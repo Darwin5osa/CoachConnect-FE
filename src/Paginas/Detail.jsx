@@ -9,7 +9,7 @@ return (
       <div className={r.contenedor}>
       <div className={r.card}>
         <div className={r.contenido}>
-        <img src={mentor.Foto} alt="" />
+        <img src={mentor.Foto} className={r.img1} alt="" />
       <h2>{mentor.nombre} {mentor.apellido}</h2>
       <p>Edad: {mentor.edad}</p>
       <p>Email: {mentor.email}</p>
