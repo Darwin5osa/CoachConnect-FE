@@ -1,4 +1,4 @@
-import Card from "../Componentes/Card";
+
 import s from "./home.module.css";
 import React from "react";
 
@@ -8,8 +8,11 @@ const Home = () => {
       <header className={s.banner}>
         <div className={s.titleCont}>
           <img className={s.brand} src="/Asset1.png" alt="" />
-          <div className={s.kaka}>
-            <h1 className={s.title}>COACH CONNECT</h1>
+          <div className={s.aux}>
+            <h1 className={s.title}>
+              <span>COACH</span> 
+              <span>CONNECT</span>
+            </h1>
             <p className={s.slogan}>Conectando Talento, creando futuro.</p>
           </div>
         </div>

@@ -5,12 +5,12 @@
 }
 
 .header {
-  padding: 0 200px;
+  padding: 0 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  height: 150px;
+  height: 160px;
 }
 
 .title {
@@ -18,6 +18,7 @@
   font-size: 38px;
   opacity: 0.9;
 }
+
 .search {
   border: none;
   background-color: transparent;
@@ -27,12 +28,14 @@
   font-size: 16px;
   width: 200px;
 }
+
 .search:focus {
   outline: none;
 }
+
 .cardContainer {
-  margin-top: 50px;
-  padding: 0 200px;
+  margin-top: 40px;
+  padding: 0 100px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -41,11 +44,14 @@
   gap: 30px;
   transition: all 0.2s ease-in-out;
 }
+
 .noResults {
   color: #e2f8f1;
   font-size: 20px;
   opacity: 0.7;
+  text-align: center;
 }
+
 .edit {
   position: absolute;
   bottom: 0;
@@ -69,32 +75,35 @@
 
 .add {
   background-color: #009416;
+  color: #e2f8f1;
 }
+
 .del {
+  color: #e2f8f1;
   background-color: rgb(201, 0, 0);
 }
+
 .link {
   text-decoration: none;
 }
 
 .formCont {
-  height: 130px;
-  padding: 0 200px;
+  height: 150px;
+  padding: 0 100px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .form {
-  padding-top: 20px;
   color: #e2f8f1;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
   align-items: flex-end;
   gap: 20px;
-  width: 900px;
+  width: 1000px;
 }
 
 .input {
@@ -108,10 +117,11 @@
   position: relative;
   font-family: system-ui;
   height: 30px;
+  color: #e2f8f1;
 }
 
-.loader{
-  transform: scale(.6);
+.loader {
+  transform: scale(0.6);
   filter: brightness(10);
 }
 
@@ -155,15 +165,61 @@
   align-items: center;
 }
 
-.searchCont{
+.searchCont {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
+  padding-left: 50px;
 }
 
-.ico{
+.ico {
   color: white;
   font-size: 18px;
-  opacity: .7;
+  opacity: 0.7;
+}
+
+@media (max-width: 1200px) {
+  .title {
+    font-size: 32px;
+  }
+  .input {
+    width: 240px;
+    font-size: 15px;
+    padding: 6px;
+    height: 30px;
+  }
+  .submit {
+    padding: 7px 13px;
+    width: 240px;
+    height: 40px;
+  }
+  .formCont {
+    height: 180px;
+  }
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 28px;
+  }
+  .header {
+    padding: 0 50px;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 28px;
+  }
+  .search {
+    width: 150px;
+  }
+  .formCont {
+    height: 330px;
+  }
+/*   .title{
+    width: 200px;
+  } */
 }

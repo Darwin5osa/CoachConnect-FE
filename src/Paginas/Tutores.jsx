@@ -23,11 +23,13 @@ const Tutores = () => {
   const [term, setTerm] = useState("");
   console.log(term);
   const handleInputChange = (event) => {
-    setTerm(event.target.value);
+    setTerm(event.target.value.toLowerCase());
   };
-  const filteredNombres = tutores.filter((tutor) =>
-    tutor.nombre.toLocaleLowerCase().includes(term.toLocaleLowerCase())
-  );
+  const filteredNombres = tutores.filter((tutor) => {
+    const fullName = `${tutor.nombre} ${tutor.apellido}`.toLowerCase();
+    return fullName.includes(term);
+  });
+  
   const handleMostrarForm = () => {
     setMostrarForm(!mostrarForm);
   };
@@ -59,7 +61,6 @@ const Tutores = () => {
             className={s.search}
             type="text"
             placeholder="Buscar tutor"
-            value={term}
             onChange={handleInputChange}
           />
         </div>
@@ -86,7 +87,7 @@ const Tutores = () => {
 
             <div className={s.inpCont}>
               <input
-                pattern="[A-Za-zÁÉÍÓÚáéíóú]{3,}"
+                /* pattern="[A-Za-zÁÉÍÓÚáéíóú]{3,}" */
                 title="El nombre debe contener al menos 3 letras y solo letras."
                 type="text"
                 id="nombre"
@@ -105,7 +106,7 @@ const Tutores = () => {
 
             <div className={s.inpCont}>
               <input
-                pattern="[A-Za-zÁÉÍÓÚáéíóú]{2,}"
+                /* pattern="[A-Za-zÁÉÍÓÚáéíóú]{2,}" */
                 title="El apellido debe contener al menos 2 letras y solo letras."
                 type="text"
                 id="apellido"
