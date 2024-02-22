@@ -5,22 +5,25 @@ import Register from "./Paginas/Register.jsx";
 import Acerca from "./Paginas/Acerca.jsx";
 import Login from "./Paginas/Login.jsx";
 import ReactDOM from "react-dom/client";
-import Home from "./Paginas/Home";
 import App from "./App.jsx";
 import React from "react";
 import "./index.css";
+import Initial from "./Paginas/Initial.jsx";
+import 'semantic-ui-css/semantic.min.css'
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+   {/*  <App/> */}
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<Acerca />} />
+          <Route path="/" element={<Initial />} />
+          <Route path="/acerca-de" element={<Acerca />} />
           <Route path="/contacto" element={<Contacto />} />
-          <Route path="/servicios" element={<Servicios />} />
+          <Route path="/mentores" element={<Servicios />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/registrarse" element={<Register />} />
+          <Route path="/detalle/:id" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>

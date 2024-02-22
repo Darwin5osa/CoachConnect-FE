@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 import s from "./Navbar.module.css";
 import React from "react";
 
@@ -7,25 +8,25 @@ const Navbar = () => {
     <nav className={s.navbar}>
       <div className={s.navbarlogo}>
         <Link to="/">
-          <img src="/logoPlaceholder.png" alt="Logo" />
+          <img src="/Asset3.png" alt="Logo" />
         </Link>
       </div>
-      <div className={s.navbarmenu}>
-        <ul>
-          <li className={s.item}>
-            <Link to="/about">Acerca de</Link>
-          </li>
-          <li className={s.item}>
-            <Link to="/servicios">Servicios</Link>
-          </li>
-          <li className={s.item}>
-            <Link to="/contacto">Contacto</Link>
-          </li>
-        </ul>
-      </div>
+
+      <ul className={s.navbarmenu}>
+        <div className={s.item}>
+          <Link className={s.link} to="/acerca-de">Acerca de</Link>
+        </div>
+        <div className={s.item}>
+          <ScrollLink className={s.link} to="mentores" smooth={true} duration={500}>Mentores</ScrollLink>
+        </div>
+        <div className={s.item}>
+          <Link className={s.link} to="/contacto">Contacto</Link>
+        </div>
+      </ul>
+
       <div className={s.navbarbuttons}>
         <Link to="/login">Login</Link>
-        <Link to="/register">Register</Link>
+        <Link to="/registrarse">Register</Link>
       </div>
     </nav>
   );

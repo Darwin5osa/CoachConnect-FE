@@ -1,0 +1,58 @@
+.banner {
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+.bg {
+  height: 700px;
+  z-index: -1;
+  position: relative;
+}
+.bg {
+  height: 650px;
+  z-index: -1;
+  position: relative;
+  background-image: url("niñaEstudiando.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  display: block;
+}
+.bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, #000000 8%,#00000074 60%, rgba(0, 0, 0, 0));
+  z-index: 2;
+}
+.titleCont {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 200px;
+  transform: translateY(-50%);
+  color: #4bc8ab;
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+.brand {
+  width: 210px;
+  padding-bottom: 6px;
+}
+.title {
+  width: 700px;
+  font-size: 90px;
+  line-height: 80px;
+}
+.slogan {
+  z-index: 2;
+  color: #e2f8f1;
+  font-size: 20px;
+  width: 450px;
+  font-weight: 600;
+  opacity: 0.8;
+}
