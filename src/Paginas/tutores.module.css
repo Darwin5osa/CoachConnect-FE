@@ -1,0 +1,168 @@
+.mainTutores {
+  background-color: #02080c;
+  padding-bottom: 50px;
+}
+
+.header {
+  padding: 0 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 150px;
+}
+
+.title {
+  color: #e2f8f1;
+  font-size: 38px;
+  opacity: 0.9;
+}
+.search {
+  border: none;
+  background-color: transparent;
+  border-bottom: solid #e2f8f1 1px;
+  color: #e2f8f1;
+  padding: 6px 0px;
+  font-size: 16px;
+  width: 200px;
+}
+.search:focus {
+  outline: none;
+}
+.cardContainer {
+  margin-top: 50px;
+  padding: 0 200px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  transition: all 0.2s ease-in-out;
+}
+.noResults {
+  color: #e2f8f1;
+  font-size: 20px;
+  opacity: 0.7;
+}
+.edit {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  gap: 20px;
+}
+
+.edit button {
+  padding: 7px 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  filter: saturate(0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.edit button:hover {
+  filter: saturate(1);
+}
+
+.add {
+  background-color: #009416;
+}
+.del {
+  background-color: rgb(201, 0, 0);
+}
+.link {
+  text-decoration: none;
+}
+
+.formCont {
+  height: 130px;
+  padding: 0 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  padding-top: 20px;
+  color: #e2f8f1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: flex-end;
+  gap: 20px;
+  width: 900px;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  resize: none;
+  border-bottom: solid #e2f8f1 1px;
+  width: 280px;
+  font-size: 17px;
+  padding: 6px;
+  position: relative;
+  font-family: system-ui;
+  height: 30px;
+}
+
+.loader{
+  transform: scale(.6);
+  filter: brightness(10);
+}
+
+.input::placeholder {
+  color: #e2f8f1;
+  opacity: 0.8;
+  text-align: left;
+  position: absolute;
+  bottom: 5px;
+  font-size: 15px;
+}
+
+.inpCont {
+  display: flex;
+  width: fit-content;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.label {
+  font-size: 17px;
+  width: 220px;
+  margin-bottom: -2px;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.submit {
+  padding: 7px 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #193c3c;
+  width: 280px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchCont{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.ico{
+  color: white;
+  font-size: 18px;
+  opacity: .7;
+}

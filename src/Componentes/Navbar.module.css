@@ -2,30 +2,41 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: rgb(0, 0, 0);
-  padding: 15px 30px;
+  width: 100%;
+  padding: 0 100px;
+  height: 80px;
+  background-color: #000000;
+  position: absolute;
+  z-index: 3;
 }
 .navbarlogo img {
   max-height: 40px;
+  cursor: pointer;
 }
-.navbarmenu ul {
+.navbarmenu {
   list-style-type: none;
   padding: 0;
   display: flex;
-  gap: 22px;
+  gap: 50px;
 }
-
-.navbarmenu ul li a {
-  color: rgb(0, 0, 0);
+.item a {
+  z-index: 1;
+  color: #e2f8f1;
+  position: relative;
+  cursor: pointer;
+}
+.item a:hover {
+  color: #e2f8f1;
   text-decoration: none;
 }
 .item {
   position: relative;
   font-weight: 500;
+  font-size: 16px;
 }
 .item::after {
   content: "";
-  border-bottom: solid rgba(5, 5, 5, 0.713) 2px;
+  border-bottom: solid #e2f8f1 2px;
   padding-top: 2px;
   width: 0%;
   height: 20px;
@@ -35,7 +46,6 @@
   left: 50%;
   transform: translateX(-50%);
   transition: width 0.2s ease-in-out;
-  z-index: -1;
 }
 .item:hover::after {
   width: 100%;
@@ -44,17 +54,19 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+  z-index: 2;
 }
 .navbarbuttons a {
-  color: rgb(0, 0, 0);
+  color: #e2f8f1;
   text-decoration: none;
   padding: 3px 10px;
-  border: 1px solid rgb(5, 5, 5);
+  border: 1px solid rgb(254, 254, 254);
   border-radius: 10px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .navbarbuttons a:hover {
-  color: rgb(238, 226, 226);
-  background-color: rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  background-color: #e2f8f1;
 }
