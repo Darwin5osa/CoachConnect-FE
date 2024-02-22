@@ -17,7 +17,7 @@
     align-items: center;
     flex-direction: column;
     border-radius: 5px;
-    
+
     background-color: #1B4242;
    
 }
@@ -26,7 +26,7 @@
     background-color: #1B4242;
 
 }
-img{
+.img1{
     width: 20%;
     height: 20vh;
     border-radius: 100px;
