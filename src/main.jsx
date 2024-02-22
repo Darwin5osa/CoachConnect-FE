@@ -10,6 +10,7 @@ import React from "react";
 import "./index.css";
 import Initial from "./Paginas/Initial.jsx";
 import 'semantic-ui-css/semantic.min.css'
+import Detail from "./Paginas/Detail.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="/mentores" element={<Servicios />} />
           <Route path="/login" element={<Login />} />
           <Route path="/registrarse" element={<Register />} />
-          <Route path="/detalle/:id" element={<Register />} />
+          <Route path="/detalle/:id" element={<Detail />} />
         </Route>
       </Routes>
     </BrowserRouter>
