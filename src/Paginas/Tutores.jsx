@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import Card from "../Componentes/Card";
 import s from "./tutores.module.css";
 
+
 const Tutores = () => {
   const [tutores, setTutores] = useState(data.tutores);
   const [mostrarForm, setMostrarForm] = useState(false);
@@ -53,7 +54,7 @@ const Tutores = () => {
           <button className={s.add} onClick={handleMostrarForm}>
             Agregar
           </button>
-          {/* <button className={s.del}>Eliminar</button> */}
+          <button className={s.del}>Eliminar</button>
         </div>
         <div className={s.searchCont}>
           <RiSearch2Line className={s.ico} />

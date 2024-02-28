@@ -1,3 +1,4 @@
+import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdStar } from "react-icons/md";
 import s from "./card.module.css";
 import React from "react";
@@ -14,7 +15,17 @@ const Card = (data) => {
           {info.nombre} {info.apellido}
         </h2>
         <p className={s.descrip}>{info.descripcion}</p>
-        <div className={s.rating}><MdStar/><MdStar/><MdStar/><MdStar/><MdStar/></div>
+        <div className={s.rating}>
+          <MdStar />
+          <MdStar />
+          <MdStar />
+          <MdStar />
+          <MdStar />
+        </div>
+      </div>
+      <div className={s.infoCont}>
+        Más informacion
+        <FaExternalLinkAlt className={s.link} />
       </div>
     </div>
   );

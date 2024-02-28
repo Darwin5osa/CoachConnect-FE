@@ -14,3 +14,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+h1{
+  font-size: 90px;
+}
+h2{
+  font-size: 38px;
+}
