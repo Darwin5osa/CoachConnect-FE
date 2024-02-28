@@ -63,31 +63,6 @@
   gap: 3px;
 }
 
-@media (max-width: 1200px) {
-  .cardContainer {
-    width: 400px;
-    height: 220px;
-  }
-  .img {
-    width: 35%;
-  }
-  .img img {
-    width: 75%;
-  }
-
-  .info {
-    margin: 0px;
-    padding: 0px;
-    width: 65%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    font-size: 15px;
-    height: 85%;
-    /*   gap: 10px; */
-  }
-}
-
 .link{
   font-size: 18px;
   color: white;

@@ -11,7 +11,7 @@ function App() {
       <Tutores/> */}
       <Navbar />
       <Outlet />
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

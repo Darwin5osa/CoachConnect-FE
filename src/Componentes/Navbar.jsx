@@ -27,6 +27,7 @@ const Navbar = () => {
             to="mentores"
             smooth={true}
             duration={500}
+            offset={-80}
           >
             Mentores
           </ScrollLink>
