@@ -1,6 +1,6 @@
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdStar } from "react-icons/md";
-import s from "./card.module.css";
+import s from "./css/card.module.css";
 import React from "react";
 const Card = (data) => {
   const info = data.info;
@@ -24,7 +24,6 @@ const Card = (data) => {
         </div>
       </div>
       <div className={s.infoCont}>
-        Más informacion
         <FaExternalLinkAlt className={s.link} />
       </div>
     </div>

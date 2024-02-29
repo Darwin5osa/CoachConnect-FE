@@ -1,5 +1,5 @@
-import React from 'react'
-import s from "./footer.module.css"
+import s from "./css/footer.module.css";
+import React from "react";
 
 const Footer = () => {
   return (
@@ -9,10 +9,19 @@ const Footer = () => {
           <img className={s.logo} src="./Asset1.png" alt="logo" />
           <p className={s.copy}>© 2024 - COACH CONNECT</p>
         </div>
-        <p className={s.email}>info@coachconnect.com</p>
+        <div className={s.line}></div>
+        <a
+          className={s.email}
+          title="Email"
+          href="mailto:info@coachconnect.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          INFO@COACHCONNECT.COM
+        </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

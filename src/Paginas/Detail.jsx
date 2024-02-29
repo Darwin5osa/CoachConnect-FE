@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router'
 import data from '../Utils/DatosTutores.json';
-import r from "../Paginas/detail.module.css";
+import r from "../Paginas/css/detail.module.css";
 const Detail = ()=> {
   const { id } = useParams();
 const mentor = data.tutores.find(mentor => mentor.id === parseInt(id));

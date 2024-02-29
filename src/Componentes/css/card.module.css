@@ -1,8 +1,8 @@
 .cardContainer {
-  width: 480px;
-  height: 220px;
+  width: 420px;
+  min-width: 300px;
+  height: 200px;
   border-radius: 15px;
-  transition: all 0.2s ease-in-out;
   background-color: #193c3c;
   display: flex;
   align-items: center;
@@ -10,28 +10,30 @@
   box-shadow: -1px -1px 81px -12px rgba(28, 90, 62, 0.1);
   -webkit-box-shadow: -1px -1px 81px -12px rgba(28, 90, 62, 0.1);
   -moz-box-shadow: -1px -1px 81px -12px rgba(28, 90, 62, 0.1);
+  overflow: hidden;
+  gap: 20px;
 }
 
 
 .img {
-  width: 35%;
+  width: 40%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .img img {
-  border-radius: 15px;
-  width: 75%;
+  width: 105%;
 }
 
 .info {
   margin: 0px;
   padding: 0px;
-  width: 65%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  font-size: 15px;
+  font-size: 13px;
   height: 85%;
   /*   gap: 10px; */
 }
@@ -43,11 +45,11 @@
 }
 .profession {
   color: rgb(255, 255, 255);
-  background-color: rgb(49, 98, 182);
+  background-color: #0f7777;
   width: fit-content;
   border-radius: 6px;
-  padding: 1px 5px;
-  font-size: 15px;
+  padding: 2px 6px;
+  font-size: 14px;
 }
 .descrip {
   width: 90%;
@@ -64,7 +66,7 @@
 }
 
 .link{
-  font-size: 18px;
+  font-size: 20px;
   color: white;
   transition: all .2s ease-in-out;
   transform: scale(0.1);
@@ -81,13 +83,44 @@
   color: white;
   font-size: 15px;
   opacity: 0;
-  transition: all .2s ease-in-out;
 }
 
 .cardContainer:hover .infoCont{
-  opacity: .7;
+  opacity: .6;
 }
 
 .cardContainer:hover .link{
   transform: scale(1);
+}
+
+
+@media (max-width: 1200px) {
+  .cardContainer{
+    width: 100%;
+    min-width: 400px;
+  }
+}
+
+@media (max-width: 500px) {
+  .cardContainer{
+    width: 350px;
+    min-width: 300px;
+    height: 160px;
+  }
+  .info {
+    font-size: 11px;
+  }
+  .name {
+    font-size: 16px;
+  }
+  .profession {
+    padding: 1px 5px;
+    font-size: 10px;
+  }
+  .rating {
+    font-size: 14px;
+  }
+  .link{
+    font-size: 15px;
+  }
 }
