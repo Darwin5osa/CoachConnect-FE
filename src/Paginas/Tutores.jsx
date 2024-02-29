@@ -4,7 +4,7 @@ import { RiSearch2Line } from "react-icons/ri";
 import data from "../Utils/DatosTutores.json";
 import { Link } from "react-router-dom";
 import Card from "../Componentes/Card";
-import s from "./tutores.module.css";
+import s from "./css/tutores.module.css";
 import { useMemo } from "react";
 
 const Tutores = () => {
@@ -13,40 +13,36 @@ const Tutores = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const [itemsPerPage, setItemsPerPage] = useState(
-    window.innerWidth > 1450 ? 10 : 5
+    window.innerWidth > 1200 ? 10 : 5
   );
-
+  const filteredTutores = tutores.filter((tutor) => {
+    const fullName = `${tutor.nombre} ${tutor.apellido}`.toLowerCase();
+    return fullName.includes(term);
+  });
+  const totalPages = Math.ceil(filteredTutores.length / itemsPerPage);
   useEffect(() => {
     const handleResize = () => {
-      setItemsPerPage(window.innerWidth > 1429 ? 10 : 5);
+      setItemsPerPage(window.innerWidth > 1200 ? 10 : 5);
+      if (currentPage > Math.ceil(filteredTutores.length / itemsPerPage) - 1) {
+        setCurrentPage(totalPages - 1);
+      }
     };
-
     window.addEventListener("resize", handleResize);
-
-    // Limpieza del event listener
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []); // Se ejecuta solo una vez al montar el componente
+  }, [currentPage, filteredTutores.length, itemsPerPage]);
 
   const pages = Math.ceil(tutores.length / itemsPerPage) - 1;
-  console.log(pages);
 
   const handleInputChange = (event) => {
     setTerm(event.target.value.toLowerCase());
     setCurrentPage(0);
   };
 
-  const filteredTutores = tutores.filter((tutor) => {
-    const fullName = `${tutor.nombre} ${tutor.apellido}`.toLowerCase();
-    return fullName.includes(term);
-  });
-
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentTutores = filteredTutores.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(filteredTutores.length / itemsPerPage);
-  console.log(totalPages);
 
   const renderPageButtons = useMemo(() => {
     const buttons = [];
@@ -72,20 +68,46 @@ const Tutores = () => {
     return buttons;
   }, [currentPage, totalPages]);
 
+
+  const randomTutors = () =>{
+    let recomendados = []
+    let rep = []
+    for(let i=0; i<4; i++) {
+      let numRandom = Math.floor(Math.random() * tutores.length) +1;
+      if (!rep.includes(numRandom)) {
+        rep.push(numRandom)
+        recomendados.push(tutores[numRandom])
+        } else {i--;}
+    }
+    return recomendados
+  }
+
+
   return (
     <main id="mentores" className={s.mainTutores}>
       <header className={s.header}>
+        <h2 className={s.title}>RECOMENDADOS</h2>
+      </header>
+
+      <section className={s.cardContainer}>
+        {randomTutors().map((tutor, index) => (
+          <Link to={`/detalle/${tutor.id}`} key={index} className={s.link}>
+            <Card info={tutor} />
+          </Link>
+        ))}
+      </section>
+
+      <header className={s.header}>
         <h2 className={s.title}>NUESTROS MENTORES</h2>
-        <div className={s.searchCont}>
-          <RiSearch2Line className={s.ico} />
-          <input
-            className={s.search}
-            type="text"
-            placeholder="Buscar tutor"
-            value={term}
-            onChange={handleInputChange}
-          />
-        </div>
+
+        {/* <RiSearch2Line className={s.ico} /> */}
+        <input
+          className={s.search}
+          type="text"
+          placeholder="Buscar mentor"
+          value={term}
+          onChange={handleInputChange}
+        />
       </header>
       <section className={s.cardContainer}>
         {currentTutores.length > 0 ? (

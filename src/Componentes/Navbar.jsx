@@ -1,6 +1,6 @@
 import { Link as ScrollLink } from "react-scroll";
 import { Link } from "react-router-dom";
-import s from "./Navbar.module.css";
+import s from "./css/Navbar.module.css";
 import React from "react";
 
 const Navbar = () => {
@@ -17,7 +17,7 @@ const Navbar = () => {
 
       <ul className={s.navbarmenu}>
         <div className={s.item}>
-          <Link className={s.link} to="/acerca-de">
+          <Link className={s.link} to="">
             Acerca de
           </Link>
         </div>
@@ -33,7 +33,7 @@ const Navbar = () => {
           </ScrollLink>
         </div>
         <div className={s.item}>
-          <Link className={s.link} to="/contacto">
+          <Link className={s.link} to="/">
             Contacto
           </Link>
         </div>
