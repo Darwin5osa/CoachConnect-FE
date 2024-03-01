@@ -1,34 +1,116 @@
 .contenedor{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: #02080c;
-    width: 100%;
-    height: 100vh;
-}
-.card {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin-left: 100px;
-    width: 80%;
-    height: 50vh;
-    display: flex;
     align-items: center;
-    flex-direction: column;
-    border-radius: 5px;
-    border-radius: 20px;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #092635;
+}
 
-    background-color: #1B4242;
-   
+.card{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 70%;
+}
+
+.card img{
+    width: 250px;
+    height: 300px;
+    border-radius: 30%;
+    margin: 5px;
+    
+    
 }
 .contenido{
-    color:#9EC8B9;
+    display: flex;
+    flex-direction: column ;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     background-color: #1B4242;
+    border-radius: 10px 10px 0px 0px;
+}
+.contenido h1{
+    color: #9EC8B9;
+    font-size: 36px;
+    margin: 10px 0px;
+    
+}
+/* h1: nombre, h2: profesion, p email, descripcion*/
+.contenido h2{
+    color: #226e94;
+    text-align: center;
+    width: 30%;
+    margin: 3px 10px;
+    font-size: 15px;
+    background-color: #9EC8B9;
+    border-radius: 10px;
+    padding: 4px;
+    
+}
+.contenido p{
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin: 10px;
+}
+.botones{
+    display: flex;
+    justify-content: space-between;
+    background-color: #1B4242;
+    width: 100%;
+    padding: 10px;
+    border-radius: 0px 0px 10px 10px;
+
 
 }
-.img1{
-    width: 20%;
-    height: 20vh;
-    border-radius: 100px;
+.btnes{
+        background:#092635;
+        color:#9EC8B9;
+        border:none;
+        height:60px;
+        font-size:1.6em;
+        padding:0 2em;
+        cursor:pointer;
+        transition:800ms ease all;
+        outline:none;
+        border-radius: 10px;
 }
+.btnes:hover{
+        background:#9EC8B9;
+        color:#092635;
+}
+
+.btnes:before,.btnes:after{
+    content:'';
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #092635;
+    transition:400ms ease all;
+}
+.btnes:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+.btnes:hover:before,.btnes:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+@media (max-width: 1200px){
+    .card, .contenido, .botones{
+        width: 90%;
+    }
+}
+
+
+    
+
+
+
