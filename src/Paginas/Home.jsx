@@ -18,6 +18,7 @@ const Home = () => {
         </div>
         <div className={s.bg}></div>
       </header>
+    
     </>
   );
 };
