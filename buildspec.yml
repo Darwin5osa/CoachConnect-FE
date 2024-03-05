@@ -9,7 +9,11 @@ phases:
       - npm install
     build:
       commands:
+        - ls
+        - echo "==========="
         - npm run build
+        - echo "============================"
+        - ls
 artifacts:
   files:
     - dist/**/*
