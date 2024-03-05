@@ -16,4 +16,5 @@ phases:
       - ls
 artifacts:
   files:
-    - dist/**/*
+    - '**/*'
+  base-directory: dist
