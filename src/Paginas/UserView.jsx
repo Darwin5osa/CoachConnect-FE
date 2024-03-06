@@ -7,7 +7,7 @@ const UserView = () => {
       
       const handleClick = () => {
        //URL del endpoint
-      const endPointBE = "https://api.chucknorris.io/jokes/random";
+      const endPointBE = "http://backend-lb-344706339.us-east-1.elb.amazonaws.com/status";
       
       const opciones = {
         method: 'GET',
