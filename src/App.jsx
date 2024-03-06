@@ -1,23 +1,21 @@
 import PrivateRoute from "./Componentes/admin/PrivateRoute";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AdminLayout from "./Paginas/admin/AdminLayout";
-import AdminLogin from "./Paginas/admin/AdminLogin";
 import UserLayout from "./Paginas/UserLayout";
 import Admin from "./Paginas/admin/Admin";
-import Register from "./Paginas/Register";
 import UserView from "./Paginas/UserView";
+import AdminLogin from "./Paginas/Login";
 import Detail from "./Paginas/Detail";
+import Example from "./Paginas/Example";
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/" element={<UserLayout />}>
-          <Route index element={<UserView />} />
-          <Route path="registrarse" element={<Register />} />
+          <Route index path="/" element={<UserView />} />
           <Route path="detalle/:id" element={<Detail />} />
         </Route>
         <Route path="/admin/*" element={<AdminLayout />}>
-          <Route path="login" element={<AdminLogin />} />
           <Route
             path="dashboard"
             element={
@@ -27,8 +25,11 @@ function App() {
             }
           />
         </Route>
+        <Route path="/admin" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/register" element={<AdminLogin />} />
 
-        <Route path="/admin" element={<Navigate to="/admin/login" />} />
+        <Route path="/example" element={<Example />} />
       </Routes>
     </div>
   );

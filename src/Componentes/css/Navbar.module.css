@@ -3,24 +3,43 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 100px;
+  padding: 0 50px;
   height: 80px;
   backdrop-filter: blur(40px);
   position: fixed;
   z-index: 3;
 }
+.navbarA {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 50px;
+  height: 80px;
+  backdrop-filter: blur(40px);
+  position: fixed;
+  z-index: 3;
+  top: 0;
+}
+
+.navbarlogo{
+  justify-content: left;
+  width: 33%;
+}
 .navbarlogo img {
   max-height: 40px;
   cursor: pointer;
 }
-.logo2{
+.logo2 {
   display: none;
 }
 .navbarmenu {
+  width: 33%;
   list-style-type: none;
   padding: 0;
   display: flex;
   gap: 50px;
+  justify-content: center;
 }
 .item a {
   z-index: 1;
@@ -54,11 +73,44 @@
   width: 100%;
 }
 .navbarbuttons {
+  width: 33%;
   display: flex;
   flex-direction: row;
   gap: 20px;
   z-index: 2;
+  justify-content: right;
 }
+
+.navSessin {
+  width: 33%;
+  display: flex;
+  color: #e2f8f1;
+  justify-content: right;
+  align-items: center;
+  gap: 20px;
+}
+
+.navSessin button {
+  background-color: transparent;
+  color: #e2f8f1;
+  text-decoration: none;
+  padding: 3px 10px;
+  border: 1px solid rgb(254, 254, 254);
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.navSessin button:hover {
+  color: rgb(0, 0, 0);
+  background-color: #e2f8f1;
+}
+
+.navSessin p {
+  margin: 0;
+  font-size: 17px;
+}
+
 .navbarbuttons a {
   color: #e2f8f1;
   text-decoration: none;
@@ -74,29 +126,21 @@
   background-color: #e2f8f1;
 }
 
-.hamburger{
+.hamburger {
   display: none;
 }
-
 
 @media (max-width: 900px) {
   .navbarmenu {
     display: none;
   }
-  .navbarbuttons {
-    display: none;
-  }
-  .hamburger{
+  .hamburger {
     display: block;
   }
   .navbar {
     padding: 20px 50px;
   }
 }
-
-
-
-
 
 /* HAMBURGUER MENU */
 .hamburger {
@@ -122,7 +166,7 @@
   stroke-width: 3;
   /* Define the transition for transforming the Stroke */
   transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
-              stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .linetopbottom {

@@ -1,0 +1,223 @@
+.login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../imgs/image.webp");
+  background-size: cover;
+  position: relative;
+}
+
+.cont {
+  background-color: #02080c;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 1000px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: #000000c9 0 0 30px;
+}
+
+.screen {
+  box-shadow: #193c3c 0 0 30px;
+  position: absolute;
+  background-color: #193c3c;
+  width: 50%;
+  height: 100%;
+  border-radius: 0 80px 80px 0;
+  z-index: 1;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.active1 {
+  transform: translateX(100%);
+  border-radius: 80px 0 0 80px;
+}
+
+.formLogin {
+  height: 500px;
+  width: 50%;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 50px 0;
+  position: relative;
+}
+
+.formLogin h1 {
+  position: absolute;
+  top: 50px;
+  font-size: 40px;
+  width: 300px;
+  text-align: center;
+}
+.us {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: left;
+  position: relative;
+}
+
+.in {
+  background: none;
+  border: none;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.618);
+  width: 200px;
+  color: white;
+  font-size: 20px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+}
+.lab {
+  position: absolute;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.648);
+  transition: all 0.2s ease-in-out;
+  pointer-events: none;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+
+.active {
+  transform: translateY(-26px);
+  font-size: 15px;
+  opacity: 0.8;
+}
+
+.formLogin input:focus {
+  outline: none;
+}
+.formLogin button {
+  position: absolute;
+  bottom: 50px;
+  background-color: rgba(255, 255, 255, 0);
+  border: solid white 1px;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.formLogin button:hover {
+  background-color: white;
+  color: black;
+}
+
+.logcont {
+  gap: 35px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formReg {
+  height: 500px;
+  width: 50%;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding: 50px 0;
+  position: relative;
+}
+
+.formReg h1 {
+  position: absolute;
+  top: 50px;
+  font-size: 40px;
+  width: 300px;
+  text-align: center;
+}
+
+.formReg input:focus {
+  outline: none;
+}
+.formReg button {
+  position: absolute;
+  bottom: 50px;
+  background-color: rgba(255, 255, 255, 0);
+  border: solid white 1px;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.formReg button:hover {
+  background-color: white;
+  color: black;
+}
+
+.struc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.none {
+  display: none;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.info img {
+  width: 150px;
+}
+
+.info h2 {
+  margin: 0;
+}
+
+.info div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.info p {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.info button {
+  background-color: transparent;
+  border: solid white 1px;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.info button:hover {
+  color: #193c3c;
+  background-color: #fff;
+}

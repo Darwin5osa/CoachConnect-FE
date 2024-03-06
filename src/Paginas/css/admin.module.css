@@ -1,0 +1,13 @@
+.admin{
+  height: 100vh;
+  position: relative;
+  border: solid 2px;
+  background-color: #02080c;
+}
+
+
+.admin button{
+  position: absolute;
+  top: 100px;
+  z-index: 99;
+}

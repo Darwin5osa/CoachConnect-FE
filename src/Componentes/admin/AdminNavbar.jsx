@@ -1,13 +1,14 @@
 
 import s from "../css/Navbar.module.css";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AdminNavbar = () => {
   return (
-    <nav className={s.navbar}>
-      <div className={s.navbarlogo}>
+    <nav className={s.navbarA}>
+      <Link to="/" className={s.navbarlogo}>
         <img className={s.logo1} src="/Asset3.png" alt="Logo" />
-      </div>
+      </Link>
     </nav>
   );
 };
