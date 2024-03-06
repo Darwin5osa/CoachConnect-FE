@@ -14,7 +14,7 @@
             "password" : "majo123"
         },
         {
-            "id": 2,
+            "id": 1,
             "nombre": "Ana",
             "apellido": "López",
             "edad": 30,
@@ -27,7 +27,7 @@
             "password" : "ana123"
         },
         {
-            "id": 3,
+            "id": 2,
             "nombre": "Pedro",
             "apellido": "García",
             "edad": 40,
@@ -40,7 +40,7 @@
             "password" : "pedro123"
         },
         {
-            "id": 4,
+            "id": 3,
             "nombre": "Laura",
             "apellido": "Martínez",
             "edad": 35,
@@ -53,7 +53,7 @@
             "password" : "laura123"
         },
         {
-            "id": 5,
+            "id": 4,
             "nombre": "Juan",
             "apellido": "Hernández",
             "edad": 28,
@@ -66,7 +66,7 @@
             "password" : "juan123"
         },
         {
-            "id": 6,
+            "id": 5,
             "nombre": "María",
             "apellido": "Gómez",
             "edad": 32,
@@ -79,7 +79,7 @@
             "password" : "maria123"
         },
         {
-            "id": 7,
+            "id": 6,
             "nombre": "Juan",
             "apellido": "Pérez",
             "edad": 30,
@@ -92,7 +92,7 @@
             "password" : "juan123"
         },
         {
-            "id": 8,
+            "id": 7,
             "nombre": "Luisa",
             "apellido": "Gómez",
             "edad": 28,

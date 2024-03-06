@@ -1,25 +1,34 @@
+import { useGlobalContex } from "../Utils/global.context";
 import { Link as ScrollLink } from "react-scroll";
-import { Link } from "react-router-dom";
 import s from "./css/Navbar.module.css";
+import { Link } from "react-router-dom";
 import React from "react";
 
 const Navbar = () => {
+  const { state, dispatch } = useGlobalContex();
+
+  const handleClose = () => {
+    dispatch({ type: "CLOSE_SESSION" });
+  };
   return (
     <nav className={s.navbar}>
       <div className={s.navbarlogo}>
         <Link to="/" className={s.logo1}>
           <img src="/Asset3.png" alt="Logo" />
         </Link>
-        <Link to="/" className={s.logo2}>
-          <img src="/Asset1.png" alt="Logo" />
-        </Link>
       </div>
 
       <ul className={s.navbarmenu}>
         <div className={s.item}>
-          <Link className={s.link} to="">
-            Acerca de
-          </Link>
+          <ScrollLink
+            className={s.link}
+            to="home"
+            smooth={true}
+            duration={500}
+            offset={-80}
+          >
+            Home
+          </ScrollLink>
         </div>
         <div className={s.item}>
           <ScrollLink
@@ -38,12 +47,19 @@ const Navbar = () => {
           </Link>
         </div>
       </ul>
+      {!state.session ? (
+        <div className={s.navbarbuttons}>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </div>
+      ) : (
+        <div className={s.navSessin}>
+          <p>{state.session.name}</p>
+          <button onClick={handleClose}>cerrar sesion</button>
+        </div>
+      )}
 
-      <div className={s.navbarbuttons}>
-        <Link to="/login">Login</Link>
-        <Link to="/registrarse">Register</Link>
-      </div>
-      <label className={s.hamburger}>
+      {/* <label className={s.hamburger}>
         <input type="checkbox" />
         <svg viewBox="0 0 32 32">
           <path
@@ -52,7 +68,7 @@ const Navbar = () => {
           ></path>
           <path className={s.line} d="M7 16 27 16"></path>
         </svg>
-      </label>
+      </label> */}
     </nav>
   );
 };

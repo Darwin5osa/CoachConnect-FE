@@ -7,13 +7,7 @@
   font-family: system-ui;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
   color: rgb(0, 0, 0);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #000000;
 }
 
 h1{
@@ -21,4 +15,8 @@ h1{
 }
 h2{
   font-size: 38px;
+}
+
+body{
+  background-color: #c8a1a1;
 }
