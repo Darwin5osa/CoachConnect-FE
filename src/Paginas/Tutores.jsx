@@ -6,8 +6,12 @@ import { Link } from "react-router-dom";
 import Card from "../Componentes/Card";
 
 const Tutores = () => {
+
+  
   // Estados
   const { state } = useGlobalContex();
+  console.log(state.TUTORIAS);
+  console.log(state.tutorias);
   const [tutorias, setTutorias] = useState(state.tutorias);
   const [tutores, setTutores] = useState(state.data)
   const [niveles, setNiveles] = useState(state.niveles)
@@ -96,7 +100,7 @@ const Tutores = () => {
       <section className={s.cardContainer}>
         {tutoresRecomendados.map((tutoria, index) => (
           <Link to={`/detalle/${tutoria.id}`} key={index} className={s.link}>
-            <Card info={tutoria} tutor={buscarTutor(tutoria.tutorId)} nivel={buscarNivel(tutoria.nivelId)} />
+            <Card info={tutoria} tutor={buscarTutor(tutoria.id)} nivel={buscarNivel(tutoria.nivelId)} />
           </Link>
         ))}
       </section>
@@ -118,7 +122,7 @@ const Tutores = () => {
         {currentTutores.length > 0 ? (
           currentTutores.map((tutoria, index) => (
             <Link to={`/detalle/${tutoria.id}`} key={index} className={s.link}>
-              <Card info={tutoria} tutor={buscarTutor(tutoria.tutorId)} nivel={buscarNivel(tutoria.nivelId)}  />
+              <Card info={tutoria} tutor={buscarTutor(tutoria.id)} nivel={buscarNivel(tutoria.nivelId)}  />
             </Link>
           ))
         ) : (

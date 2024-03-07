@@ -1,5 +1,12 @@
+import {
+  getCaracteristicas,
+  getCategorias,
+  getEstudiantes,
+  getNiveles,
+  getTutores,
+  getTutorias,
+} from "./fetchAPI";
 import { createContext, useContext, useReducer } from "react";
-import { getCategorias, getTutorias } from "./fetchAPI";
 import data from "../Utils/DatosTutores.json";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
@@ -17,6 +24,12 @@ const getSessionToken = () => {
 
 export const initialState = {
   data: data.tutores,
+  CATEGORIAS: [],
+  CARACTERISTICAS: [],
+  NIVELES: [],
+  TUTORIAS: [],
+  TUTORES: [],
+  ESTUDIANTES: [],
   tutorias: [
     {
       id: 1,
@@ -25,7 +38,6 @@ export const initialState = {
       nivelId: 1,
       categoriaId: 2,
       caracteristicas: [1, 3],
-      tutorId: 0,
     },
     {
       id: 2,
@@ -34,7 +46,6 @@ export const initialState = {
       nivelId: 1,
       categoriaId: 2,
       caracteristicas: [1, 2],
-      tutorId: 1,
     },
     {
       id: 3,
@@ -43,7 +54,6 @@ export const initialState = {
       nivelId: 2,
       categoriaId: 2,
       caracteristicas: [2, 3, 4],
-      tutorId: 2,
     },
     {
       id: 4,
@@ -52,151 +62,22 @@ export const initialState = {
       nivelId: 2,
       categoriaId: 3,
       caracteristicas: [3, 4],
-      tutorId: 3,
     },
     {
-      id: 5,
-      nombre: "Tutoría de Química General",
-      descripcion: "Introducción a los conceptos básicos de química",
-      nivelId: 3,
-      categoriaId: 3,
-      caracteristicas: [1, 2, 3],
-      tutorId: 4,
-    },
-    {
-      id: 6,
-      nombre: "Tutoría de Educación Física",
-      descripcion: "Desarrolla habilidades físicas y deportivas",
-      nivelId: 1,
-      categoriaId: 1,
-      caracteristicas: [2, 5],
-      tutorId: 5,
-    },
-    {
-      id: 7,
-      nombre: "Tutoría de Lengua y Gramática",
-      descripcion: "Refuerza los conocimientos lingüísticos y gramaticales",
+      id: 4,
+      nombre: "Tutoría de Historia Antigua",
+      descripcion: "Estudio de las civilizaciones antiguas",
       nivelId: 2,
-      categoriaId: 2,
-      caracteristicas: [1, 3, 4],
-      tutorId: 6,
-    },
-    {
-      id: 8,
-      nombre: "Tutoría de Geografía Mundial",
-      descripcion: "Estudio de la geografía global",
-      nivelId: 2,
-      categoriaId: 3,
-      caracteristicas: [2, 4, 5],
-      tutorId: 7,
-    },
-    {
-      id: 9,
-      nombre: "Tutoría de Álgebra Avanzada",
-      descripcion: "Estudio de álgebra a un nivel avanzado",
-      nivelId: 3,
-      categoriaId: 2,
-      caracteristicas: [4, 5],
-      tutorId: 8,
-    },
-    {
-      id: 10,
-      nombre: "Tutoría de Educación Cívica",
-      descripcion: "Aprende sobre la sociedad y la ciudadanía",
-      nivelId: 2,
-      categoriaId: 3,
-      caracteristicas: [1, 3, 5],
-      tutorId: 9,
-    },
-    {
-      id: 11,
-      nombre: "Tutoría de Arte Visual",
-      descripcion: "Explora el mundo del arte visual",
-      nivelId: 2,
-      categoriaId: 2,
-      caracteristicas: [2, 3, 4],
-      tutorId: 10,
-    },
-    {
-      id: 12,
-      nombre: "Tutoría de Música Instrumental",
-      descripcion: "Aprende a tocar un instrumento musical",
-      nivelId: 3,
-      categoriaId: 2,
-      caracteristicas: [1, 4, 5],
-      tutorId: 11,
-    },
-    {
-      id: 13,
-      nombre: "Tutoría de Biología Celular",
-      descripcion: "Estudio de la estructura y función de las células",
-      nivelId: 3,
       categoriaId: 3,
       caracteristicas: [3, 4],
-      tutorId: 12,
     },
     {
-      id: 14,
-      nombre: "Tutoría de Historia Moderna",
-      descripcion: "Estudio de la historia reciente",
+      id: 4,
+      nombre: "Tutoría de Historia Antigua",
+      descripcion: "Estudio de las civilizaciones antiguas",
       nivelId: 2,
       categoriaId: 3,
-      caracteristicas: [2, 5],
-      tutorId: 13,
-    },
-    {
-      id: 15,
-      nombre: "Tutoría de Geometría Euclidiana",
-      descripcion: "Estudio de la geometría euclidiana clásica",
-      nivelId: 3,
-      categoriaId: 2,
-      caracteristicas: [1, 3, 4],
-      tutorId: 14,
-    },
-    {
-      id: 16,
-      nombre: "Tutoría de Educación Ambiental",
-      descripcion: "Concienciación sobre el medio ambiente",
-      nivelId: 2,
-      categoriaId: 3,
-      caracteristicas: [2, 4],
-      tutorId: 15,
-    },
-    {
-      id: 17,
-      nombre: "Tutoría de Educación Física y Salud",
-      descripcion: "Promoción de la salud a través de la actividad física",
-      nivelId: 2,
-      categoriaId: 1,
-      caracteristicas: [3, 5],
-      tutorId: 16,
-    },
-    {
-      id: 18,
-      nombre: "Tutoría de Astronomía Básica",
-      descripcion: "Introducción a la astronomía",
-      nivelId: 1,
-      categoriaId: 3,
-      caracteristicas: [1, 2, 3],
-      tutorId: 17,
-    },
-    {
-      id: 19,
-      nombre: "Tutoría de Inglés como Segundo Idioma",
-      descripcion: "Aprende inglés como segundo idioma",
-      nivelId: 1,
-      categoriaId: 2,
-      caracteristicas: [2, 4, 5],
-      tutorId: 18,
-    },
-    {
-      id: 20,
-      nombre: "Tutoría de Arte Dramático",
-      descripcion: "Explora el arte del teatro y la actuación",
-      nivelId: 3,
-      categoriaId: 2,
-      caracteristicas: [1, 3, 5],
-      tutorId: 19,
+      caracteristicas: [3, 4],
     },
   ],
   caracteristicas: [
@@ -290,15 +171,46 @@ export const ContextProvider = ({ children }) => {
         return { ...state, niveles: action.payload };
       case "SET_CARACTERISTICAS":
         return { ...state, niveles: action.payload };
+
+      case "GETcategorias":
+        return { ...state, CATEGORIAS: action.payload };
+      case "GETcaracteristicas":
+        return { ...state, CARACTERISTICAS: action.payload };
+      case "GETniveles":
+        return { ...state, NIVELES: action.payload };
+      case "GETtutorias":
+        return { ...state, TUTORIAS: action.payload };
+      case "GETtutores":
+        return { ...state, TUTORES: action.payload };
+      case "GETestudiantes":
+        return { ...state, ESTUDIANTES: action.payload };
       default:
         return state;
     }
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    getCategorias(dispatch);
+    getCaracteristicas(dispatch);
+    getTutorias(dispatch);
+    getNiveles(dispatch);
+    getTutores(dispatch);
+    getEstudiantes(dispatch);
+  }, []);
+
   console.log(state);
   return (
-    <ContextGlobal.Provider value={{ state, dispatch, getCategorias }}>
+    <ContextGlobal.Provider
+      value={{
+        state,
+        dispatch,
+        getCategorias,
+        getCaracteristicas,
+        getTutorias,
+      }}
+    >
       {children}
     </ContextGlobal.Provider>
   );

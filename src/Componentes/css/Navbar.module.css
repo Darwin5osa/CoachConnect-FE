@@ -11,13 +11,13 @@
 }
 .navbarA {
   display: flex;
+  position: fixed;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0 50px;
   height: 80px;
   backdrop-filter: blur(40px);
-  position: fixed;
   z-index: 3;
   top: 0;
 }

@@ -9,67 +9,170 @@ const Admin = () => {
     dispatch({ type: "CLOSE_SESSION" });
     navigate("/");
   };
-  const { state, dispatch } = useGlobalContex();
-  const [categorias, setCategorias] = useState(state.categorias);
-  console.log(categorias);
-  const [caracteristicas, setCaracteristicas] = useState(state.caracteristicas);
-  const [niveles, setNiveles] = useState(state.niveles);
-  const [tutores, setTutores] = useState(state.data);
-  const [objetos, setObjetos] = useState(state.tutorias);
+  const { state, dispatch, getCategorias, getCaracteristicas, getTutorias } =
+    useGlobalContex();
+  const [categorias, setCategorias] = useState(state.CATEGORIAS);
+  const [caracteristicas, setCaracteristicas] = useState(state.CARACTERISTICAS);
+  const [niveles, setNiveles] = useState(state.NIVELES);
+  const [tutores, setTutores] = useState(state.TUTORES);
+  const [objetos, setObjetos] = useState(state.TUTORIAS);
   const [nuevaCategoria, setNuevaCategoria] = useState({
-    id: categorias.length + 1,
     nombre: "",
   });
 
   const [nuevaCaracteristica, setNuevaCaracteristica] = useState({
-    id: caracteristicas.length + 1,
     nombre: "",
   });
 
-  console.log(nuevaCategoria);
-
   const handleAgregarCategoria = () => {
-    const nuevasCategorias = [...categorias, nuevaCategoria];
-    setCategorias(nuevasCategorias);
-    dispatch({ type: "SET_CATEGORIAS", payload: nuevasCategorias });
+    fetch("http://localhost:8080/categoria", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevaCategoria),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getCategorias(dispatch);
+        setNuevaCategoria({ nombre: "" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleEliminarCategoria = (id) => {
+    fetch(`http://localhost:8080/categoria/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getCategorias(dispatch);
+      })
+      .catch((error) => {
+        getCategorias(dispatch);
+      });
+  };
+
+  const handleCategoria = () => {
+    if (nuevaCategoria.id) {
+      handleGuardarCategoria();
+    } else {
+      handleAgregarCategoria();
+    }
+  };
+
+  const handleGuardarCategoria = () => {
+    fetch(`http://localhost:8080/categoria/${nuevaCategoria.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevaCategoria),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getCategorias(dispatch);
+        setNuevaCategoria({ nombre: "" });
+      })
+      .catch((error) => {
+        getCategorias(dispatch);
+      });
+  };
+
+  const handleEditarCategoria = (categoria) => {
+    console.log(categoria);
     setNuevaCategoria({
-      id: nuevaCategoria.id + 1,
-      nombre: "",
+      id: categoria.id,
+      nombre: categoria.nombre,
     });
+  };
+
+  const handleCategoriaCancel = () => {
+    setNuevaCategoria({ nombre: "" });
   };
 
   useEffect(() => {
-    setObjetos(state.tutorias);
-    setTutores(state.data);
-    setNiveles(state.niveles);
-    setCaracteristicas(state.caracteristicas);
-    setCategorias(state.categorias);
+    setObjetos(state.TUTORIAS);
+    setTutores(state.TUTORES);
+    setNiveles(state.NIVELES);
+    setCaracteristicas(state.CARACTERISTICAS);
+    setCategorias(state.CATEGORIAS);
   }, [state]);
 
-  const handleEliminarCategoria = (id) => {
-    const nuevasCategorias = categorias.filter(
-      (categoria) => categoria.id !== id
-    );
-    setCategorias(nuevasCategorias);
-    dispatch({ type: "SET_CATEGORIAS", payload: nuevasCategorias });
-  };
-
   const handleAgregarCaracteristica = () => {
-    const nuevasCaracteristicas = [...caracteristicas, nuevaCaracteristica];
-    setCaracteristicas(nuevasCaracteristicas);
-    dispatch({ type: "SET_CARACTERISTICAS", payload: nuevasCaracteristicas });
-    setNuevaCaracteristica({
-      id: nuevaCaracteristica.id + 1,
-      nombre: "",
-    });
+    fetch("http://localhost:8080/caracteristica", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevaCaracteristica),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getCaracteristicas(dispatch);
+        setNuevaCaracteristica({ nombre: "" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleEliminarCaracteristica = (id) => {
-    const nuevasCaracteristicas = caracteristicas.filter(
-      (caracteristica) => caracteristica.id !== id
-    );
-    setCaracteristicas(nuevasCaracteristicas);
-    dispatch({ type: "SET_CARACTERISTICAS", payload: nuevasCaracteristicas });
+    fetch(`http://localhost:8080/caracteristica/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getCaracteristicas(dispatch);
+      })
+      .catch((error) => {
+        getCaracteristicas(dispatch);
+      });
+  };
+
+  const handleGuardarCaracteristica = () => {
+    fetch(`http://localhost:8080/caracteristica/${nuevaCaracteristica.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevaCaracteristica),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getCaracteristicas(dispatch);
+        setNuevaCaracteristica({ nombre: "" });
+      })
+      .catch((error) => {
+        getCaracteristicas(dispatch);
+      });
+  };
+
+  const handleEditarCaracteristica = (caracteristica) => {
+    console.log(caracteristica);
+    setNuevaCaracteristica({
+      id: caracteristica.id,
+      nombre: caracteristica.nombre,
+    });
+  };
+
+  const handleCaracteristicaCancel = () => {
+    setNuevaCaracteristica({ nombre: "" });
+  };
+
+  const handleCaracteristica = () => {
+    if (nuevaCaracteristica.id) {
+      handleGuardarCaracteristica();
+    } else {
+      handleAgregarCaracteristica();
+    }
   };
 
   const initialFormData = {
@@ -78,7 +181,6 @@ const Admin = () => {
     descripcion: "",
     categoriaId: "",
     caracteristicas: [],
-    tutorId: null,
     nivelId: null,
   };
 
@@ -99,8 +201,6 @@ const Admin = () => {
       [name]: parseInt(value, 10),
     });
   };
-
-  console.log(formData);
 
   const handleCaracteristicaChange = (e) => {
     const { value } = e.target;
@@ -139,21 +239,25 @@ const Admin = () => {
   };
 
   const handleEditar = (objeto) => {
-    console.log(objeto);
     setFormData(objeto);
-    console.log(formData);
   };
 
   const handleCrear = () => {
-    // Asignar un ID al nuevo objeto
-    const nuevoObjeto = { ...formData, id: objetos.length + 1 };
-
-    // Agregar el nuevo objeto a la lista de objetos
-    const nuevosObjetos = [...objetos, nuevoObjeto];
-
-    dispatch({ type: "SET_OBJETOS", payload: [...objetos, nuevoObjeto] });
-    // Actualizar el estado de los objetos y despachar la acción
-    setObjetos(nuevosObjetos);
+    console.log(formData);
+    fetch(`http://localhost:8080/tutoria`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getTutorias(dispatch);
+      })
+      .catch((error) => {
+        getTutorias(dispatch);
+      });
   };
 
   const handleSubmit = (e) => {
@@ -166,18 +270,21 @@ const Admin = () => {
     setFormData(initialFormData);
   };
 
-  const handleTutorChange = (e) => {
-    const { value } = e.target;
-    setFormData({
-      ...formData,
-      tutorId: value,
-    });
-  };
 
   const handleEliminarObjeto = (id) => {
-    const nuevosObjetos = objetos.filter((objeto) => objeto.id !== id);
-    setObjetos(nuevosObjetos);
-    dispatch({ type: "SET_OBJETOS", payload: nuevosObjetos });
+    fetch(`http://localhost:8080/tutoria/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getTutorias(dispatch);
+      })
+      .catch((error) => {
+        getTutorias(dispatch);
+      });
   };
 
   const handleCancelar = () => {
@@ -185,15 +292,20 @@ const Admin = () => {
   };
 
   const handleGuardarEdicion = () => {
-    const objetosActualizados = objetos.map((obj) => {
-      if (obj.id === formData.id) {
-        return formData; // Si es el objeto que se está editando, se reemplaza con el nuevo formData
-      }
-      return obj; // De lo contrario, se mantiene igual
-    });
-
-    setObjetos(objetosActualizados);
-    setFormData(initialFormData); // Limpiar el formulario después de guardar la edición
+    fetch(`http://localhost:8080/tutoria/${formData.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        getTutorias(dispatch);
+      })
+      .catch((error) => {
+        getTutorias(dispatch);
+      });
   };
 
   return (
@@ -232,28 +344,10 @@ const Admin = () => {
           />
         </div>
         <div>
-          <label htmlFor="tutor">Tutor:</label>
-          <select
-            id="tutor"
-            name="tutorId"
-            value={formData.tutorId || ""}
-            onChange={handleTutorChange}
-          >
-            <option value="" disabled>
-              Seleccione un tutor
-            </option>
-            {tutores.map((tutor) => (
-              <option key={tutor.id} value={tutor.id}>
-                {tutor.nombre} {tutor.apellido}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
           <label htmlFor="categoria">Categoría:</label>
           <select
             id="categoria"
-            name="CategoriaId"
+            name="categoriaId"
             value={formData.categoriaId || ""}
             onChange={handleCategoriaChange}
           >
@@ -318,6 +412,9 @@ const Admin = () => {
               <button onClick={() => handleEliminarCategoria(categoria.id)}>
                 Eliminar
               </button>
+              <button onClick={() => handleEditarCategoria(categoria)}>
+                Editar
+              </button>
             </li>
           ))}
         </ul>
@@ -330,7 +427,10 @@ const Admin = () => {
             }
             placeholder="Nueva Categoría"
           />
-          <button onClick={handleAgregarCategoria}>Agregar</button>
+          <button onClick={() => handleCategoria()}>
+            {nuevaCategoria.id ? "editar" : "agregar"}
+          </button>
+          <button onClick={() => handleCategoriaCancel()}>cancelar</button>
         </div>
       </div>
       <h2>Lista de Características</h2>
@@ -342,6 +442,9 @@ const Admin = () => {
               onClick={() => handleEliminarCaracteristica(caracteristica.id)}
             >
               Eliminar
+            </button>
+            <button onClick={() => handleEditarCaracteristica(caracteristica)}>
+              Editar
             </button>
           </li>
         ))}
@@ -358,7 +461,10 @@ const Admin = () => {
           }
           placeholder="Nueva Característica"
         />
-        <button onClick={handleAgregarCaracteristica}>Agregar</button>
+        <button onClick={() => handleCaracteristica()}>
+            {nuevaCaracteristica.id ? "editar" : "agregar"}
+          </button>
+        <button onClick={() => handleCaracteristicaCancel()}>cancelar</button>
       </div>
 
       <div className={s.admin}>
