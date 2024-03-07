@@ -8,20 +8,38 @@ import Card from "../Componentes/Card";
 const Tutores = () => {
   // Estados
   const { state } = useGlobalContex();
-  const [tutores, setTutores] = useState(state.data);
+  const [tutorias, setTutorias] = useState(state.tutorias);
+  const [tutores, setTutores] = useState(state.data)
+  const [niveles, setNiveles] = useState(state.niveles)
+  console.log(niveles);
   const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(
     window.innerWidth > 1200 ? 10 : 5
   );
   const [tutoresRecomendados, setTutoresRecomendados] = useState([]);
-  
+
+  const buscarTutor = (i) => {
+    return tutores.find(t => t.id == i)
+  }
+
+  const buscarNivel = (i) => {
+    return niveles.find(t => t.id == i)
+  }
+
+  useEffect(()=>{
+    setTutorias(state.tutorias)
+    setTutores(state.data)
+    setNiveles(state.niveles)
+  },[state])
+
+
   // Variables calculadas
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const filteredTutores = tutores.filter((tutor) => {
-    const fullName = `${tutor.nombre} ${tutor.apellido}`.toLowerCase();
-    return fullName.includes(term);
+  const filteredTutores = tutorias.filter((tutoria) => {
+    const name = tutoria.nombre.toLowerCase();
+    return name.includes(term);
   });
   const currentTutores = filteredTutores.slice(startIndex, endIndex);
   const totalPages = Math.ceil(filteredTutores.length / itemsPerPage);
@@ -31,10 +49,10 @@ const Tutores = () => {
     let recomendados = [];
     let rep = [];
     for (let i = 0; i < 4; i++) {
-      let numRandom = Math.floor(Math.random() * tutores.length);
+      let numRandom = Math.floor(Math.random() * tutorias.length);
       if (!rep.includes(numRandom)) {
         rep.push(numRandom);
-        recomendados.push(tutores[numRandom]);
+        recomendados.push(tutorias[numRandom]);
       } else {
         i--;
       }
@@ -56,7 +74,7 @@ const Tutores = () => {
 
   useEffect(() => {
     setTutoresRecomendados(randomTutors());
-  }, [tutores]);
+  }, [tutorias]);
 
   // Manejador para cambios en la búsqueda
   const handleInputChange = (event) => {
@@ -76,9 +94,9 @@ const Tutores = () => {
         <h2 className={s.title}>RECOMENDADOS</h2>
       </header>
       <section className={s.cardContainer}>
-        {tutoresRecomendados.map((tutor, index) => (
-          <Link to={`/detalle/${tutor.id}`} key={index} className={s.link}>
-            <Card info={tutor} />
+        {tutoresRecomendados.map((tutoria, index) => (
+          <Link to={`/detalle/${tutoria.id}`} key={index} className={s.link}>
+            <Card info={tutoria} tutor={buscarTutor(tutoria.tutorId)} nivel={buscarNivel(tutoria.nivelId)} />
           </Link>
         ))}
       </section>
@@ -98,9 +116,9 @@ const Tutores = () => {
       </header>
       <section className={s.cardContainer}>
         {currentTutores.length > 0 ? (
-          currentTutores.map((tutor, index) => (
-            <Link to={`/detalle/${tutor.id}`} key={index} className={s.link}>
-              <Card info={tutor} />
+          currentTutores.map((tutoria, index) => (
+            <Link to={`/detalle/${tutoria.id}`} key={index} className={s.link}>
+              <Card info={tutoria} tutor={buscarTutor(tutoria.tutorId)} nivel={buscarNivel(tutoria.nivelId)}  />
             </Link>
           ))
         ) : (

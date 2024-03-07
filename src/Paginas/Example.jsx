@@ -1,11 +1,79 @@
-import React, { useState } from "react";
+import { useGlobalContex } from "../Utils/global.context";
+import React, { useEffect, useState } from "react";
 
 const Example = () => {
-  const categorias = [
-    { id: 1, nombre: "Categoría 1" },
-    { id: 2, nombre: "Categoría 2" },
-    { id: 3, nombre: "Categoría 3" },
-  ];
+  const { state, getCategorias, dispatch } = useGlobalContex();
+  const [categorias, setCategorias] = useState(state.categorias);
+  console.log(categorias);
+
+
+  //preguntar por validacion del token segun admin en el back
+
+  function hacerLlamadaALaAPI() {
+    // Obtener el token JWT del localStorage justo antes de realizar la llamada
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    // Verificar si el token está presente y no está vacío
+    if (jwtToken) {
+      // Configurar la solicitud HTTP con el token en el encabezado de autorización
+      const requestOptions = {
+        method: "GET", // Método de la solicitud (puede ser GET, POST, PUT, DELETE, etc.)
+        headers: {
+          Authorization: `Bearer ${jwtToken}`, // Establecer el token JWT en el encabezado de autorización
+        },
+      };
+
+      // Realizar la solicitud al servidor utilizando fetch API o cualquier otra biblioteca para manejar solicitudes HTTP
+      fetch("https://ejemplo.com/api/recurso", requestOptions)
+        .then((response) => {
+          // Manejar la respuesta del servidor
+          if (response.ok) {
+            return response.json(); // Convertir la respuesta a JSON si es necesario
+          }
+          throw new Error("Error al realizar la solicitud");
+        })
+        .then((data) => {
+          // Manejar los datos recibidos del servidor
+          console.log(data);
+        })
+        .catch((error) => {
+          // Manejar errores de la solicitud
+          console.error("Error:", error);
+        });
+    } else {
+      // El token no está presente en el localStorage, se debe manejar la autenticación del usuario
+      console.log("Token JWT no encontrado en el localStorage");
+    }
+  }
+
+  //fetch a api
+ /*  useEffect(() => {
+    setCategorias(state.categoria);
+  }, [state.categoria]); */
+
+  const [nuevaCategoria, setNuevaCategoria] = useState({
+    nombre: "",
+  });
+
+  const handleAgregarCategoria = () => {
+    fetch("http://localhost:8080/categoria", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(nuevaCategoria),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // Después de que la categoría se haya agregado con éxito, actualiza las categorías
+        getCategorias(dispatch);
+        // También puedes limpiar el estado de nuevaCategoria aquí si es necesario
+        setNuevaCategoria({ nombre: "" });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const caracteristicas = [
     { id: 101, nombre: "Característica 1" },
@@ -51,7 +119,7 @@ const Example = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -178,6 +246,24 @@ const Example = () => {
         </div>
         <button type="submit">{formData.id ? "Actualizar" : "Crear"}</button>
       </form>
+
+      <div>
+        <h2>Lista de Categorías</h2>
+        <ul>
+          {categorias.map((categoria) => (
+            <li key={categoria.id}>{categoria.nombre}</li>
+          ))}
+        </ul>
+        <div>
+          <input
+            type="text"
+            value={nuevaCategoria.nombre}
+            onChange={(e) => setNuevaCategoria({ nombre: e.target.value })}
+            placeholder="Nueva Categoría"
+          />
+          <button onClick={handleAgregarCategoria}>Agregar</button>
+        </div>
+      </div>
     </div>
   );
 };

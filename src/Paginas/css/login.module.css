@@ -11,25 +11,24 @@
 
 .cont {
   background-color: #02080c;
-  height: 500px;
+  height: 600px;
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 1000px;
-  border-radius: 20px;
+  border-radius: 30px;
   position: relative;
   overflow: hidden;
-  box-shadow: #000000c9 0 0 30px;
 }
 
 .screen {
-  box-shadow: #193c3c 0 0 30px;
+  box-shadow: #193c3c 0 0 10px;
   position: absolute;
   background-color: #193c3c;
   width: 50%;
   height: 100%;
   border-radius: 0 80px 80px 0;
-  z-index: 1;
+  z-index: 99;
   transition: all 0.3s ease-in-out;
   display: flex;
   justify-content: center;
@@ -42,8 +41,8 @@
   border-radius: 80px 0 0 80px;
 }
 
-.formLogin {
-  height: 500px;
+.formSignin {
+  height: 600px;
   width: 50%;
   border-radius: 50px;
   display: flex;
@@ -55,7 +54,7 @@
   position: relative;
 }
 
-.formLogin h1 {
+.formSignin h1 {
   position: absolute;
   top: 50px;
   font-size: 40px;
@@ -74,32 +73,23 @@
   background: none;
   border: none;
   border-bottom: solid 1px rgba(255, 255, 255, 0.618);
-  width: 200px;
+  width: 250px;
   color: white;
-  font-size: 20px;
-  padding-bottom: 4px;
-  padding-left: 5px;
+  font-size: 16px;
+  padding: 3px 6px;
 }
 .lab {
-  position: absolute;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.648);
-  transition: all 0.2s ease-in-out;
   pointer-events: none;
-  padding-bottom: 5px;
   padding-left: 5px;
+  padding-bottom: 2px;
 }
 
-.active {
-  transform: translateY(-26px);
-  font-size: 15px;
-  opacity: 0.8;
-}
-
-.formLogin input:focus {
+.formSignin input:focus {
   outline: none;
 }
-.formLogin button {
+.formSignin button {
   position: absolute;
   bottom: 50px;
   background-color: rgba(255, 255, 255, 0);
@@ -111,13 +101,13 @@
   transition: all 0.2s ease-in-out;
 }
 
-.formLogin button:hover {
+.formSignin button:hover {
   background-color: white;
   color: black;
 }
 
 .logcont {
-  gap: 35px;
+  gap: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -126,7 +116,7 @@
 }
 
 .formReg {
-  height: 500px;
+  height: 600px;
   width: 50%;
   border-radius: 50px;
   display: flex;
@@ -149,11 +139,20 @@
 .formReg input:focus {
   outline: none;
 }
-.formReg button {
+.boton{
   position: absolute;
   bottom: 50px;
   background-color: rgba(255, 255, 255, 0);
   border: solid white 1px;
+  padding: 8px 15px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.spinner{
+  position: absolute;
+  bottom: 50px;
   padding: 8px 15px;
   color: white;
   border-radius: 8px;

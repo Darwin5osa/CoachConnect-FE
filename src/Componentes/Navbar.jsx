@@ -1,15 +1,25 @@
 import { useGlobalContex } from "../Utils/global.context";
 import { Link as ScrollLink } from "react-scroll";
 import s from "./css/Navbar.module.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import React from "react";
 
 const Navbar = () => {
   const { state, dispatch } = useGlobalContex();
+  const navigate = useNavigate()
 
+  function navigat(){
+    navigate("/admin/dashboard")
+  }
   const handleClose = () => {
     dispatch({ type: "CLOSE_SESSION" });
   };
+
+  function handleC(){
+    if(state.session.role == "ADMIN"){
+      navigate( "/admin/dashboard");
+    }
+  }
   return (
     <nav className={s.navbar}>
       <div className={s.navbarlogo}>
@@ -17,7 +27,6 @@ const Navbar = () => {
           <img src="/Asset3.png" alt="Logo" />
         </Link>
       </div>
-
       <ul className={s.navbarmenu}>
         <div className={s.item}>
           <ScrollLink
@@ -54,7 +63,7 @@ const Navbar = () => {
         </div>
       ) : (
         <div className={s.navSessin}>
-          <p>{state.session.name}</p>
+          <p onClick={handleC}>{state.session.sub}</p>
           <button onClick={handleClose}>cerrar sesion</button>
         </div>
       )}

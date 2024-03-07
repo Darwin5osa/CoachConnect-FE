@@ -1,3 +1,4 @@
+import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AdminNavbar from "../Componentes/admin/AdminNavbar";
 import { useGlobalContex } from "../Utils/global.context";
@@ -5,72 +6,52 @@ import React, { useEffect, useState } from "react";
 import s from "./css/login.module.css";
 import { jwtDecode } from "jwt-decode";
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [signin, setSignin] = useState({
     email: "",
     password: "",
   });
   const [register, setRegister] = useState({
-    name: "",
-    surname: "",
+    username: "",
+    nombre: "",
+    apellido: "",
     email: "",
-    contraseña: "",
+    password: "",
   });
-  console.log(signin);
-  const [error, setError] = useState(false);
   const { state, dispatch } = useGlobalContex();
   const navigate = useNavigate();
   const location = useLocation().pathname;
-  console.log(location);
-
   const [form, setForm] = useState(location === "/register" ? true : false);
 
   useEffect(() => {
-    if (state.session && state.session.isAdmin) {
+    if (state.session && state.session.role == "ADMIN") {
       navigate("/admin/dashboard");
     }
-    if (state.session && !state.session.isAdmin) {
+    if (state.session && state.session.role == "ESTUDIANTE") {
       navigate("/");
     }
   }, [state]);
 
-  const jwtAdmin =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibGF1cmVhbm8iLCJlbWFpbCI6ImxhdXJlYW5vQGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWV9.Je0GQ8wah3BUGujNOUBjtEi36dZp31oukOTSpS_OaGo";
+  const handleSignin = (e) => {
+    e.preventDefault();
+    console.log(signin);
+    fetch("http://localhost:8080/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signin),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const info = { ...jwtDecode(data.token), name: signin.email };
+        console.log(info);
+        dispatch({ type: "SET_SESSION", payload: info });
+        window.localStorage.setItem("token", data.token);
+      })
+      .catch((err) => alert("Datos incorrectos o faltantes"));
 
-  const jwtUser =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibGF1cmVhbm8iLCJlbWFpbCI6ImxhdXJlYW5vQGdtYWlsLmNvbSIsImlzQWRtaW4iOmZhbHNlfQ.oTl_lq9q5qyKdr_I1snKxhwQiH0qi2FOTcvUvuIizuU";
-
-  const validationRules = {
-    name: { regex: /^[a-zA-Z\s]+$/ },
-    surname: { regex: /^[a-zA-Z\s]+$/ },
-    email: { regex: /^\S+@\S+\.\S+$/ },
-    password: { regex: /^[0-9]+$/ },
-  };
-
-  const validateInputs = (data, validationRules) => {
-    for (let key in validationRules) {
-      const value = data[key];
-      const rule = validationRules[key];
-
-      if (rule && rule.regex) {
-        const regex = new RegExp(rule.regex);
-        if (!regex.test(value)) {
-          return false;
-        }
-      }
-    }
-    return true;
-  };
-
-  const handleLogin = (e) => {
-    signin;
-
-    const jwtData = { ...jwtDecode(jwtAdmin), token: jwtAdmin };
-    console.log(jwtData);
-
-    dispatch({ type: "SET_SESSION", payload: jwtData });
-    window.localStorage.setItem("token", jwtAdmin);
-
-    if (jwtData.isAdmin) {
+    /*     if (jwtData.isAdmin) {
       console.log("admin");
       navigate("/admin/dashboard");
     }
@@ -78,51 +59,105 @@ const Login = () => {
     if (jwtData && !jwtData.isAdmin) {
       console.log("user");
       navigate("/");
+    } */
+  };
+
+  const handleValidationRegister = (register) => {
+    // Expresiones regulares para validaciones
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    // Validación de los campos del formulario
+    if (!nameRegex.test(register.nombre)) {
+      alert("Nombre invalido o faltante.");
+      return false;
     }
+
+    if (!nameRegex.test(register.apellido)) {
+      alert("Apellido invalido o faltante.");
+      return false;
+    }
+
+    if (!emailRegex.test(register.email)) {
+      alert("Ingrese un correo electrónico válido.");
+      return false;
+    }
+
+    if (
+      register.password.length < 8 ||
+      !passwordRegex.test(register.password)
+    ) {
+      alert(
+        "La contraseña debe tener al menos 8 caracteres y contener números."
+      );
+      return false;
+    }
+
+    return true;
   };
 
   const handleRegister = (e) => {
     e.preventDefault();
+    console.log(register);
+
+    if (handleValidationRegister(register)) {
+      setLoading(true);
+      fetch("http://localhost:8080/estudiante", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(register),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => alert("Datos incorrectos o faltantes"))
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+            navigate("/login");
+            setForm(!form);
+          }, 1000);
+        });
+    }
   };
 
-  const [inputValue, setInputValue] = useState({
-    usuario: "",
-    pass: "",
-  });
-
-  const handleInputChange = (event) => {
+  const handleInputChangeSignin = (event) => {
     const { name, value } = event.target;
     setSignin({
       ...signin,
-      [name]: value,
-    });
-    setInputValue({
-      ...inputValue,
-      [event.target.name]: event.target.value,
+      [name]: value.trim(), // Agregar trim() para eliminar espacios al inicio y al final
     });
   };
-
-  const handleInputClick = (event) => {
-    const label = event.target.parentNode.querySelector("label");
-    if (label) {
-      label.classList.add(s.active);
-    }
-  };
-
-  const handleInputBlur = (event) => {
-    const label = event.target.parentNode.querySelector("label");
-    if (label && event.target.value === "") {
-      label.classList.remove(s.active);
-    }
+  const handleInputChangeRegister = (event) => {
+    const { name, value } = event.target;
+    setRegister({
+      ...register,
+      [name]: value.trim(),
+    });
   };
 
   const handleScreen = () => {
-    if(location=="/login"){
-      navigate("/register")
-    }else{
-      navigate("/login")
+    if (location == "/login") {
+      navigate("/register");
+    } else {
+      navigate("/login");
     }
     setForm(!form);
+    setSignin({
+      email: "",
+      password: "",
+    });
+    setRegister({
+      username: "",
+      nombre: "",
+      apellido: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
@@ -155,26 +190,30 @@ const Login = () => {
           )}
         </div>
         <div className={s.struc}>
-          <form
-            className={`${s.formReg} ${
-              !form
-                ? s.none
-                : ""
-            }`}
-          >
+          <form className={`${s.formReg} ${!form ? s.none : ""}`}>
             <h1>Register</h1>
             <div className={s.logcont}>
               <div className={s.us}>
-                <label
-                  className={`${s.lab} ${inputValue.usuario ? s.active : ""}`}
-                  htmlFor="nombre"
-                >
+                <label className={s.lab} htmlFor="usuario">
+                  Nombre de usuario:
+                </label>
+                <input
+                  onChange={handleInputChangeRegister}
+                  value={register.username}
+                  className={s.in}
+                  type="text"
+                  id="username"
+                  name="username"
+                  required
+                ></input>
+              </div>
+              <div className={s.us}>
+                <label className={s.lab} htmlFor="nombre">
                   Nombre:
                 </label>
                 <input
-                  onChange={handleInputChange}
-                  onClick={handleInputClick}
-                  onBlur={handleInputBlur}
+                  onChange={handleInputChangeRegister}
+                  value={register.nombre}
                   className={s.in}
                   type="text"
                   id="nombre"
@@ -187,9 +226,8 @@ const Login = () => {
                   Apellido:
                 </label>
                 <input
-                  onChange={handleInputChange}
-                  onClick={handleInputClick}
-                  onBlur={handleInputBlur}
+                  onChange={handleInputChangeRegister}
+                  value={register.apellido}
                   className={s.in}
                   type="apellido"
                   id="apellido"
@@ -202,9 +240,8 @@ const Login = () => {
                   Email:
                 </label>
                 <input
-                  onChange={handleInputChange}
-                  onClick={handleInputClick}
-                  onBlur={handleInputBlur}
+                  onChange={handleInputChangeRegister}
+                  value={register.email}
                   className={s.in}
                   type="email"
                   id="email"
@@ -217,68 +254,63 @@ const Login = () => {
                   Contraseña:
                 </label>
                 <input
-                  onChange={handleInputChange}
-                  onClick={handleInputClick}
-                  onBlur={handleInputBlur}
+                  onChange={handleInputChangeRegister}
+                  value={register.password}
                   className={s.in}
                   type="password"
-                  id="contrasena"
-                  name="contrasena"
-                  required
-                ></input>
-              </div>
-            </div>
-            <button type="submit" onClick={handleRegister} className={s.boton}>
-              Regsiter
-            </button>
-          </form>
-        </div>
-        <div className={s.struc}>
-          <form
-            className={`${s.formLogin} ${
-              form
-                ? s.none
-                : ""
-            }`}
-          >
-            <h1>Sign in</h1>
-            <div className={s.logcont}>
-              <div className={s.us}>
-                <label
-                  className={s.lab}
-                  htmlFor="usuario"
-                >
-                  Email:
-                </label>
-                <input
-                  onChange={handleInputChange}
-                  onClick={handleInputClick}
-                  onBlur={handleInputBlur}
-                  className={s.in}
-                  type="email"
-                  id="email"
-                  name="email"
-                  title="Porfavor ingrese un email valido"
-                  required
-                ></input>
-              </div>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="contrasena">
-                  Contraseña:
-                </label>
-                <input
-                  onChange={handleInputChange}
-                  onClick={handleInputClick}
-                  onBlur={handleInputBlur}
-                  className={s.in}
-                  type="password"
-                  id="contrasena"
+                  id="contraseña"
                   name="password"
                   required
                 ></input>
               </div>
             </div>
-            <button type="submit" onClick={handleLogin} className={s.boton}>
+            {!loading ? (
+              <button
+                type="submit"
+                onClick={handleRegister}
+                className={s.boton}
+              >
+                Regsiter
+              </button>
+            ) : (
+              <div className={s.spinner}>
+                <Loader active inline="centered" />
+              </div>
+            )}
+          </form>
+        </div>
+        <div className={s.struc}>
+          <form className={`${s.formSignin} ${form ? s.none : ""}`}>
+            <h1>Sign in</h1>
+            <div className={s.logcont}>
+              <div className={s.us}>
+                <label className={s.lab} htmlFor="usuario">
+                  Email:
+                </label>
+                <input
+                  onChange={handleInputChangeSignin}
+                  className={s.in}
+                  type="email"
+                  name="email"
+                  value={signin.email}
+                  required
+                ></input>
+              </div>
+              <div className={s.us}>
+                <label className={s.lab} htmlFor="contrasena">
+                  Contraseña:
+                </label>
+                <input
+                  onChange={handleInputChangeSignin}
+                  className={s.in}
+                  type="password"
+                  name="password"
+                  value={signin.password}
+                  required
+                ></input>
+              </div>
+            </div>
+            <button type="submit" onClick={handleSignin} className={s.boton}>
               Sign in
             </button>
           </form>
