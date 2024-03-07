@@ -2,10 +2,12 @@ import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AdminNavbar from "../Componentes/admin/AdminNavbar";
 import { useGlobalContex } from "../Utils/global.context";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import s from "./css/login.module.css";
+import emailjs from "@emailjs/browser";
 import { jwtDecode } from "jwt-decode";
 const Login = () => {
+  const forms = useRef();
   const [loading, setLoading] = useState(false);
   const [signin, setSignin] = useState({
     email: "",
@@ -113,11 +115,27 @@ const Login = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
+          emailjs
+            .sendForm(
+              "service_0zl4red",
+              "template_0ozonpo",
+              forms.current,
+              "Cjl_H5JPzn_9MsSu1"
+            )
+            .then(
+              (result) => {
+                console.log(result);
+              },
+              (error) => {
+                console.log(error.text);
+              }
+            );
         })
         .catch((err) => alert("Datos incorrectos o faltantes"))
         .finally(() => {
           setTimeout(() => {
             setLoading(false);
+
             navigate("/login");
             setForm(!form);
           }, 1000);
@@ -190,7 +208,7 @@ const Login = () => {
           )}
         </div>
         <div className={s.struc}>
-          <form className={`${s.formReg} ${!form ? s.none : ""}`}>
+          <form ref={forms} className={`${s.formReg} ${!form ? s.none : ""}`}>
             <h1>Register</h1>
             <div className={s.logcont}>
               <div className={s.us}>

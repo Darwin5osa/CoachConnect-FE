@@ -104,7 +104,7 @@ const Tutores = () => {
       {/* Sección de búsqueda y lista de tutores */}
       <header className={s.header}>
         <h2 id="startList" className={s.title}>
-          NUESTROS MENTORES
+          NUESTRAS TUTORIAS
         </h2>
         <input
           className={s.search}
