@@ -11,7 +11,8 @@
             "profesion" : "Economista",
             "descripcion" : "Economista experta en análisis macro y microeconómico, con habilidades en modelado y comunicación" ,
             "username" : "majo" ,
-            "password" : "majo123"
+            "password" : "majo123",
+            "tutoria": "Economia"
         },
         {
             "id": 2,
@@ -24,7 +25,8 @@
             "profesion" : "Licenciada en Matematicas",
             "descripcion" : "Profesora de matemáticas con experiencia en enseñanza secundaria y preparación para exámenes de ingreso a la universidad.",
             "username" : "ana",
-            "password" : "ana123"
+            "password" : "ana123",
+            "tutoria": "Matematicas Avanzadas"
         },
         {
             "id": 3,
@@ -37,7 +39,8 @@
             "profesion" : "Fisico",
             "descripcion" : "Profesor de física con experiencia en enseñanza secundaria y preparación de estudiantes para olimpiadas científicas.",
             "username" : "pedro",
-            "password" : "pedro123"
+            "password" : "pedro123",
+            "tutoria": "Fisica - Secundaria"
         },
         {
             "id": 4,
@@ -50,7 +53,8 @@
             "profesion" : "Biologa",
             "descripcion" : "Profesora de biología con experiencia en enseñanza secundaria y preparación de estudiantes para ferias científicas.",
             "username" : "laura",
-            "password" : "laura123"
+            "password" : "laura123",
+            "tutoria": "Biologia - Secundaria"
         },
         {
             "id": 5,
@@ -63,7 +67,8 @@
             "profesion" : "Historiador",
             "descripcion" : "Profesor de historia con experiencia en enseñanza secundaria y organización de eventos culturales.",
             "username" : "juan",
-            "password" : "juan123"
+            "password" : "juan123",
+            "tutoria": "Historia - Secundaria"
         },
         {
             "id": 6,
@@ -76,7 +81,8 @@
             "profesion" : "Ingeniero Informático",
             "descripcion" : "Profesora de informática con experiencia en enseñanza secundaria y desarrollo de programas educativos.",
             "username" : "maria",
-            "password" : "maria123"
+            "password" : "maria123",
+            "tutoria": "Informatica - Secundaria"
         },
         {
             "id": 7,
@@ -89,7 +95,8 @@
             "profesion" : "Profesor de Matemáticas",
             "descripcion" : "Profesor con experiencia enseñando matemáticas en bachillerato.",
             "username" : "juan",
-            "password" : "juan123"
+            "password" : "juan123",
+            "tutoria": "Matematica - Secundaria"
         },
         {
             "id": 8,
@@ -102,7 +109,8 @@
             "profesion" : "Licenciada en Biología",
             "descripcion" : "Profesora de biología con experiencia en enseñanza secundaria.",
             "username" : "luisa",
-            "password" : "luisa123"
+            "password" : "luisa123",
+            "tutoria": "Biologia - Secundaria"
         },
         {
             "id": 8,
@@ -115,7 +123,8 @@
             "profesion" : "Profesor de Historia",
             "descripcion" : "Profesor de historia con experiencia en educación secundaria.",
             "username" : "pedro",
-            "password" : "pedro123"
+            "password" : "pedro123",
+            "tutoria": "Historia - Secundaria"
         },
         {
             "id": 9,
@@ -128,7 +137,8 @@
             "profesion" : "Ingeniera Química",
             "descripcion" : "Profesora de química con experiencia en enseñanza secundaria.",
             "username" : "laura",
-            "password" : "laura123"
+            "password" : "laura123",
+            "tutoria": "Quimica"
         },
         {
             "id": 10,
@@ -141,7 +151,8 @@
             "profesion" : "Profesor de Física",
             "descripcion" : "Profesor de física con experiencia en educación secundaria.",
             "username" : "daniel",
-            "password" : "daniel123"
+            "password" : "daniel123",
+            "tutoria": "Fisica"
         },
         {
             "id": 11,
@@ -154,7 +165,8 @@
             "profesion" : "Profesora de Informática",
             "descripcion" : "Profesora de informática con experiencia en educación secundaria.",
             "username" : "sofia",
-            "password" : "sofia123"
+            "password" : "sofia123",
+            "tutoria": "Informatica - lenguajes phyton y java"
         },
         {
             "id": 12,
@@ -167,7 +179,9 @@
             "profesion" : "Licenciado en Literatura",
             "descripcion" : "Profesor de literatura con experiencia en educación secundaria.",
             "username" : "jorge",
-            "password" : "jorge123"
+            "password" : "jorge123",
+            "tutoria": "Literatura"
+            
         },
         {
             "id": 13,
@@ -180,7 +194,8 @@
             "profesion" : "Profesora de Geografía",
             "descripcion" : "Profesora de geografía con experiencia en educación secundaria.",
             "username" : "ana",
-            "password" : "ana123"
+            "password" : "ana123",
+            "tutoria": "Geografia e Historia"
         },
         {
             "id": 14,
@@ -193,7 +208,8 @@
             "profesion" : "Profesor de Español",
             "descripcion" : "Profesor de español con experiencia en educación secundaria.",
             "username" : "roberto",
-            "password" : "roberto123"
+            "password" : "roberto123",
+            "tutoria": "Español y Literatura"
         },
         {
             "id": 15,
@@ -206,7 +222,8 @@
             "profesion" : "Profesora de Arte",
             "descripcion" : "Profesora de arte con experiencia en educación secundaria.",
             "username" : "maria",
-            "password" : "maria123"
+            "password" : "maria123",
+            "tutoria": "Artes Plasticas"
         },
         {
             "id": 16,
@@ -219,7 +236,8 @@
             "profesion" : "Profesor de Música",
             "descripcion" : "Profesor de música con experiencia en educación secundaria.",
             "username" : "carlos",
-            "password" : "carlos123"
+            "password" : "carlos123",
+            "tutoria": "Musica - Percusion y Cuerda"
         },
         {
             "id": 17,
@@ -232,7 +250,8 @@
             "profesion" : "Profesora de Educación Física",
             "descripcion" : "Profesora de educación física con experiencia en educación secundaria.",
             "username" : "lorena",
-            "password" : "lorena123"
+            "password" : "lorena123",
+            "tutoria": "Educación Fisica"
         },
         {
             "id": 18,
@@ -245,7 +264,8 @@
             "profesion" : "Profesor de Filosofía",
             "descripcion" : "Profesor de filosofía con experiencia en educación secundaria.",
             "username" : "marcos",
-            "password" : "marcos123"
+            "password" : "marcos123",
+            "tutoria": "Filosofía - Secundaria"
         },
         {
             "id": 19,
@@ -258,7 +278,8 @@
             "profesion" : "Profesora de Lengua y Literatura",
             "descripcion" : "Profesora de lengua y literatura con experiencia en educación secundaria.",
             "username" : "valeria",
-            "password" : "valeria123"
+            "password" : "valeria123",
+            "tutoria": "Lengua y Literatura"
         },
         {
             "id": 20,
@@ -271,7 +292,8 @@
             "profesion" : "Licenciado en Educación Artística",
             "descripcion" : "Profesor de educación artística con experiencia en educación secundaria.",
             "username" : "diego",
-            "password" : "diego123"
+            "password" : "diego123",
+            "tutoria": "Arte Plasticas"
         },
         {
             "id": 21,
@@ -284,7 +306,8 @@
             "profesion" : "Profesora de Historia del Arte",
             "descripcion" : "Profesora de historia del arte con experiencia en educación secundaria.",
             "username" : "carolina",
-            "password" : "carolina123"
+            "password" : "carolina123",
+            "tutoria": "Historia del Arte"
         },
         {
             "id": 22,
@@ -297,7 +320,8 @@
             "profesion" : "Profesor de Tecnología",
             "descripcion" : "Profesor de tecnología con experiencia en educación secundaria.",
             "username" : "fernando",
-            "password" : "fernando123"
+            "password" : "fernando123",
+            "tutoria": "Tecnología"
         },
         {
             "id": 23,
@@ -310,7 +334,8 @@
             "profesion" : "Profesora de Educación Cívica",
             "descripcion" : "Profesora de educación cívica con experiencia en educación secundaria.",
             "username" : "camila",
-            "password" : "camila123"
+            "password" : "camila123",
+            "tutoria": "Educación Cívica"
         },
         {
             "id": 24,
@@ -323,7 +348,8 @@
             "profesion" : "Profesor de Educación Física",
             "descripcion" : "Profesor de educación física con experiencia en educación secundaria.",
             "username" : "martin",
-            "password" : "martin123"
+            "password" : "martin123",
+            "tutoria": "Educación Física"
         }
     ]
   }

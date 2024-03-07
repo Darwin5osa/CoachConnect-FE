@@ -1,34 +1,112 @@
-.contenedor{
+.contenedor {
     display: flex;
-    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background-color: #02080c;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh; /* Usar min-height para garantizar que el contenedor tenga al menos la altura de la pantalla */
+    padding-top: 5%;
 }
+  
 .card {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin-left: 100px;
     width: 80%;
-    height: 50vh;
+    max-width: 800px;
     display: flex;
-    align-items: center;
     flex-direction: column;
-    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
     border-radius: 20px;
+    background-color: rgba(27, 66, 66, 0.3);
+    padding: 5%;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+  
+.card h1 {
+    margin-bottom: 20px;
+}
+  
+.card p {
+    text-align: justify;
+}
+  
+.informacion {
+    margin-top: 20px;
+}
+  
+.imagentutor {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.infoTutor{
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0f7777;
+    width: fit-content;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 14px;
+    margin: 0 auto
+}
+.contenedorImagenes {
+    margin-top: 5%;
+    display: flex;
+    flex-wrap: wrap;
+}
+  
+.ContenedorImgLeft {
+    flex: 1;
+}
+  
+.ContenedorImgRight {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+  
+  
+.imgLeft {
+    width: 400px; 
+    height: 430px; 
+    object-fit: cover;
+    margin-right: 10px;
+}
+  
+.imgRight {
+    width: 100px; 
+    height: 100px; 
+    object-fit: cover;
+    margin-bottom: 10px; 
+}
 
-    background-color: #1B4242;
-   
+.caracteristicas{
+    margin-top: 10%;
 }
-.contenido{
-    color:#9EC8B9;
-    background-color: #1B4242;
 
+.iconosCaracteristicas{
+    display: flex;
+    flex-direction: column;
 }
-.img1{
-    width: 20%;
-    height: 20vh;
-    border-radius: 100px;
+
+.icono{
+    display: flex;
+    flex-direction: row;
 }
+
+
+
+@media (max-width: 768px) { 
+    .contenedorImagenes {
+      flex-direction: column; 
+}
+    .imgLeft,
+    .imgRight {
+        width: 100%; 
+        max-width: none; 
+        height: 100%;
+        object-fit: cover; 
+        margin: 0 0 10px 0; 
+  }
+  }
