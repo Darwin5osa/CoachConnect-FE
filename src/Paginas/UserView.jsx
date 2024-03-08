@@ -23,7 +23,7 @@ const UserView = () => {
           throw new Error('Error en la solicitud: ' + response.status);
           
         }else {
-          return response.json();
+          return response.text();
         }
       }) 
       .then(data => {
