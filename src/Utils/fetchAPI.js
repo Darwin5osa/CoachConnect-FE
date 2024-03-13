@@ -55,7 +55,7 @@ export const getTutores = (dispatch) => {
       return response.json();
     })
     .then((data) => {
-      dispatch({ type: "GETtutor", payload: data });
+      dispatch({ type: "GETtutores", payload: data });
     })
     .catch((error) => {
       console.error("Error al obtener las tutorias:", error);

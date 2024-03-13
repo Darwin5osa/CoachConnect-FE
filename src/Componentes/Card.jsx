@@ -6,7 +6,6 @@ const Card = (data) => {
   const info = data.info;
   const tutor = data.tutor;
   const nivel = data.nivel
-  console.log(nivel);
   return (
     <div className={s.cardContainer}>
       <div className={s.img}>
