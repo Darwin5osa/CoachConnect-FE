@@ -5,9 +5,9 @@ import { useEffect } from "react";
 const PrivateRoute = ({ children }) => {
   const { state } = useGlobalContex();
   
-  const session = state.session !== false
+  const session = state.session.role == "ADMIN"
 
-  return session ? children : <Navigate to="/login" />;
+  return !session ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

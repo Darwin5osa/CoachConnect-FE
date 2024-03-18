@@ -1,20 +1,23 @@
+import { useGlobalContex } from "../Utils/global.context";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdStar } from "react-icons/md";
 import s from "./css/card.module.css";
+import { useEffect } from "react";
+import { useState } from "react";
 import React from "react";
 const Card = (data) => {
-  const info = data.info;
+  const { state } = useGlobalContex();
+  console.log(data);
+
   return (
     <div className={s.cardContainer}>
       <div className={s.img}>
-        <img src={info.Foto} alt="foto de perfil" />
+        <img src={data.tutor.foto} alt="foto de perfil" />
       </div>
       <div className={s.info}>
-        <div className={s.profession}>{info.profesion}</div>
-        <h2 className={s.name}>
-          {info.nombre} {info.apellido}
-        </h2>
-        <p className={s.descrip}>{info.descripcion}</p>
+        <div className={s.profession}>nivel: {data.nivel.nombre}</div>
+        <h2 className={s.name}>{data.tutoria.nombre}</h2>
+        <p className={s.descrip}>{data.tutoria.descripcion}</p>
         <div className={s.rating}>
           <MdStar />
           <MdStar />
