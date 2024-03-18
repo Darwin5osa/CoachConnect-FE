@@ -1,8 +1,9 @@
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import AdminNavbar from "../Componentes/admin/AdminNavbar";
-import { useGlobalContex } from "../Utils/global.context";
 import React, { useEffect, useState, useRef } from "react";
+import { useGlobalContex } from "../Utils/global.context";
+import LoginNavbar from "../Componentes/LoginNavbar";
 import s from "./css/login.module.css";
 import emailjs from "@emailjs/browser";
 import { jwtDecode } from "jwt-decode";
@@ -52,16 +53,6 @@ const Login = () => {
         window.localStorage.setItem("token", data.token);
       })
       .catch((err) => alert("Datos incorrectos o faltantes"));
-
-    /*     if (jwtData.isAdmin) {
-      console.log("admin");
-      navigate("/admin/dashboard");
-    }
-
-    if (jwtData && !jwtData.isAdmin) {
-      console.log("user");
-      navigate("/");
-    } */
   };
 
   const handleValidationRegister = (register) => {
@@ -180,7 +171,7 @@ const Login = () => {
 
   return (
     <div className={s.login}>
-      <AdminNavbar />
+      <LoginNavbar />
       <div className={s.cont}>
         <div className={`${s.screen} ${form ? s.active1 : ""}`}>
           {!form ? (

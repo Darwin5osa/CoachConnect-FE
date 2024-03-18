@@ -1,42 +1,47 @@
 import { useGlobalContex } from "../Utils/global.context";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import s from "./css/tutores.module.css";
 import { Link } from "react-router-dom";
 import Card from "../Componentes/Card";
 
 const Tutores = () => {
-
-  
-  // Estados
   const { state } = useGlobalContex();
-  const [tutorias, setTutorias] = useState(state.TUTORIAS);
   const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
+  const { TUTORIAS, TUTORES, NIVELES } = state;
   const [itemsPerPage, setItemsPerPage] = useState(
     window.innerWidth > 1200 ? 10 : 5
   );
 
+  const filteredTutorias = useMemo(() => {
+    return TUTORIAS.filter((tutoria) =>
+      tutoria.nombre.toLowerCase().includes(term)
+    );
+  }, [TUTORIAS, term]);
 
-  useEffect(()=>{
-    setTutorias(state.TUTORIAS)
-  },[state])
-
-
-  // Variables calculadas
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const filteredTutores = tutorias.filter((tutoria) => {
-    const name = tutoria.nombre.toLowerCase();
-    return name.includes(term);
-  });
-  const currentTutores = filteredTutores.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(filteredTutores.length / itemsPerPage);
+  const currentTutorias = filteredTutorias.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(filteredTutorias.length / itemsPerPage);
 
-  // Función para obtener tutores aleatorios
+  const obtenerTutoriasAleatorias = () => {
+    const tutoriasAleatorias = [];
+    const tutoriasDisponibles = [...TUTORIAS];
 
+    while (tutoriasAleatorias.length < 4 && tutoriasDisponibles.length > 0) {
+      const randomIndex = Math.floor(Math.random() * tutoriasDisponibles.length);
+      const randomTutoria = tutoriasDisponibles.splice(randomIndex, 1)[0];
+      tutoriasAleatorias.push(randomTutoria);
+    }
 
-  // Efectos secundarios
+    return tutoriasAleatorias;
+  };
+
+  const tutoriasRecomendadas = useMemo(() => obtenerTutoriasAleatorias(), [
+    TUTORIAS,
+  ]);
+
   useEffect(() => {
     const handleResize = () => {
       setItemsPerPage(window.innerWidth > 1200 ? 10 : 5);
@@ -48,32 +53,39 @@ const Tutores = () => {
     };
   }, [totalPages]);
 
-  // Manejador para cambios en la búsqueda
   const handleInputChange = (event) => {
     setTerm(event.target.value.toLowerCase());
     setCurrentPage(0);
   };
 
-  // Manejador para cambios de página
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+  const renderTutorCards = (tutorias) => {
+    return tutorias.map((tutoria, index) => (
+      <Link to={`/detalle/${tutoria.id}`} key={index} className={s.link}>
+        <Card
+          tutoria={tutoria}
+          tutor={buscarTutor(tutoria.tutorId)}
+          nivel={buscarNivel(tutoria.nivelId)}
+        />
+      </Link>
+    ));
+  };
+
+  const buscarTutor = (id) => TUTORES.find((tutor) => tutor.id === id);
+  const buscarNivel = (id) => NIVELES.find((nivel) => nivel.id === id);
+
   return (
     <main id="mentores" className={s.mainTutores}>
-      {/* Sección de tutores recomendados */}
-      {/* <header className={s.header}>
+      <header className={s.header}>
         <h2 className={s.title}>RECOMENDADOS</h2>
       </header>
       <section className={s.cardContainer}>
-        {tutoresRecomendados.map((tutoria, index) => (
-          <Link to={`/detalle/${tutoria.id}`} key={index} className={s.link}>
-            <Card info={tutoria} tutor={buscarTutor(tutoria.id)} nivel={buscarNivel(tutoria.nivelId)} />
-          </Link>
-        ))}
-      </section> */}
+        {renderTutorCards(tutoriasRecomendadas)}
+      </section>
 
-      {/* Sección de búsqueda y lista de tutores */}
       <header className={s.header}>
         <h2 id="startList" className={s.title}>
           NUESTRAS TUTORIAS
@@ -87,17 +99,14 @@ const Tutores = () => {
         />
       </header>
       <section className={s.cardContainer}>
-        {currentTutores.length > 0 ? (
-          currentTutores.map((tutoria, index) => (
-            <h1 key={index}>hola</h1>
-          ))
+        {currentTutorias.length > 0 ? (
+          renderTutorCards(currentTutorias)
         ) : (
           <h2 className={s.noResults}>No hay resultados para "{term}"</h2>
         )}
       </section>
 
-      {/* Paginación */}
-      {filteredTutores.length > itemsPerPage && (
+      {filteredTutorias.length > itemsPerPage && (
         <div className={s.pagination}>
           {[...Array(totalPages).keys()].map((page) => (
             <ScrollLink

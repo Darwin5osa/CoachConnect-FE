@@ -1,23 +1,25 @@
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useGlobalContex } from "../Utils/global.context";
 import { Link as ScrollLink } from "react-scroll";
 import s from "./css/Navbar.module.css";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = () => {
   const { state, dispatch } = useGlobalContex();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  function navigat(){
-    navigate("/admin/dashboard")
-  }
+  const toggleDropdown = () => {
+    setShowDropdown((prevState) => !prevState);
+  };
+
   const handleClose = () => {
     dispatch({ type: "CLOSE_SESSION" });
   };
 
-  function handleC(){
-    if(state.session.role == "ADMIN"){
-      navigate( "/admin/dashboard");
+  function handleC() {
+    if (state.session.role == "ADMIN") {
+      navigate("/admin/dashboard");
     }
   }
   return (
@@ -36,7 +38,7 @@ const Navbar = () => {
             duration={500}
             offset={-80}
           >
-            Home
+            <Link to="/">Home</Link>
           </ScrollLink>
         </div>
         <div className={s.item}>
@@ -47,13 +49,21 @@ const Navbar = () => {
             duration={500}
             offset={-80}
           >
-            Mentores
+            <Link to="/">Mentores</Link>
           </ScrollLink>
         </div>
         <div className={s.item}>
-          <Link className={s.link} to="/">
-            Contacto
-          </Link>
+          <ScrollLink
+            className={s.link}
+            to="favoritos"
+            smooth={true}
+            duration={500}
+            offset={-80}
+          >
+            <Link className={s.link} to="/favoritos">
+              Favoritos
+            </Link>
+          </ScrollLink>
         </div>
       </ul>
       {!state.session ? (
@@ -62,9 +72,9 @@ const Navbar = () => {
           <Link to="/register">Register</Link>
         </div>
       ) : (
-        <div className={s.navSessin}>
+        <div className={s.navSession}>
           <p onClick={handleC}>{state.session.sub}</p>
-          <button onClick={handleClose}>cerrar sesion</button>
+          <button onClick={handleClose}>salir</button>
         </div>
       )}
 

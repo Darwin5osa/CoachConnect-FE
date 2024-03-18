@@ -3,11 +3,11 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 50px;
+  padding: 0 30px;
   height: 80px;
   backdrop-filter: blur(40px);
   position: fixed;
-  z-index: 3;
+  z-index: 99;
 }
 .navbarA {
   display: flex;
@@ -15,10 +15,21 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 50px;
+  padding: 0 30px;
   height: 80px;
-  backdrop-filter: blur(40px);
-  z-index: 3;
+  z-index: 99;
+  top: 0;
+}
+
+.navbarL {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 30px;
+  height: 80px;
+  z-index: 99;
   top: 0;
 }
 
@@ -79,9 +90,10 @@
   gap: 20px;
   z-index: 2;
   justify-content: right;
+  
 }
 
-.navSessin {
+.navSession {
   width: 33%;
   display: flex;
   color: #e2f8f1;
@@ -90,7 +102,7 @@
   gap: 20px;
 }
 
-.navSessin button {
+.navSession button {
   background-color: transparent;
   color: #e2f8f1;
   text-decoration: none;
@@ -101,12 +113,13 @@
   cursor: pointer;
 }
 
-.navSessin button:hover {
+.navSession button:hover {
   color: rgb(0, 0, 0);
   background-color: #e2f8f1;
 }
 
-.navSessin p {
+.navSession p {
+  cursor: pointer;
   margin: 0;
   font-size: 17px;
 }
@@ -136,9 +149,6 @@
   }
   .hamburger {
     display: block;
-  }
-  .navbar {
-    padding: 20px 50px;
   }
 }
 
