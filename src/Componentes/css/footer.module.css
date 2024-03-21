@@ -4,13 +4,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-  background-color: #02080c;
-  background-image: linear-gradient(
-    to top,
-    #000000 20%,
-    #00000000,
-    rgba(0, 0, 0, 0)
-  );
+
 }
 
 .logo {
@@ -71,10 +65,11 @@
   }
   .left p{
     font-size: 12px;
+    text-align: center;
   }
   .email {
     text-align: center;
-    width: 50%;
+    width: 100%;
     font-size: 14px;
   }
 }

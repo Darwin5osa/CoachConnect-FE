@@ -1,18 +1,33 @@
+import {
+  FaChalkboardTeacher,
+  FaRegUser,
+  FaUniversity,
+  FaUserEdit,
+  FaUserPlus,
+} from "react-icons/fa";
 import { useGlobalContex } from "../../Utils/global.context";
-import { FaUserEdit, FaUserPlus } from "react-icons/fa";
-import { FaChalkboardTeacher } from "react-icons/fa";
-import { HiOutlineSelector } from "react-icons/hi";
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import { FaUniversity } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
-import { FaRegUser } from "react-icons/fa";
 import s from "../css/admin.module.css";
-import { GoGear } from "react-icons/go";
 import { FiEdit } from "react-icons/fi";
+import { GoGear } from "react-icons/go";
 const Admin = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 950);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   /* ESTADOS */
   const [menu, setMenu] = useState("Tutorias");
   const {
@@ -33,6 +48,7 @@ const Admin = () => {
   });
   const [nuevaCaracteristica, setNuevaCaracteristica] = useState({
     nombre: "",
+    icono: "",
   });
   const [nuevoNivel, setNuevoNivel] = useState({
     nombre: "",
@@ -69,7 +85,7 @@ const Admin = () => {
     });
   };
   const handleAgregarCategoria = () => {
-    fetch("http://localhost:8080/categoria", {
+    fetch("https://api.coachconnect.tech/categoria", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +102,7 @@ const Admin = () => {
       });
   };
   const handleEliminarCategoria = (id) => {
-    fetch(`http://localhost:8080/categoria/${id}`, {
+    fetch(`https://api.coachconnect.tech/categoria/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -111,7 +127,7 @@ const Admin = () => {
   };
 
   const handleGuardarCategoria = () => {
-    fetch(`http://localhost:8080/categoria/${nuevaCategoria.id}`, {
+    fetch(`https://api.coachconnect.tech/categoria/${nuevaCategoria.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +159,7 @@ const Admin = () => {
 
   /* CARACTERISTICAS */
   const handleAgregarCaracteristica = () => {
-    fetch("http://localhost:8080/caracteristica", {
+    fetch("https://api.coachconnect.tech/caracteristica", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -160,7 +176,7 @@ const Admin = () => {
       });
   };
   const handleEliminarCaracteristica = (id) => {
-    fetch(`http://localhost:8080/caracteristica/${id}`, {
+    fetch(`https://api.coachconnect.tech/caracteristica/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -175,13 +191,16 @@ const Admin = () => {
       });
   };
   const handleGuardarCaracteristica = () => {
-    fetch(`http://localhost:8080/caracteristica/${nuevaCaracteristica.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(nuevaCaracteristica),
-    })
+    fetch(
+      `https://api.coachconnect.tech/caracteristica/${nuevaCaracteristica.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(nuevaCaracteristica),
+      }
+    )
       .then((response) => response.json())
       .then((res) => {
         getCaracteristicas(dispatch);
@@ -196,11 +215,12 @@ const Admin = () => {
     setNuevaCaracteristica({
       id: caracteristica.id,
       nombre: caracteristica.nombre,
+      icono: caracteristica.icono,
     });
   };
   const handleCaracteristicaCancel = (e) => {
     e.preventDefault();
-    setNuevaCaracteristica({ nombre: "" });
+    setNuevaCaracteristica({ nombre: "", icono: "" });
   };
   const handleCaracteristica = (e) => {
     e.preventDefault();
@@ -253,7 +273,7 @@ const Admin = () => {
 
   const handleCrear = () => {
     console.log(formData);
-    fetch(`http://localhost:8080/tutoria`, {
+    fetch(`https://api.coachconnect.tech/tutoria`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -280,7 +300,7 @@ const Admin = () => {
   };
 
   const handleEliminarObjeto = (id) => {
-    fetch(`http://localhost:8080/tutoria/${id}`, {
+    fetch(`https://api.coachconnect.tech/tutoria/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -300,7 +320,7 @@ const Admin = () => {
   };
 
   const handleGuardarEdicion = () => {
-    fetch(`http://localhost:8080/tutoria/${formData.id}`, {
+    fetch(`https://api.coachconnect.tech/tutoria/${formData.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -327,7 +347,7 @@ const Admin = () => {
   };
 
   const handleAgregarNivel = () => {
-    fetch("http://localhost:8080/nivel", {
+    fetch("https://api.coachconnect.tech/nivel", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -345,7 +365,7 @@ const Admin = () => {
   };
 
   const handleEliminarNivel = (id) => {
-    fetch(`http://localhost:8080/nivel/${id}`, {
+    fetch(`https://api.coachconnect.tech/nivel/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -374,7 +394,7 @@ const Admin = () => {
   };
 
   const handleGuardarNivel = () => {
-    fetch(`http://localhost:8080/nivel/${nuevoNivel.id}`, {
+    fetch(`https://api.coachconnect.tech/nivelø/${nuevoNivel.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -402,6 +422,87 @@ const Admin = () => {
 
   const buscarTutor = (id) => tutores.find((tutor) => tutor.id === id);
 
+  //PAGINACION TUTORIAS
+  const [currentPage, setCurrentPage] = useState(1);
+  const tutoriasPerPage = 5;
+
+  const indexOfLastTutoria = currentPage * tutoriasPerPage;
+  const indexOfFirstTutoria = indexOfLastTutoria - tutoriasPerPage;
+  const currentTutorias = objetos.slice(
+    indexOfFirstTutoria,
+    indexOfLastTutoria
+  );
+  const totalPages = Math.ceil(objetos.length / tutoriasPerPage);
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  //PAGINACION CARACTERISTICAS
+  const [currentPageCarac, setCurrentPageCarac] = useState(1);
+  const CaracPerPage = 5;
+
+  const indexOfLastCarac = currentPageCarac * CaracPerPage;
+  const indexOfFirstCarac = indexOfLastCarac - CaracPerPage;
+  const currentCarac = caracteristicas.slice(
+    indexOfFirstCarac,
+    indexOfLastCarac
+  );
+  const totalPagesCarac = Math.ceil(caracteristicas.length / CaracPerPage);
+  const handleNextPageCarac = () => {
+    if (currentPageCarac < totalPagesCarac) {
+      setCurrentPageCarac(currentPageCarac + 1);
+    }
+  };
+  const handlePrevPageCarac = () => {
+    if (currentPageCarac > 1) {
+      setCurrentPageCarac(currentPageCarac - 1);
+    }
+  };
+
+  //PAGINACION CATEGORIAS
+  const [currentPageCat, setCurrentPageCat] = useState(1);
+  const CatPerPage = 5;
+
+  const indexOfLastCat = currentPageCat * CatPerPage;
+  const indexOfFirstCat = indexOfLastCat - CatPerPage;
+  const currentCat = categorias.slice(indexOfFirstCat, indexOfLastCat);
+  const totalPagesCat = Math.ceil(categorias.length / CatPerPage);
+  const handleNextPageCat = () => {
+    if (currentPageCat < totalPagesCat) {
+      setCurrentPageCat(currentPageCat + 1);
+    }
+  };
+  const handlePrevPageCat = () => {
+    if (currentPageCat > 1) {
+      setCurrentPageCat(currentPageCat - 1);
+    }
+  };
+
+  //PAGINACION NIVELES
+  const [currentPageNiv, setCurrentPageNiv] = useState(1);
+  const nivPerPage = 5;
+
+  const indexOfLastNiv = currentPageNiv * nivPerPage;
+  const indexOfFirstNiv = indexOfLastNiv - nivPerPage;
+  const currentNiv = niveles.slice(indexOfFirstNiv, indexOfLastNiv);
+  const totalPagesNiv = Math.ceil(niveles.length / nivPerPage);
+  const handleNextPageNiv = () => {
+    if (currentPageNiv < totalPagesNiv) {
+      setCurrentPageNiv(currentPageNiv + 1);
+    }
+  };
+  const handlePrevPageNiv = () => {
+    if (currentPageNiv > 1) {
+      setCurrentPageNiv(currentPageNiv - 1);
+    }
+  };
+
   const tutoriasT = () => {
     return (
       <div className={s.selectedCont}>
@@ -414,7 +515,7 @@ const Admin = () => {
               <p className={s.tutorName}>Tutor</p>
               <p className={s.btns}>Acciones</p>
             </li>
-            {objetos.map((objeto) => (
+            {currentTutorias.map((objeto) => (
               <li className={s.item} key={objeto.id}>
                 <p className={s.id}>{objeto.id}</p>
                 <p className={s.tutoriaName}>{objeto.nombre}</p>
@@ -439,6 +540,11 @@ const Admin = () => {
               </li>
             ))}
           </ul>
+          <div className={s.pagination}>
+            <button onClick={handlePrevPage}>Anterior</button>
+            <span>{currentPage}</span>
+            <button onClick={handleNextPage}>Siguiente</button>
+          </div>
         </div>
         <form className={s.listCont} onSubmit={handleSubmit}>
           <h2 className={s.tit}>Agregar - Editar</h2>
@@ -579,7 +685,7 @@ const Admin = () => {
               <p className={s.nameSimple}>Nombre</p>
               <p className={s.btnsSimple}>Acciones</p>
             </li>
-            {categorias.map((categoria) => (
+            {currentCat.map((categoria) => (
               <li className={s.item} key={categoria.id}>
                 <p className={s.id}>{categoria.id}</p>
                 <p className={s.nameSimple}>{categoria.nombre}</p>
@@ -600,6 +706,11 @@ const Admin = () => {
               </li>
             ))}
           </ul>
+          <div className={s.pagination}>
+            <button onClick={handlePrevPageCat}>Anterior</button>
+            <span>{currentPageCat}</span>
+            <button onClick={handleNextPageCat}>Siguiente</button>
+          </div>
         </div>
         <p className={s.note}>
           Nota: No podras eliminar una categoria que este en uso.
@@ -653,8 +764,9 @@ const Admin = () => {
               <p className={s.nameSimple}>Nombre</p>
               <p className={s.btnsSimple}>Acciones</p>
             </li>
-            {caracteristicas.map((caracteristica) => (
+            {currentCarac.map((caracteristica) => (
               <li className={s.item} key={caracteristica.id}>
+                {console.log(caracteristica)}
                 <p className={s.id}>{caracteristica.id}</p>
                 <p className={s.nameSimple}>{caracteristica.nombre}</p>
                 <div className={s.btnsSimple}>
@@ -676,6 +788,11 @@ const Admin = () => {
               </li>
             ))}
           </ul>
+          <div className={s.pagination}>
+            <button onClick={handlePrevPageCarac}>Anterior</button>
+            <span>{currentPageCarac}</span>
+            <button onClick={handleNextPageCarac}>Siguiente</button>
+          </div>
         </div>
         <p className={s.note}>
           Nota: No podras eliminar una caracteristica que este en uso.
@@ -697,6 +814,22 @@ const Admin = () => {
                 }
                 placeholder="Nueva Característica"
               />
+            </div>
+            <div className={s.formInputSimple}>
+              <label htmlFor="nombre">Icono:</label>
+              <input
+                className={s.textInput}
+                type="text"
+                value={nuevaCaracteristica.icono}
+                onChange={(e) =>
+                  setNuevaCaracteristica({
+                    ...nuevaCaracteristica,
+                    icono: e.target.value,
+                  })
+                }
+                placeholder="Nueva Icono"
+              />
+              <i className={`fas ${nuevaCaracteristica.icono} ${s.icoC}`} />
             </div>
             <div className={s.options}>
               <button
@@ -731,7 +864,7 @@ const Admin = () => {
               <p className={s.nameSimple}>Nombre</p>
               <p className={s.btnsSimple}>Acciones</p>
             </li>
-            {niveles.map((nivel) => (
+            {currentNiv.map((nivel) => (
               <li className={s.item} key={nivel.id}>
                 <p className={s.id}>{nivel.id}</p>
                 <p className={s.nameSimple}>{nivel.nombre}</p>
@@ -752,6 +885,11 @@ const Admin = () => {
               </li>
             ))}
           </ul>
+          <div className={s.pagination}>
+            <button onClick={handlePrevPageNiv}>Anterior</button>
+            <span>{currentPageNiv}</span>
+            <button onClick={handleNextPageNiv}>Siguiente</button>
+          </div>
         </div>
         <p className={s.note}>
           Nota: No podras eliminar un nivel que este en uso.
@@ -760,7 +898,7 @@ const Admin = () => {
           <h2 className={s.tit}>Agregar - Editar</h2>
           <div className={s.formContainer}>
             <div className={s.formInputSimple}>
-            <label htmlFor="descripcion">Nombre:</label>
+              <label htmlFor="descripcion">Nombre:</label>
               <input
                 className={s.textInput}
                 type="text"
@@ -794,7 +932,8 @@ const Admin = () => {
   };
 
   return (
-    <div className={s.admin}>
+    <div>
+      {!isMobile ? <div className={s.admin}>
       <div className={s.cont}>
         <section className={s.menu}>
           <h3>Menú</h3>
@@ -846,7 +985,13 @@ const Admin = () => {
           {menu === "Niveles" && nivelesT()}
         </section>
       </div>
+    </div> : (
+        <div className={s.mobile}>
+          <h1>Ooops, el panel de administracion es solo accesible en desktop</h1>
+        </div>
+      )}
     </div>
+    
   );
 };
 

@@ -68,8 +68,6 @@ export const ContextProvider = ({ children }) => {
     getTutores(dispatch);
     getEstudiantes(dispatch);
   }, []);
-
-  console.log(state);
   return (
     <ContextGlobal.Provider
       value={{

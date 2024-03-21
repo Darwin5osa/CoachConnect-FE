@@ -6,19 +6,33 @@
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  background-color: #02080c;
+
+  position: relative;
+}
+.mainTutores::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  background-image: url("../../imgs/favs2.jpg");
+  filter: blur(80px) saturate(2) brightness(2);
+  background-attachment: fixed;
+  background-size: cover;
+  opacity: 0.08;
+  z-index: -3;
 }
 
 .header {
   width: 100%;
-  padding: 0 100px;
+  padding: 0 50px;
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 12px;
   justify-content: center;
   position: relative;
-  height: 150px;
+  height: 130px;
 }
 
 .title {
@@ -26,18 +40,18 @@
   font-size: 38px;
   opacity: 0.9;
   margin: 0;
-  text-align: center;
+  text-align: left;
 }
 
 .search {
-  border: none;
+  color: white;
+  border: solid rgba(255, 255, 255, 0.2) 2px;
+  border-radius: 8px;
+  padding: 10px 10px;
+  font-size: 15px;
   background-color: transparent;
-  border-bottom: solid #e2f8f1 1px;
-  color: #e2f8f1;
-  padding: 6px;
-  font-size: 16px;
-  width: 200px;
-  border-radius: none;
+  outline: none;
+
 }
 
 .search:focus {
@@ -46,7 +60,7 @@
 
 
 .search::placeholder {
-  text-align: center;
+  text-align: left;
 }
 
 .cardContainer {
@@ -56,9 +70,8 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  gap: 20px;
 }
-
 .noResults {
   color: #e2f8f1;
   font-size: 20px;
@@ -66,154 +79,15 @@
   text-align: center;
 }
 
-.edit {
-  position: absolute;
-  bottom: 0;
-  z-index: 2;
-  display: flex;
-  gap: 20px;
-}
 
-.edit button {
-  padding: 7px 13px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  filter: saturate(0.3);
-  transition: all 0.2s ease-in-out;
-}
-
-.edit button:hover {
-  filter: saturate(1);
-}
-
-.add {
-  background-color: #009416;
-  color: #e2f8f1;
-}
-
-.del {
-  color: #e2f8f1;
-  background-color: rgb(201, 0, 0);
-}
-
-.link {
-  text-decoration: none;
-}
-
-.formCont {
-  height: 150px;
-  padding: 0 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.form {
-  color: #e2f8f1;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 20px;
-  width: 1000px;
-}
-
-.input {
-  background-color: transparent;
-  border: none;
-  resize: none;
-  border-bottom: solid #e2f8f1 1px;
-  width: 280px;
-  font-size: 17px;
-  padding: 6px;
-  position: relative;
-  font-family: system-ui;
-  height: 30px;
-  color: #e2f8f1;
-}
-
-.loader {
-  transform: scale(0.6);
-  filter: brightness(10);
-}
-
-.input::placeholder {
-  color: #e2f8f1;
-  opacity: 0.8;
-  text-align: left;
-  position: absolute;
-  bottom: 5px;
-  font-size: 15px;
-}
-
-.inpCont {
-  display: flex;
-  width: fit-content;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.label {
-  font-size: 17px;
-  width: 220px;
-  margin-bottom: -2px;
-}
-
-.input:focus {
-  outline: none;
-}
-
-.submit {
-  padding: 7px 13px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  background-color: #193c3c;
-  width: 280px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.searchCont {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding-left: 50px;
-}
-
-.ico {
-  color: white;
-  font-size: 18px;
-  opacity: 0.7;
-}
 
 @media (max-width: 1200px) {
   .title {
     font-size: 32px;
   }
-  .input {
-    width: 240px;
-    font-size: 15px;
-    padding: 6px;
-    height: 30px;
-  }
-  .submit {
-    padding: 7px 13px;
-    width: 240px;
-    height: 40px;
-  }
-  .formCont {
-    height: 180px;
-  }
   .cardContainer {
     width: 50%;
-    min-width: 0px;
+    min-width: 350px;
   }
 }
 
@@ -255,4 +129,156 @@
   font-size: 16px;
   border-bottom: solid #e2f8f1 1px;
   padding: 2px;
+}
+
+.menu{
+  box-shadow: rgba(0, 0, 0, 0.50) -5px 0 50px 1px;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.089);
+  height: fit-content;
+  width: 860px;
+  border-radius: 0 20px 20px 0;
+  transition: all .1s ease-in-out;
+  margin-bottom: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.content{
+  width: 100%;
+  height: 100%;
+  padding: 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.titleB{
+  color: #e2f8f1;
+  font-size: 30px;
+  opacity: 0.9;
+  margin: 0;
+  text-align: left;
+}
+.menu::after{
+  content: "";
+  position: absolute;
+  border-left: #4bc8ab solid 3px;
+  height: 100%;
+  z-index: -1;
+  transition: all .2s ease-in-out;
+}
+
+.menu:hover::after{
+  border-left: #4bc8ab solid 20px;
+}
+
+.menu:hover{
+  transform: scale(.98);
+}
+
+.input{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.inputS{
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.content label{
+  color: #e2f8f1;
+  padding-left: 5px;
+}
+.selectInput{
+  cursor: pointer;
+  background-color: transparent;
+  border: solid rgba(255, 255, 255, 0.2) 2px;
+  border-radius: 8px;
+  padding: 10px 10px;
+  color: white;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+}
+
+.buscar{
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+.buscar button{
+  margin-top: 20px;
+  padding: 9px 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+
+  opacity: .8;
+  transition: all .1s ease-in-out;
+  color: #ffffff;
+}
+.res{
+  background-color: rgba(200, 38, 38, 0.715);
+}
+.bus{
+  background-color:#3b9d87;
+}
+.buscar button:hover{
+  opacity: 1;
+  transform: scale(.95);
+  color: #e2f8f1;
+}
+.buscar button:active{
+  transform: scale(.9);
+}
+
+@media (max-width: 1200px) {
+
+
+  .inputS{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+  }
+  .input{
+    width: 100%;
+  }
+  .search{
+    width: 100%;
+  }
+  .content{
+    gap: 15px;
+  }
+  .menu::after{
+    content: "";
+    position: absolute;
+    border-left: #4bc8ab solid 10px;
+    height: 100%;
+    z-index: -1;
+    transition: all .2s ease-in-out;
+  }
+  
+  .menu:hover::after{
+    border-left: #4bc8ab solid 10px;
+  }
+  
+  .menu:hover{
+    transform: none;
+  }
+}
+@media (max-width: 1200px) {
+  .menu{
+    height: fit-content;
+    width: 50%;
+    min-width: 350px;
+  }
 }

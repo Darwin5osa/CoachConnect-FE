@@ -1,12 +1,23 @@
+import { useLocation } from "react-router-dom";
+
 import s from "./css/footer.module.css";
 import React from "react";
 
 const Footer = () => {
+  const location = useLocation();
+  
+
+
   return (
     <div>
       <footer className={s.footer}>
         <div className={s.left}>
-          <img className={s.logo} src="./Asset1.png" alt="logo" />
+          {location.pathname == "/admin/dashboard" ? (
+            <img className={s.logo} src="../imgs/Asset1.png" alt="logo" />
+          ) : (
+            <img className={s.logo} src="./Asset1.png" alt="logo" />
+          )}
+
           <p className={s.copy}>© 2024 - COACH CONNECT</p>
         </div>
         <div className={s.line}></div>
@@ -19,6 +30,9 @@ const Footer = () => {
         >
           INFO@COACHCONNECT.COM
         </a>
+        
+          
+      
       </footer>
     </div>
   );
