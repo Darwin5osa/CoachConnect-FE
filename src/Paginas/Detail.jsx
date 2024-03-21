@@ -9,7 +9,8 @@ const Detail = () => {
   const [tutoria, setTutoria] = useState("");
   const [tutor, setTutor] = useState("");
   const [caracteristicas, setCaracteristicas] = useState([]);
-  const { id } = useParams(); 
+  const { id } = useParams();
+  const [politicas, setPoliticas] = useState("");
 
   useEffect(() => {
     const tutoriaEncontrada = state.TUTORIAS.find(
@@ -36,6 +37,27 @@ const Detail = () => {
       setCaracteristicas(caracteristicasTutoria);
     }
   }, [tutoria, state.CARACTERISTICAS]);
+
+  function compartirEnFacebook() {
+    const url = window.location.href; 
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+  }
+
+  
+  function compartirEnTwitter() {
+    const url = window.location.href; 
+    window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, '_blank');
+  }
+
+  useEffect(() => {
+    obtenerPoliticas()
+      .then((data) => {
+        setPoliticas(data.politicas);
+      })
+      .catch((error) => {
+        console.error("Error al obtener las políticas:", error);
+      });
+  }, []);
 
   console.log("------caracteristicas------");
   console.log(caracteristicas);
@@ -69,6 +91,11 @@ const Detail = () => {
             src={tutor.foto}
             alt="Foto de perfil - tutor"
           />
+        </div>
+
+        <div className={r.politicas}>
+          <h2>Políticas</h2>
+          <p>{politicas}</p>
         </div>
 
         <div className={r.informacion}>
@@ -141,6 +168,16 @@ const Detail = () => {
             }}
           ></i>
           <p style={{ margin: "0" }}>Volver a Home</p>
+
+          <div className={r.botonesCompartir}>
+          <button onClick={compartirEnFacebook}>
+            <FontAwesomeIcon icon={faFacebook} />
+          </button>
+          <button onClick={compartirEnTwitter}>
+            <FontAwesomeIcon icon={faTwitter} />
+          </button>
+        </div>
+
         </div>
       </div>
     </div>
