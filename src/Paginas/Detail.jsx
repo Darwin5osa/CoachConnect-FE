@@ -107,7 +107,7 @@ useEffect(() => {
           <h3 className={r.infoTutor}>
             {tutor.nombre} {tutor.apellido}
           </h3>
-          <h3> {tutor.descripcion}</h3>
+          <h3 className={r.tutorDes}> {tutor.descripcion}</h3>
         </div>
 
         <div className={r.contenedorImagenes}>
@@ -144,7 +144,7 @@ useEffect(() => {
 
         <div className={r.caracteristicas}>
           <h2>Características Principales</h2>
-          <ul>
+          <ul className={r.carac}>
             {caracteristicas.map((caracteristica, index) => (
               <li
                 className={r.icono}
@@ -164,12 +164,7 @@ useEffect(() => {
         <div onClick={irAHome} className={r.backArrow}>
           <i
             className="fa-solid fa-house"
-            style={{
-              fontSize: "25px",
-              marginRight: "10px",
-            }}
           ></i>
-          <p style={{ margin: "0" }}>Volver a Home</p>
         </div>
       </div>
     </div>

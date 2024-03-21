@@ -22,7 +22,8 @@
     "react-spinners": "^0.13.8",
     "rsuite": "^5.56.0",
     "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.5"
+    "semantic-ui-react": "^2.1.5",
+    "sonner": "^1.4.41"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",

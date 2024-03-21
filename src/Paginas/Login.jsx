@@ -1,4 +1,5 @@
 import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
+import { Toaster, toast } from 'sonner'
 import { useNavigate, useLocation } from "react-router-dom";
 import AdminNavbar from "../Componentes/admin/AdminNavbar";
 import React, { useEffect, useState, useRef } from "react";
@@ -38,7 +39,7 @@ const Login = () => {
   const handleSignin = (e) => {
     e.preventDefault();
     console.log(signin);
-    fetch("http://localhost:8080/login", {
+    fetch("https://api.coachconnect.tech/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ const Login = () => {
         dispatch({ type: "SET_SESSION", payload: info });
         window.localStorage.setItem("token", data.token);
       })
-      .catch((err) => alert("Datos incorrectos o faltantes"));
+      .catch((err) => toast.warning("Datos incorrectos o faltantes"));
   };
 
   const handleValidationRegister = (register) => {
@@ -63,17 +64,17 @@ const Login = () => {
 
     // Validación de los campos del formulario
     if (!nameRegex.test(register.nombre)) {
-      alert("Nombre invalido o faltante.");
+      toast.warning("Nombre invalido o faltante.");
       return false;
     }
 
     if (!nameRegex.test(register.apellido)) {
-      alert("Apellido invalido o faltante.");
+      toast.warning("Apellido invalido o faltante.");
       return false;
     }
 
     if (!emailRegex.test(register.email)) {
-      alert("Ingrese un correo electrónico válido.");
+      toast.warning("Ingrese un correo electrónico válido.");
       return false;
     }
 
@@ -81,7 +82,7 @@ const Login = () => {
       register.password.length < 8 ||
       !passwordRegex.test(register.password)
     ) {
-      alert(
+      toast.warning(
         "La contraseña debe tener al menos 8 caracteres y contener números."
       );
       return false;
@@ -96,7 +97,7 @@ const Login = () => {
 
     if (handleValidationRegister(register)) {
       setLoading(true);
-      fetch("http://localhost:8080/estudiante", {
+      fetch("https://api.coachconnect.tech/estudiante", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -116,13 +117,14 @@ const Login = () => {
             .then(
               (result) => {
                 console.log(result);
+                toast.info('Te llegara un mail con la confirmacion de registro')
               },
               (error) => {
                 console.log(error.text);
               }
             );
         })
-        .catch((err) => alert("Datos incorrectos o faltantes"))
+        .catch((err) => toast.warning("Datos incorrectos o faltantes"))
         .finally(() => {
           setTimeout(() => {
             setLoading(false);
@@ -171,6 +173,7 @@ const Login = () => {
 
   return (
     <div className={s.login}>
+      <Toaster richColors />
       <LoginNavbar />
       <div className={s.cont}>
         <div className={`${s.screen} ${form ? s.active1 : ""}`}>

@@ -5,6 +5,7 @@ import {
   FaUserEdit,
   FaUserPlus,
 } from "react-icons/fa";
+import { Toaster, toast } from 'sonner'
 import { useGlobalContex } from "../../Utils/global.context";
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -96,6 +97,7 @@ const Admin = () => {
       .then((res) => {
         getCategorias(dispatch);
         setNuevaCategoria({ nombre: "" });
+        toast.success('Categoria agregada')
       })
       .catch((error) => {
         console.log(error);
@@ -111,6 +113,7 @@ const Admin = () => {
       .then((response) => response.json())
       .then((res) => {
         getCategorias(dispatch);
+        toast.success('Categoria eliminada')
       })
       .catch((error) => {
         getCategorias(dispatch);
@@ -138,6 +141,7 @@ const Admin = () => {
       .then((res) => {
         getCategorias(dispatch);
         setNuevaCategoria({ nombre: "" });
+        toast.success('Categoria guardada')
       })
       .catch((error) => {
         getCategorias(dispatch);
@@ -170,6 +174,7 @@ const Admin = () => {
       .then((res) => {
         getCaracteristicas(dispatch);
         setNuevaCaracteristica({ nombre: "" });
+        toast.success('Caracteristica agregada')
       })
       .catch((error) => {
         console.log(error);
@@ -205,6 +210,7 @@ const Admin = () => {
       .then((res) => {
         getCaracteristicas(dispatch);
         setNuevaCaracteristica({ nombre: "" });
+        toast.success('Caracteristica guardada')
       })
       .catch((error) => {
         getCaracteristicas(dispatch);
@@ -283,6 +289,7 @@ const Admin = () => {
       .then((response) => response.json())
       .then((res) => {
         getTutorias(dispatch);
+        toast.success('Tutoria agregada')
       })
       .catch((error) => {
         getTutorias(dispatch);
@@ -330,6 +337,7 @@ const Admin = () => {
       .then((response) => response.json())
       .then((res) => {
         getTutorias(dispatch);
+        toast.success('Tutoria guardada')
       })
       .catch((error) => {
         getTutorias(dispatch);
@@ -358,6 +366,7 @@ const Admin = () => {
       .then((res) => {
         getNiveles(dispatch);
         setNuevoNivel({ nombre: "" });
+        toast.success('Nivel agregado')
       })
       .catch((error) => {
         console.log(error);
@@ -374,6 +383,7 @@ const Admin = () => {
       .then((response) => response.json())
       .then((res) => {
         getNiveles(dispatch);
+        richColors('Nivel guardado')
       })
       .catch((error) => {
         getNiveles(dispatch);
@@ -933,6 +943,7 @@ const Admin = () => {
 
   return (
     <div>
+      <Toaster richColors/>
       {!isMobile ? <div className={s.admin}>
       <div className={s.cont}>
         <section className={s.menu}>

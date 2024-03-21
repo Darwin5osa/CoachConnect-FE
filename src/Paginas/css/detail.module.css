@@ -6,6 +6,7 @@
     width: 100%;
     padding-top: 5%;
     z-index: 1;
+    position: relative;
 }
 
 .contenedor::after {
@@ -22,6 +23,7 @@
   }
   
 .card {
+    position: relative;
     width: 80%;
     max-width: 800px;
     display: flex;
@@ -38,7 +40,7 @@
 }
   
 .card h1 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 30px;
 }
   
@@ -48,6 +50,10 @@
   
 .informacion {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
   
 .imagentutor {
@@ -55,15 +61,27 @@
     height: auto;
     object-fit: contain;
     border-radius: 10px;
+    margin-top: 20px;
 }
 .infoTutor{
     color: rgba(255, 255, 255, 0.8);
     background-color: #0f7777;
     width: fit-content;
     border-radius: 6px;
-    padding: 2px 6px;
+    width: 150px;
+    height: 40px;
     font-size: 14px;
-    margin: 0 auto
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tutorDes{
+    margin-top: 15px;
+    font-size: 18px;
+    width: 80%;
+    line-height: 1.5;
+    text-align: center;
 }
 .contenedorImagenes {
     margin-top: 5%;
@@ -81,7 +99,6 @@
     flex-direction: column;
 }
   
-  
 .imgLeft {
     width: 400px; 
     height: 430px; 
@@ -97,7 +114,17 @@
 }
 
 .caracteristicas{
-    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+.carac{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .iconosCaracteristicas{
@@ -108,24 +135,34 @@
 .icono{
     display: flex;
     flex-direction: row;
+    gap: 8px;
+    font-size: 14px;
 }
 
 .backArrow{
+    position: absolute;
     cursor: pointer;
     display: flex;
     align-items: center;
     max-width: 150px;
     margin: 0 auto; 
     padding: 10px;
-    background-color: white;
     border-radius: 5px;
-    color: #0f7777;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    color: #ffffff;
+    transition: all 0.2s ease;
     margin-top: 20px;
-    
+    top: 0;
+    right: 20px;
+    font-size: 20px;
 }
 
+.backArrow:hover{
+    color: #4bc8ab;
+}
+
+.backArrow:active{
+    transform: scale(.9);
+}
 
 @media (max-width: 768px) { 
     .contenedorImagenes {
@@ -142,6 +179,7 @@
   }
 
   .calendario{
+    margin-top: 70px;
     border-radius: 0 20px 20px 0;
     border-left: solid #4bc8ab 10px;
     padding: 20px 40px;
