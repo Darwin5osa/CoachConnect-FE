@@ -7,8 +7,9 @@ import { useState } from "react";
 import React from "react";
 const Card = (data) => {
   const { state } = useGlobalContex();
+  console.log("-----data card-------");
   console.log(data);
-
+  console.log("-----data card-------");
   return (
     <div className={s.cardContainer}>
       <div className={s.img}>
