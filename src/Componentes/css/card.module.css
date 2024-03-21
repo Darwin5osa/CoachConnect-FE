@@ -2,19 +2,32 @@
   width: 420px;
   min-width: 300px;
   height: 200px;
-  border-radius: 15px;
-  background-color: #193c3c;
+  border-radius: 0 15px 15px 0;
+  background-color: #ffffff11;
   display: flex;
   align-items: center;
   position: relative;
-  box-shadow: -1px -1px 81px -12px rgba(28, 90, 62, 0.1);
-  -webkit-box-shadow: -1px -1px 81px -12px rgba(28, 90, 62, 0.1);
-  -moz-box-shadow: -1px -1px 81px -12px rgba(28, 90, 62, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.60) -5px 0 20px 1px;
   overflow: hidden;
   gap: 20px;
+  transition: all .1s ease-in-out;
+
 }
 
 
+.cardContainer::after{
+  position: absolute;
+  content: "";
+  border-left: #4bc8ab solid 0px;
+  height: 100%;
+  transition: all .2s ease-in-out;
+}
+.cardContainer:hover::after{
+  border-left: #4bc8ab solid 20px;
+}
+.cardContainer:hover{
+  transform: scale(.95)
+}
 .img {
   width: 40%;
   height: 100%;
@@ -24,6 +37,7 @@
 }
 .img img {
   width: 105%;
+  filter: contrast(1.1);
 }
 
 .info {
@@ -32,25 +46,36 @@
   width: 60%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  font-size: 13px;
+  justify-content: center;
+  font-size: 12px;
   height: 85%;
-  /*   gap: 10px; */
+  gap: 12px;
+  position: relative;
+  padding-top: 20px;
 }
 
 .name {
+  margin: 0;
+  padding: 0;
   color: white;
   margin-bottom: -6px;
   margin-top: 0;
-  font-size: 24px;
+  line-height: initial;
+  font-size: 20px;
+  width: 90%;
+  border: none;
 }
+
+
 .profession {
-  color: rgb(255, 255, 255);
-  background-color: #0f7777;
+  color: #ffffff;
+  background-color: #4bc8ab7d;
   width: fit-content;
   border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 14px;
+  padding: 1px 6px;
+  font-size: 13px;
+  position: absolute;
+  top: 5px;
 }
 .descrip {
   width: 90%;
@@ -64,6 +89,7 @@
   font-size: 18px;
   display: flex;
   gap: 3px;
+  display: none;
 }
 
 .link{
@@ -98,30 +124,8 @@
 @media (max-width: 1200px) {
   .cardContainer{
     width: 100%;
-    min-width: 400px;
+    min-width: 300px;
   }
 }
 
-@media (max-width: 500px) {
-  .cardContainer{
-    width: 350px;
-    min-width: 300px;
-    height: 160px;
-  }
-  .info {
-    font-size: 11px;
-  }
-  .name {
-    font-size: 16px;
-  }
-  .profession {
-    padding: 1px 5px;
-    font-size: 10px;
-  }
-  .rating {
-    font-size: 14px;
-  }
-  .link{
-    font-size: 15px;
-  }
-}
+

@@ -41,7 +41,7 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </ScrollLink>
         </div>
-        <div className={s.item}>
+        {/* <div className={s.item}>
           <ScrollLink
             className={s.link}
             to="mentores"
@@ -51,7 +51,7 @@ const Navbar = () => {
           >
             <Link to="/">Mentores</Link>
           </ScrollLink>
-        </div>
+        </div> */}
         <div className={s.item}>
           <ScrollLink
             className={s.link}

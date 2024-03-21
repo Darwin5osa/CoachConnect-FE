@@ -1,5 +1,5 @@
 export const getCategorias = (dispatch) => {
-  fetch("http://localhost:8080/categoria")
+  fetch("https://api.coachconnect.tech/categoria")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -15,7 +15,7 @@ export const getCategorias = (dispatch) => {
 };
 
 export const getCaracteristicas = (dispatch) => {
-  fetch("http://localhost:8080/caracteristica")
+  fetch("https://api.coachconnect.tech/caracteristica")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -31,7 +31,7 @@ export const getCaracteristicas = (dispatch) => {
 };
 
 export const getTutorias = (dispatch) => {
-  fetch("http://localhost:8080/tutoria")
+  fetch("https://api.coachconnect.tech/tutoria")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -47,7 +47,7 @@ export const getTutorias = (dispatch) => {
 };
 
 export const getTutores = (dispatch) => {
-  fetch("http://localhost:8080/tutor")
+  fetch("https://api.coachconnect.tech/tutor")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -63,7 +63,7 @@ export const getTutores = (dispatch) => {
 };
 
 export const getNiveles = (dispatch) => {
-  fetch("http://localhost:8080/nivel")
+  fetch("https://api.coachconnect.tech/nivel")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -79,7 +79,7 @@ export const getNiveles = (dispatch) => {
 };
 
 export const getEstudiantes = (dispatch) => {
-  fetch("http://localhost:8080/estudiante")
+  fetch("https://api.coachconnect.tech/estudiante")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -93,3 +93,6 @@ export const getEstudiantes = (dispatch) => {
       console.error("Error al obtener las tutorias:", error);
     });
 };
+
+
+

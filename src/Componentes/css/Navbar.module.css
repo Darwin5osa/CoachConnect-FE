@@ -19,6 +19,7 @@
   height: 80px;
   z-index: 99;
   top: 0;
+  backdrop-filter: blur(15px);
 }
 
 .navbarL {

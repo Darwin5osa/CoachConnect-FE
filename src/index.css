@@ -1,3 +1,4 @@
+@import "rsuite/dist/rsuite.css";
 * {
   margin: 0;
   box-sizing: border-box;
@@ -10,13 +11,14 @@
   color: rgb(0, 0, 0);
 }
 
-h1{
+h1 {
   font-size: 90px;
 }
-h2{
+h2 {
   font-size: 38px;
 }
 
-body{
+body {
   background-color: #02080c;
 }
+

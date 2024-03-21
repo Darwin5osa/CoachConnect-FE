@@ -1,7 +1,7 @@
+import { useGlobalContex } from "../../Utils/global.context";
 import s from "../css/Navbar.module.css";
 import { Link } from "react-router-dom";
 import React from "react";
-import { useGlobalContex } from "../../Utils/global.context";
 
 const AdminNavbar = () => {
   const { state, dispatch } = useGlobalContex();
@@ -19,6 +19,11 @@ const AdminNavbar = () => {
       <Link to="/" className={s.navbarlogo}>
         <img className={s.logo1} src="/Asset3.png" alt="Logo" />
       </Link>
+      <ul className={s.navbarmenu}>
+        <div className={s.item}>
+          <Link to="/">Home</Link>
+        </div>
+      </ul>
       <div className={s.navSession}>
         <p onClick={handleC}>{state.session.sub}</p>
         <button onClick={handleClose}>salir</button>

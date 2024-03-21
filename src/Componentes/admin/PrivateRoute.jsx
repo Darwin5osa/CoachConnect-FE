@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
   
   const session = state.session.role == "ADMIN"
 
-  return !session ? children : <Navigate to="/login" />;
+  return session ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

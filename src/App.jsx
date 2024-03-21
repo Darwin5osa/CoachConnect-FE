@@ -1,15 +1,13 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import PrivateRoute from "./Componentes/admin/PrivateRoute";
-import AdminLayout from "./views/AdminLayout";
-import Favoritos from "./Paginas/Favoritos";
-import UserLayout from "./views/UserLayout";
-import Admin from "./Paginas/admin/Admin";
-import AdminView from "./views/AdminView";
-import Example from "./Paginas/Example";
-import UserView from "./views/UserView";
 import Detail from "./Paginas/Detail";
+import Favoritos from "./Paginas/Favoritos";
 import Login from "./Paginas/Login";
-import { useEffect } from "react";
+import AdminLayout from "./views/AdminLayout";
+import AdminView from "./views/AdminView";
+import UserLayout from "./views/UserLayout";
+import UserView from "./views/UserView";
 function App() {
   const { pathname } = useLocation();
 
@@ -39,7 +37,6 @@ function App() {
         <Route path="/admin" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Login />} />
-        <Route path="/example" element={<Example />} />
       </Routes>
     </div>
   );

@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import { isSameDay, format, isBefore, startOfDay } from "date-fns";
 import { useGlobalContex } from "../Utils/global.context";
-import { useParams } from "react-router";
-import { useEffect } from "react";
-import data from "../Utils/DatosTutores.json";
+import { useNavigate, useParams } from "react-router";
+import React, { useEffect, useState } from "react";
 import r from "../Paginas/css/detail.module.css";
+import { DateRangePicker } from "rsuite";
 const Detail = () => {
+  const [datesArray, setDatesArray] = useState(null)
+  const [selectedRange, setSelectedRange] = useState(null);
+  const navigate = useNavigate();
   const { state } = useGlobalContex();
   const [tutoria, setTutoria] = useState("");
   const [tutor, setTutor] = useState("");
   const [caracteristicas, setCaracteristicas] = useState([]);
-  const { id } = useParams(); 
+  const { id } = useParams();
 
-  useEffect(() => {
-    const tutoriaEncontrada = state.TUTORIAS.find(
-      (tutoria) => tutoria.id === parseInt(id)
-    );
-    setTutoria(tutoriaEncontrada);
-  }, [id, state.TUTORIAS]);
+console.log(tutoria.dias);
+
+
+useEffect(() => {
+  fetch(`https://api.coachconnect.tech/tutoria/${id}`)
+    .then((res) => res.json())
+    .then((data) => setTutoria(data));
+}, []);
+
+useEffect(() => {
+  if (tutoria && tutoria.dias) {
+    setDatesArray(Object.keys(tutoria.dias)
+      .filter(day => tutoria.dias[day]) // Filtrar solo los días con valor true
+      .map(day => new Date(2024, 2, parseInt(day)))) // Crear un objeto Date para cada día (el mes es 0-indexado)
+    console.log(datesArray);
+  }
+}, [tutoria]);
 
   useEffect(() => {
     const tutorEncontrado = state.TUTORES.find(
@@ -37,19 +51,37 @@ const Detail = () => {
     }
   }, [tutoria, state.CARACTERISTICAS]);
 
-  console.log("------caracteristicas------");
-  console.log(caracteristicas);
-  console.log("------caracteristicas------");
   if (!tutoria || !tutor) {
     return <div style={{ color: "white" }}>Tutoría no encontrada</div>;
   }
 
   function irAHome() {
-    window.location.href = "/";
+    navigate(-1);
   }
 
   return (
-    <div div className={r.contenedor}>
+    <div className={r.contenedor}>
+      <div className={r.calendario}>
+        <h2>Disponibilidad</h2>
+        <DateRangePicker
+          value={selectedRange}
+          block
+          label="Fechas de inicio y fin"
+          editable={false}
+          format="dd.MM.yyyy"
+          shouldDisableDate={(date) => {
+            // Deshabilita las fechas anteriores a hoy, pero no deshabilita la fecha de hoy
+            const isBeforeToday = isBefore(date, startOfDay(new Date()));
+            // Deshabilita las fechas presentes en disabledDates
+            const isDisabled = datesArray.some((disabledDate) =>
+              isSameDay(date, disabledDate)
+            );
+
+            // Retorna true si la fecha está antes de hoy o si está en disabledDates
+            return isBeforeToday || isDisabled;
+          }}
+        />
+      </div>
       <div className={r.card}>
         <h1>{tutoria.nombre}</h1>
         <p>
@@ -75,7 +107,7 @@ const Detail = () => {
           <h3 className={r.infoTutor}>
             {tutor.nombre} {tutor.apellido}
           </h3>
-          <h3> {tutor.descripcion}</h3>
+          <h3 className={r.tutorDes}> {tutor.descripcion}</h3>
         </div>
 
         <div className={r.contenedorImagenes}>
@@ -112,7 +144,7 @@ const Detail = () => {
 
         <div className={r.caracteristicas}>
           <h2>Características Principales</h2>
-          <ul>
+          <ul className={r.carac}>
             {caracteristicas.map((caracteristica, index) => (
               <li
                 className={r.icono}
@@ -129,18 +161,10 @@ const Detail = () => {
           </ul>
         </div>
 
-        <div
-          onClick={irAHome}
-          className={r.backArrow}
-        >
+        <div onClick={irAHome} className={r.backArrow}>
           <i
             className="fa-solid fa-house"
-            style={{
-              fontSize: "25px",
-              marginRight: "10px",
-            }}
           ></i>
-          <p style={{ margin: "0" }}>Volver a Home</p>
         </div>
       </div>
     </div>
