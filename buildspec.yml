@@ -1,0 +1,20 @@
+version: 0.2
+        
+phases:
+  install:
+    runtime-version: 
+      nodejs: 20
+    commands:
+      - npm install -g npm@9
+      - npm install
+  build:
+    commands:
+      - ls
+      - echo "==========="
+      - npm run build
+      - echo "============================"
+      - ls
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist
