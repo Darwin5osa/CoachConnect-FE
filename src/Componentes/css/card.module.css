@@ -1,35 +1,35 @@
 .cardContainer {
-  width: 420px;
-  min-width: 300px;
-  height: 200px;
+  width: 490px;
+  height: 220px;
   border-radius: 0 15px 15px 0;
   background-color: #ffffff11;
   display: flex;
   align-items: center;
   position: relative;
-  box-shadow: rgba(0, 0, 0, 0.60) -5px 0 20px 1px;
+  box-shadow: rgba(0, 0, 0, 0.6) -5px 0 20px 1px;
   overflow: hidden;
   gap: 20px;
-  transition: all .1s ease-in-out;
-
+  transition: all 0.1s ease-in-out;
 }
 
-
-.cardContainer::after{
+.cardContainer::after {
   position: absolute;
   content: "";
   border-left: #4bc8ab solid 0px;
   height: 100%;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
-.cardContainer:hover::after{
-  border-left: #4bc8ab solid 20px;
+
+.cardContainer:hover::after {
+  border-left: #4bc8ab solid 10px;
 }
-.cardContainer:hover{
-  transform: scale(.95)
+
+.cardContainer:hover {
+  transform: scale(0.95);
 }
 .img {
   width: 40%;
+  min-width: 40%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -37,6 +37,7 @@
 }
 .img img {
   width: 105%;
+  min-height: 100%;
   filter: contrast(1.1);
 }
 
@@ -61,11 +62,10 @@
   margin-bottom: -6px;
   margin-top: 0;
   line-height: initial;
-  font-size: 20px;
-  width: 90%;
+  font-size: clamp(16px, 4vw, 22px);
+  width: 95%;
   border: none;
 }
-
 
 .profession {
   color: #ffffff;
@@ -82,6 +82,9 @@
   color: white;
   overflow: hidden;
   margin: 0;
+  font-size: clamp(12px, 2vw, 13px);
+  text-align: left;
+  opacity: .8;
 }
 
 .rating {
@@ -92,14 +95,14 @@
   display: none;
 }
 
-.link{
+.link {
   font-size: 20px;
   color: white;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   transform: scale(0.1);
 }
 
-.infoCont{
+.infoCont {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -112,20 +115,16 @@
   opacity: 0;
 }
 
-.cardContainer:hover .infoCont{
-  opacity: .6;
+.cardContainer:hover .infoCont {
+  opacity: 0.6;
 }
 
-.cardContainer:hover .link{
+.cardContainer:hover .link {
   transform: scale(1);
 }
 
-
 @media (max-width: 1200px) {
-  .cardContainer{
+  .cardContainer {
     width: 100%;
-    min-width: 300px;
   }
 }
-
-

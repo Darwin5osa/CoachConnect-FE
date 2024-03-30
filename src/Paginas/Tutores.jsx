@@ -11,15 +11,6 @@ import "./css/calendar.css";
 const Tutores = () => {
   const [selectedRange, setSelectedRange] = useState(null);
   const [formattedRange, setFormattedRange] = useState(null);
-  const disabledDates = [
-    new Date("2024-03-25"),
-    new Date("2024-03-26"),
-    new Date("2024-03-27"),
-  ];
-
-  const handleDateRangeChange = () => {
-    setSelectedRange(selectedRange);
-  };
 
   const {
     appearance,
@@ -56,7 +47,6 @@ const Tutores = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const { TUTORIAS, TUTORES, NIVELES } = state;
   const [tutorias, setTutorias] = useState(TUTORIAS);
-  console.log(tutorias);
   const [itemsPerPage, setItemsPerPage] = useState(
     window.innerWidth > 1200 ? 10 : 5
   );
@@ -68,12 +58,11 @@ const Tutores = () => {
   const fetchTutoriasDisponibilidad = (url) => {
     console.log(url);
     fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
         setTutorias(data);
-    });
-
+      });
   };
 
   const search = () => {
@@ -90,7 +79,7 @@ const Tutores = () => {
   };
 
   const handleCancelSearch = () => {
-    setTutorias(TUTORIAS)
+    setTutorias(TUTORIAS);
     setSelectedRange(null);
     setTerm("");
   };
@@ -184,7 +173,7 @@ const Tutores = () => {
         <div className={s.content}>
           <h3 className={s.titleB}>Buscador</h3>
           <div className={s.input}>
-            <label>Tutoria</label>
+            <label className={s.label}>Tutoria</label>
             <input
               className={s.search}
               type="text"
@@ -193,24 +182,21 @@ const Tutores = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className={s.picker}>
+          <div>
+            <label className={s.label}>Fecha</label>
             <DateRangePicker
+              className={s.picker}
               value={selectedRange}
               onChange={(e) => setSelectedRange(e)}
               block
-              label="Fechas de inicio y fin"
+              showOneCalendar
               editable={false}
               format="dd.MM.yyyy"
               shouldDisableDate={(date) => {
-                // Deshabilita las fechas anteriores a hoy, pero no deshabilita la fecha de hoy
-                const isBeforeToday = isBefore(date, startOfDay(new Date()));
-                // Deshabilita las fechas presentes en disabledDates
-                const isDisabled = disabledDates.some((disabledDate) =>
-                  isSameDay(date, disabledDate)
-                );
 
-                // Retorna true si la fecha está antes de hoy o si está en disabledDates
-                return isBeforeToday || isDisabled;
+                const isBeforeToday = isBefore(date, startOfDay(new Date()));
+
+                return isBeforeToday;
               }}
             />
           </div>
@@ -228,7 +214,7 @@ const Tutores = () => {
         {currentTutorias.length > 0 ? (
           renderTutorCards(currentTutorias)
         ) : (
-          <h2 className={s.noResults}>No hay resultados para "{term}"</h2>
+          <p className={s.noResults}>No hay resultados para "{term}", o no hay disponibilidad en las fechas seleccionadas</p>
         )}
       </section>
 

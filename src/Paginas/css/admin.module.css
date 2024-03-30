@@ -52,7 +52,6 @@
 }
 
 .selected {
-  
   width: 72%;
 }
 
@@ -80,7 +79,7 @@
 }
 
 .active {
-  border-left: solid #4bc8ab 3px;
+  border-left: solid #4bc8ab 5px;
   background-color: rgba(255, 255, 255, 0.09);
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
@@ -98,7 +97,6 @@
 /* ESTILOS TUTORIAS */
 
 .selectedCont {
-  /*   border-left: solid 1px white; */
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -392,9 +390,9 @@
   align-items: center;
   padding: 70px;
 }
-.mobile h1{
+.mobile p{
   color: white;
-  font-size: clamp(18px, 5vw, 30px);
+  font-size: clamp(16px, 4vw, 25px);
   text-align: center;
-  opacity: .8;
+  opacity: .6;
 }
