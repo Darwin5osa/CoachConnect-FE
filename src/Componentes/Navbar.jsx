@@ -1,44 +1,41 @@
 import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import { useGlobalContex } from "../Utils/global.context";
+import React, { useEffect, useState } from "react";
 import { IoLogIn } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 import s from "./css/Navbar.module.css";
 import { FaHome } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
 const Navbar = () => {
   const { state, dispatch } = useGlobalContex();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const handleClose = () => {
+    navigate("/")
     dispatch({ type: "CLOSE_SESSION" });
+    setMenuOpen(false);
   };
 
   useEffect(() => {
     if (menuOpen) {
       // Deshabilitar el scroll
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
       // Habilitar el scroll
-      document.body.style.overflow = 'visible';
+      document.body.style.overflow = "visible";
     }
 
     // Cleanup del efecto
     return () => {
-      document.body.style.overflow = 'visible';
+      document.body.style.overflow = "visible";
     };
   }, [menuOpen]);
-  function handleC() {
-    if (state.session.role === "ADMIN") {
-      Navigate("/admin/dashboard");
-    }
-  }
 
-    function handleOpen(){
-    if(menuOpen===false){
-      setMenuOpen(true)
+  function handleOpen() {
+    if (menuOpen === false) {
+      setMenuOpen(true);
     }
-    if(menuOpen===true){
-      setMenuOpen(false)
+    if (menuOpen === true) {
+      setMenuOpen(false);
     }
   }
 
@@ -74,42 +71,58 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        className={`${s.menu} ${menuOpen ? s.active : ""}`}
-      >
+      <div className={`${s.menu} ${menuOpen ? s.active : ""}`}>
         {state.session ? (
-          <div className={s.navMenuName}>
-            Hola, {state.session.sub}!
+          <div className={s.navMenuName}>Hola, {state.session.nombre}!</div>
+        ) : (
+          ""
+        )}
+        {state.session.role === "ESTUDIANTE" ? (
+          <div className={s.navMenu}>
+            Perfil
+          </div>
+        ) : (
+          ""
+        )}
+        <div className={s.navMenu} onClick={handleHome}>
+          Home
+        </div>
+        {!state.session ? (
+          <div className={s.navMenu} onClick={handleSignin}>
+            Sign In
+          </div>
+        ) : (
+          ""
+        )}
+        {!state.session ? (
+          <div className={s.navMenu} onClick={handleRegister}>
+            Register
           </div>
         ) : (
           ""
         )}
 
-        <div className={s.navMenu} onClick={handleHome}>
-          Home
-        </div>
-        {
-          !state.session?<div className={s.navMenu} onClick={handleSignin}>
-          Sign In
-        </div>: ""
-        }
-        {
-          !state.session?<div className={s.navMenu} onClick={handleRegister}>
-          Register
-        </div>: ""
-        }
-        
-        {
-          state.session.role == "ESTUDIANTE"?<div className={s.navMenu} onClick={handleFav}>
-          Favoritos
-        </div>:""
-        }
-        {
-          state.session.role == "ADMIN"?<div className={s.navMenu} onClick={handleAdm}>
-          Administrar
-        </div>:""
-        }
-        
+        {state.session.role == "ESTUDIANTE" ? (
+          <div className={s.navMenu} onClick={handleFav}>
+            Favoritos
+          </div>
+        ) : (
+          ""
+        )}
+        {state.session.role == "ADMIN" ? (
+          <div className={s.navMenu} onClick={handleAdm}>
+            Administrar
+          </div>
+        ) : (
+          ""
+        )}
+        {state.session ? (
+          <div className={s.navMenu} onClick={handleClose}>
+            Salir
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       <nav className={s.navbar}>
         <div className={s.navbarlogo}>

@@ -2,18 +2,21 @@ import {
   getCaracteristicas,
   getCategorias,
   getEstudiantes,
+  getFavs,
   getNiveles,
   getTutores,
   getTutorias,
 } from "./fetchAPI";
 import { createContext, useContext, useReducer } from "react";
+
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const getSessionToken = () => {
   const token = localStorage.getItem("token");
   try {
-    return token ? jwtDecode(token) : false;
+    return token ? {...jwtDecode(token), id: 20} : false;
   } catch (error) {
     console.error("Error al decodificar el token:", error);
     return false;
@@ -27,20 +30,21 @@ export const initialState = {
   TUTORIAS: [],
   TUTORES: [],
   ESTUDIANTES: [],
-  detail: null,
   session: getSessionToken(),
+  favs: [],
 };
 
 export const ContextGlobal = createContext();
 
 export const ContextProvider = ({ children }) => {
+
   const reducer = (state, action) => {
     switch (action.type) {
       case "SET_SESSION":
         return { ...state, session: action.payload };
       case "CLOSE_SESSION":
         localStorage.clear();
-        return { ...state, session: false };
+        return { ...state, session: false, favs: [] };
       case "GETcategorias":
         return { ...state, CATEGORIAS: action.payload };
       case "GETcaracteristicas":
@@ -53,6 +57,8 @@ export const ContextProvider = ({ children }) => {
         return { ...state, TUTORES: action.payload };
       case "GETestudiantes":
         return { ...state, ESTUDIANTES: action.payload };
+      case "GETfavs":
+        return { ...state, favs: action.payload };
       default:
         return state;
     }
@@ -61,12 +67,13 @@ export const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    getTutores(dispatch);
     getCategorias(dispatch);
     getCaracteristicas(dispatch);
     getTutorias(dispatch);
     getNiveles(dispatch);
-    getTutores(dispatch);
     getEstudiantes(dispatch);
+    if(state.session) getFavs(dispatch, state.session.id)
   }, []);
   return (
     <ContextGlobal.Provider
@@ -77,6 +84,8 @@ export const ContextProvider = ({ children }) => {
         getCaracteristicas,
         getTutorias,
         getNiveles,
+        getFavs,
+        getEstudiantes
       }}
     >
       {children}

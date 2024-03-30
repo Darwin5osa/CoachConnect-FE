@@ -1,12 +1,12 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContex } from "../Utils/global.context";
-import Navbar from "../Componentes/Navbar";
-import { Loader } from "semantic-ui-react";
-import { toast, Toaster } from "sonner";
-import s from "./css/login.module.css";
 import emailjs from "@emailjs/browser";
 import { jwtDecode } from "jwt-decode";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Loader } from "semantic-ui-react";
+import { toast, Toaster } from "sonner";
+import Navbar from "../Componentes/Navbar";
+import { useGlobalContex } from "../Utils/global.context";
+import s from "./css/login.module.css";
 const Login = () => {
   const forms = useRef();
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const { state, dispatch } = useGlobalContex();
+  const { state, dispatch, getFavs } = useGlobalContex();
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [form, setForm] = useState(location === "/register" ? true : false);
@@ -50,7 +50,7 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const info = { ...jwtDecode(data.token), name: signin.email };
+        const info = { ...jwtDecode(data.token), id: 20 };
         console.log(info);
         dispatch({ type: "SET_SESSION", payload: info });
         window.localStorage.setItem("token", data.token);

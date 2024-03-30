@@ -38,6 +38,7 @@ const Admin = () => {
     getCaracteristicas,
     getTutorias,
     getNiveles,
+    getEstudiantes
   } = useGlobalContex();
   const [categorias, setCategorias] = useState(state.CATEGORIAS);
   const [caracteristicas, setCaracteristicas] = useState(state.CARACTERISTICAS);
@@ -1015,6 +1016,84 @@ const Admin = () => {
     );
   };
 
+  const usuariosT = () => {
+    return (
+      <div className={s.selectedCont}>
+        <div className={`${s.listCont} ${s.lista}`}>
+          <h2 className={s.tit}>Lista de Niveles</h2>
+          <ul className={s.tList}>
+            <li className={s.head}>
+              <p className={s.id}>id</p>
+              <p className={s.nameSimple}>Nombre</p>
+              <p className={s.btnsSimple}>Acciones</p>
+            </li>
+            {currentNiv.map((nivel) => (
+              <li className={s.item} key={nivel.id}>
+                <p className={s.id}>{nivel.id}</p>
+                <p className={s.nameSimple}>{nivel.nombre}</p>
+                <div className={s.btnsSimple}>
+                  <button
+                    className={`${s.btn} ${s.edit}`}
+                    onClick={() => handleEditarNivel(nivel)}
+                  >
+                    <FiEdit />
+                  </button>
+                  <button
+                    className={`${s.btn} ${s.el}`}
+                    onClick={() => handleEliminarNivel(nivel.id)}
+                  >
+                    <RiDeleteBin6Line />
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className={s.pagination}>
+            <button onClick={handlePrevPageNiv}>Anterior</button>
+            <span>{currentPageNiv}</span>
+            <button onClick={handleNextPageNiv}>Siguiente</button>
+          </div>
+        </div>
+        <p className={s.note}>
+          Nota: No podras eliminar un nivel que este en uso.
+        </p>
+        <form className={s.listCont}>
+          <h2 className={s.tit}>Agregar - Editar</h2>
+          <div className={s.formContainer}>
+            <div className={s.formInputSimple}>
+              <label htmlFor="descripcion">Nombre:</label>
+              <input
+                className={s.textInput}
+                type="text"
+                value={nuevoNivel.nombre}
+                onChange={(e) =>
+                  setNuevoNivel({
+                    ...nuevoNivel,
+                    nombre: e.target.value,
+                  })
+                }
+                placeholder="Nuevo Nivel"
+              />
+            </div>
+            <div className={s.options}>
+              <button className={s.plus} onClick={(e) => handleNivel(e)}>
+                {nuevoNivel.id ? <FaUserEdit /> : <FaUserPlus />}
+                {nuevoNivel.id ? "Actualizar" : "Crear"}
+              </button>
+              <button
+                className={s.delete}
+                onClick={(e) => handleNivelCancel(e)}
+              >
+                <MdOutlineCancel />
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Toaster richColors />
@@ -1069,6 +1148,7 @@ const Admin = () => {
               {menu === "Caracteristicas" && caracteristicasT()}
               {menu === "Categorias" && categoriasT()}
               {menu === "Niveles" && nivelesT()}
+              {menu === "Usuarios" && usuariosT()}
             </section>
           </div>
         </div>

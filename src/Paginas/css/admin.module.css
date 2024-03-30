@@ -217,6 +217,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 100%;
   gap: 8px;
   margin-bottom: 20px;
@@ -347,7 +348,7 @@
 .icoC {
   position: absolute;
   right: 20px;
-  bottom: 10px;
+  bottom: 13px;
   font-size: 18px;
   opacity: 0.8;
 }
