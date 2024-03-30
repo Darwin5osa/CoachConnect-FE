@@ -5,7 +5,6 @@ import {
   FaUserEdit,
   FaUserPlus,
 } from "react-icons/fa";
-import { Toaster, toast } from 'sonner'
 import { useGlobalContex } from "../../Utils/global.context";
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -14,6 +13,7 @@ import { BiCategory } from "react-icons/bi";
 import s from "../css/admin.module.css";
 import { FiEdit } from "react-icons/fi";
 import { GoGear } from "react-icons/go";
+import { toast, Toaster } from "sonner";
 const Admin = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -93,14 +93,20 @@ const Admin = () => {
       },
       body: JSON.stringify(nuevaCategoria),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getCategorias(dispatch);
         setNuevaCategoria({ nombre: "" });
-        toast.success('Categoria agregada')
+        toast.success("Categoria agregada");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.message);
       });
   };
   const handleEliminarCategoria = (id) => {
@@ -110,13 +116,19 @@ const Admin = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((res) => {
+      .then((response) => {
+        if (response.ok) return;
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
+      .then(() => {
+        toast.info("Se ha eliminado la categoria");
         getCategorias(dispatch);
-        toast.success('Categoria eliminada')
       })
       .catch((error) => {
-        getCategorias(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -137,14 +149,20 @@ const Admin = () => {
       },
       body: JSON.stringify(nuevaCategoria),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getCategorias(dispatch);
         setNuevaCategoria({ nombre: "" });
-        toast.success('Categoria guardada')
+        toast.success("Categoria guardada");
       })
       .catch((error) => {
-        getCategorias(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -170,14 +188,20 @@ const Admin = () => {
       },
       body: JSON.stringify(nuevaCaracteristica),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getCaracteristicas(dispatch);
-        setNuevaCaracteristica({ nombre: "" });
-        toast.success('Caracteristica agregada')
+        setNuevaCaracteristica({ nombre: "" , icono: ""});
+        toast.success("Caracteristica agregada");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.message);
       });
   };
   const handleEliminarCaracteristica = (id) => {
@@ -187,12 +211,19 @@ const Admin = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((res) => {
+      .then((response) => {
+        if (response.ok) return;
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
+      .then(() => {
+        toast.info("Se ha eliminado la característica");
         getCaracteristicas(dispatch);
       })
       .catch((error) => {
-        getCaracteristicas(dispatch);
+        toast.error(error.message);
       });
   };
   const handleGuardarCaracteristica = () => {
@@ -206,14 +237,20 @@ const Admin = () => {
         body: JSON.stringify(nuevaCaracteristica),
       }
     )
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getCaracteristicas(dispatch);
-        setNuevaCaracteristica({ nombre: "" });
-        toast.success('Caracteristica guardada')
+        setNuevaCaracteristica({ nombre: "" , icono: ""});
+        toast.success("Caracteristica guardada");
       })
       .catch((error) => {
-        getCaracteristicas(dispatch);
+        toast.error(error.message);
       });
   };
   const handleEditarCaracteristica = (caracteristica) => {
@@ -286,13 +323,19 @@ const Admin = () => {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getTutorias(dispatch);
-        toast.success('Tutoria agregada')
+        toast.success("Tutoria agregada");
       })
       .catch((error) => {
-        getTutorias(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -313,12 +356,19 @@ const Admin = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((res) => {
+      .then((response) => {
+        if (response.ok) return;
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
+      .then(() => {
+        toast.info("Se ha eliminado la tutoria");
         getTutorias(dispatch);
       })
       .catch((error) => {
-        getTutorias(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -334,13 +384,19 @@ const Admin = () => {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getTutorias(dispatch);
-        toast.success('Tutoria guardada')
+        toast.success("Tutoria guardada");
       })
       .catch((error) => {
-        getTutorias(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -362,14 +418,20 @@ const Admin = () => {
       },
       body: JSON.stringify(nuevoNivel),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getNiveles(dispatch);
         setNuevoNivel({ nombre: "" });
-        toast.success('Nivel agregado')
+        toast.success("Nivel agregado");
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.message);
       });
   };
 
@@ -380,13 +442,19 @@ const Admin = () => {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((res) => {
+      .then((response) => {
+        if (response.ok) return;
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
+      .then(() => {
+        toast.info("Se ha eliminado el nivel");
         getNiveles(dispatch);
-        richColors('Nivel guardado')
       })
       .catch((error) => {
-        getNiveles(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -411,13 +479,19 @@ const Admin = () => {
       },
       body: JSON.stringify(nuevoNivel),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) return response.json();
+        else
+          return response.json().then((jsonResponse) => {
+            throw new Error(jsonResponse.message || "Error en la solicitud.");
+          });
+      })
       .then((res) => {
         getNiveles(dispatch);
         setNuevoNivel({ nombre: "" });
       })
       .catch((error) => {
-        getNiveles(dispatch);
+        toast.error(error.message);
       });
   };
 
@@ -629,6 +703,7 @@ const Admin = () => {
                 ))}
               </select>
             </div>
+
             <div className={`${s.formInput}`}>
               <label>Características:</label>
               <div className={s.checkbox}>
@@ -776,7 +851,6 @@ const Admin = () => {
             </li>
             {currentCarac.map((caracteristica) => (
               <li className={s.item} key={caracteristica.id}>
-                {console.log(caracteristica)}
                 <p className={s.id}>{caracteristica.id}</p>
                 <p className={s.nameSimple}>{caracteristica.nombre}</p>
                 <div className={s.btnsSimple}>
@@ -943,66 +1017,67 @@ const Admin = () => {
 
   return (
     <div>
-      <Toaster richColors/>
-      {!isMobile ? <div className={s.admin}>
-      <div className={s.cont}>
-        <section className={s.menu}>
-          <h3>Menú</h3>
-          <ul className={s.menuList}>
-            <li
-              onClick={() => setMenu("Tutorias")}
-              className={menu == "Tutorias" ? s.active : ""}
-            >
-              <FaChalkboardTeacher className={s.ico} />
-              <p>Tutorias</p>
-            </li>
-            <li
-              onClick={() => setMenu("Categorias")}
-              className={menu == "Categorias" ? s.active : ""}
-            >
-              <BiCategory className={s.ico} />
-              <p>Categorias</p>
-            </li>
-            <li
-              onClick={() => setMenu("Caracteristicas")}
-              className={menu == "Caracteristicas" ? s.active : ""}
-            >
-              <GoGear className={s.ico} />
+      <Toaster richColors />
+      {!isMobile ? (
+        <div className={s.admin}>
+          <div className={s.cont}>
+            <section className={s.menu}>
+              <h3>Menú</h3>
+              <ul className={s.menuList}>
+                <li
+                  onClick={() => setMenu("Tutorias")}
+                  className={menu == "Tutorias" ? s.active : ""}
+                >
+                  <FaChalkboardTeacher className={s.ico} />
+                  <p>Tutorias</p>
+                </li>
+                <li
+                  onClick={() => setMenu("Categorias")}
+                  className={menu == "Categorias" ? s.active : ""}
+                >
+                  <BiCategory className={s.ico} />
+                  <p>Categorias</p>
+                </li>
+                <li
+                  onClick={() => setMenu("Caracteristicas")}
+                  className={menu == "Caracteristicas" ? s.active : ""}
+                >
+                  <GoGear className={s.ico} />
 
-              <p>Caracteristicas</p>
-            </li>
-            <li
-              onClick={() => setMenu("Niveles")}
-              className={menu == "Niveles" ? s.active : ""}
-            >
-              <FaUniversity className={s.ico} />
+                  <p>Caracteristicas</p>
+                </li>
+                <li
+                  onClick={() => setMenu("Niveles")}
+                  className={menu == "Niveles" ? s.active : ""}
+                >
+                  <FaUniversity className={s.ico} />
 
-              <p>Niveles</p>
-            </li>
-            <li
-              onClick={() => setMenu("Usuarios")}
-              className={menu == "Usuarios" ? s.active : ""}
-            >
-              <FaRegUser className={s.ico} />
+                  <p>Niveles</p>
+                </li>
+                <li
+                  onClick={() => setMenu("Usuarios")}
+                  className={menu == "Usuarios" ? s.active : ""}
+                >
+                  <FaRegUser className={s.ico} />
 
-              <p>Usuarios</p>
-            </li>
-          </ul>
-        </section>
-        <section className={s.selected}>
-          {menu === "Tutorias" && tutoriasT()}
-          {menu === "Caracteristicas" && caracteristicasT()}
-          {menu === "Categorias" && categoriasT()}
-          {menu === "Niveles" && nivelesT()}
-        </section>
-      </div>
-    </div> : (
+                  <p>Usuarios</p>
+                </li>
+              </ul>
+            </section>
+            <section className={s.selected}>
+              {menu === "Tutorias" && tutoriasT()}
+              {menu === "Caracteristicas" && caracteristicasT()}
+              {menu === "Categorias" && categoriasT()}
+              {menu === "Niveles" && nivelesT()}
+            </section>
+          </div>
+        </div>
+      ) : (
         <div className={s.mobile}>
-          <h1>Ooops, el panel de administracion es solo accesible en desktop</h1>
+          <p>Ooops, el panel de administracion es solo accesible en desktop</p>
         </div>
       )}
     </div>
-    
   );
 };
 

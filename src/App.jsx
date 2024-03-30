@@ -1,13 +1,12 @@
-import { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import PrivateRoute from "./Componentes/admin/PrivateRoute";
-import Detail from "./Paginas/Detail";
 import Favoritos from "./Paginas/Favoritos";
-import Login from "./Paginas/Login";
-import AdminLayout from "./views/AdminLayout";
-import AdminView from "./views/AdminView";
 import UserLayout from "./views/UserLayout";
+import Admin from "./Paginas/admin/Admin";
 import UserView from "./views/UserView";
+import Detail from "./Paginas/Detail";
+import Login from "./Paginas/Login";
+import { useEffect } from "react";
 function App() {
   const { pathname } = useLocation();
 
@@ -22,21 +21,19 @@ function App() {
           <Route index path="/" element={<UserView />} />
           <Route path="detalle/:id" element={<Detail />} />
           <Route path="favoritos" element={<Favoritos />} />
-        </Route>
-        <Route path="/admin/*" element={<AdminLayout />}>
           <Route
-            path="dashboard"
+            path="/admin/dashboard"
             element={
               <PrivateRoute>
-                <AdminView />
+                <Admin />
               </PrivateRoute>
             }
           />
         </Route>
 
-        <Route path="/admin" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Login />} />
+        <Route path="/admin" element={<Navigate to="/login" />} />
       </Routes>
     </div>
   );

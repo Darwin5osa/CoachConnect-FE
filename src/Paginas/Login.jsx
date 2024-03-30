@@ -1,10 +1,9 @@
-import { Dimmer, Loader, Image, Segment } from "semantic-ui-react";
-import { Toaster, toast } from 'sonner'
-import { useNavigate, useLocation } from "react-router-dom";
-import AdminNavbar from "../Componentes/admin/AdminNavbar";
-import React, { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import { useGlobalContex } from "../Utils/global.context";
-import LoginNavbar from "../Componentes/LoginNavbar";
+import Navbar from "../Componentes/Navbar";
+import { Loader } from "semantic-ui-react";
+import { toast, Toaster } from "sonner";
 import s from "./css/login.module.css";
 import emailjs from "@emailjs/browser";
 import { jwtDecode } from "jwt-decode";
@@ -17,6 +16,10 @@ const Login = () => {
   });
   const [register, setRegister] = useState({
     username: "",
+    edad: 0,
+    contactoCelular: 0,
+    foto: "foto",
+    nivelEducativo: "nivel",
     nombre: "",
     apellido: "",
     email: "",
@@ -38,7 +41,6 @@ const Login = () => {
 
   const handleSignin = (e) => {
     e.preventDefault();
-    console.log(signin);
     fetch("https://api.coachconnect.tech/login", {
       method: "POST",
       headers: {
@@ -93,8 +95,7 @@ const Login = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(register);
-
+    console.log(forms.current);
     if (handleValidationRegister(register)) {
       setLoading(true);
       fetch("https://api.coachconnect.tech/estudiante", {
@@ -109,15 +110,17 @@ const Login = () => {
           console.log(data);
           emailjs
             .sendForm(
-              "service_0zl4red",
-              "template_0ozonpo",
+              "service_m7y7fsr",
+              "template_5mveabq",
               forms.current,
               "Cjl_H5JPzn_9MsSu1"
             )
             .then(
               (result) => {
                 console.log(result);
-                toast.info('Te llegara un mail con la confirmacion de registro')
+                toast.info(
+                  "Te llegara un mail con la confirmacion de registro"
+                );
               },
               (error) => {
                 console.log(error.text);
@@ -162,174 +165,173 @@ const Login = () => {
       email: "",
       password: "",
     });
-    setRegister({
-      username: "",
-      nombre: "",
-      apellido: "",
-      email: "",
-      password: "",
-    });
+    forms.current.reset()
   };
 
   return (
-    <div className={s.login}>
+    <>
+      <Navbar />
       <Toaster richColors />
-      <LoginNavbar />
-      <div className={s.cont}>
-        <div className={`${s.screen} ${form ? s.active1 : ""}`}>
-          {!form ? (
-            <div className={s.info}>
-              <div>
-                <img src="/Asset1.png" />
-                <h2>Coach Connect</h2>
+      <div className={s.login}>
+        <div className={s.cont}>
+          <div className={`${s.screen} ${form ? s.active1 : ""}`}>
+            {!form ? (
+              <div className={s.info}>
+                <div>
+                  <img src="/Asset1.png" />
+                  <h2>Coach Connect</h2>
+                </div>
+                <div className={s.acount}>
+                  <p>¿No tienes una cuenta?</p>
+                  <button onClick={handleScreen}>Registrarse</button>
+                </div>
               </div>
-              <div>
-                <p>¿No tienes una cuenta?</p>
-                <button onClick={handleScreen}>Registrarse</button>
-              </div>
-            </div>
-          ) : (
-            <div className={s.info}>
-              <div>
-                <img src="/Asset1.png" />
-                <h2>Coach Connect</h2>
-              </div>
-              <div>
-                <p>¿Ya eres miembro?</p>
-                <button onClick={handleScreen}>Iniciar Sesion</button>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className={s.struc}>
-          <form ref={forms} className={`${s.formReg} ${!form ? s.none : ""}`}>
-            <h1>Register</h1>
-            <div className={s.logcont}>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="usuario">
-                  Nombre de usuario:
-                </label>
-                <input
-                  onChange={handleInputChangeRegister}
-                  value={register.username}
-                  className={s.in}
-                  type="text"
-                  id="username"
-                  name="username"
-                  required
-                ></input>
-              </div>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="nombre">
-                  Nombre:
-                </label>
-                <input
-                  onChange={handleInputChangeRegister}
-                  value={register.nombre}
-                  className={s.in}
-                  type="text"
-                  id="nombre"
-                  name="nombre"
-                  required
-                ></input>
-              </div>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="contrasena">
-                  Apellido:
-                </label>
-                <input
-                  onChange={handleInputChangeRegister}
-                  value={register.apellido}
-                  className={s.in}
-                  type="apellido"
-                  id="apellido"
-                  name="apellido"
-                  required
-                ></input>
-              </div>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="contrasena">
-                  Email:
-                </label>
-                <input
-                  onChange={handleInputChangeRegister}
-                  value={register.email}
-                  className={s.in}
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                ></input>
-              </div>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="contrasena">
-                  Contraseña:
-                </label>
-                <input
-                  onChange={handleInputChangeRegister}
-                  value={register.password}
-                  className={s.in}
-                  type="password"
-                  id="contraseña"
-                  name="password"
-                  required
-                ></input>
-              </div>
-            </div>
-            {!loading ? (
-              <button
-                type="submit"
-                onClick={handleRegister}
-                className={s.boton}
-              >
-                Regsiter
-              </button>
             ) : (
-              <div className={s.spinner}>
-                <Loader active inline="centered" />
+              <div className={s.info}>
+                <div>
+                  <img src="/Asset1.png" />
+                  <h2>Coach Connect</h2>
+                </div>
+                <div>
+                  <p>¿Ya eres miembro?</p>
+                  <button onClick={handleScreen}>Iniciar Sesion</button>
+                </div>
               </div>
             )}
-          </form>
-        </div>
-        <div className={s.struc}>
-          <form className={`${s.formSignin} ${form ? s.none : ""}`}>
-            <h1>Sign in</h1>
-            <div className={s.logcont}>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="usuario">
-                  Email:
-                </label>
-                <input
-                  onChange={handleInputChangeSignin}
-                  className={s.in}
-                  type="email"
-                  name="email"
-                  value={signin.email}
-                  required
-                ></input>
+          </div>
+          <div className={s.struc}>
+            <form ref={forms} className={`${s.formReg} ${!form ? s.none : ""}`}>
+              <h1>Register</h1>
+              <div className={s.logcont}>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="usuario">
+                    Nombre de usuario:
+                  </label>
+                  <input
+                    onChange={handleInputChangeRegister}
+                    placeholder="Nombre de usuario"
+                    className={s.in}
+                    type="text"
+                    id="username"
+                    name="username"
+                    required
+                  ></input>
+                </div>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="nombre">
+                    Nombre:
+                  </label>
+                  <input
+                    placeholder="Nombre"
+                    onChange={handleInputChangeRegister}
+                    className={s.in}
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                  ></input>
+                </div>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="contrasena">
+                    Apellido:
+                  </label>
+                  <input
+                    placeholder="Apellido"
+                    onChange={handleInputChangeRegister}
+                    className={s.in}
+                    type="apellido"
+                    id="apellido"
+                    name="apellido"
+                    required
+                  ></input>
+                </div>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="contrasena">
+                    Email:
+                  </label>
+                  <input
+                    placeholder="Email"
+                    onChange={handleInputChangeRegister}
+                    className={s.in}
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                  ></input>
+                </div>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="contrasena">
+                    Contraseña:
+                  </label>
+                  <input
+                    placeholder="Contraseña"
+                    onChange={handleInputChangeRegister}
+                    className={s.in}
+                    type="password"
+                    id="contraseña"
+                    name="password"
+                    required
+                  ></input>
+                </div>
               </div>
-              <div className={s.us}>
-                <label className={s.lab} htmlFor="contrasena">
-                  Contraseña:
-                </label>
-                <input
-                  onChange={handleInputChangeSignin}
-                  className={s.in}
-                  type="password"
-                  name="password"
-                  value={signin.password}
-                  required
-                ></input>
+              {!loading ? (
+                <button
+                  type="submit"
+                  onClick={handleRegister}
+                  className={s.boton}
+                >
+                  Regsiter
+                </button>
+              ) : (
+                <div className={s.spinner}>
+                  <Loader active />
+                </div>
+              )}
+            </form>
+          </div>
+          <div className={s.struc}>
+            <form className={`${s.formSignin} ${form ? s.none : ""}`}>
+              <h1>Sign in</h1>
+              <div className={s.logcont}>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="usuario">
+                    Email:
+                  </label>
+                  <input
+                    placeholder="Email"
+                    onChange={handleInputChangeSignin}
+                    className={s.in}
+                    type="email"
+                    name="email"
+                    value={signin.email}
+                    required
+                  ></input>
+                </div>
+                <div className={s.us}>
+                  <label className={s.lab} htmlFor="contrasena">
+                    Contraseña:
+                  </label>
+                  <input
+                    placeholder="Contrasña"
+                    onChange={handleInputChangeSignin}
+                    className={s.in}
+                    type="password"
+                    name="password"
+                    value={signin.password}
+                    required
+                  ></input>
+                </div>
               </div>
-            </div>
-            <button type="submit" onClick={handleSignin} className={s.boton}>
-              Sign in
-            </button>
-          </form>
+              <button type="submit" onClick={handleSignin} className={s.boton}>
+                Sign in
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Login;
+

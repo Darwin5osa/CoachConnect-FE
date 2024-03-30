@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import r from "../Paginas/css/detail.module.css";
 import { DateRangePicker } from "rsuite";
 const Detail = () => {
-  const [datesArray, setDatesArray] = useState(null)
+  const [datesArray, setDatesArray] = useState(null);
   const [selectedRange, setSelectedRange] = useState(null);
   const navigate = useNavigate();
   const { state } = useGlobalContex();
@@ -14,23 +14,24 @@ const Detail = () => {
   const [caracteristicas, setCaracteristicas] = useState([]);
   const { id } = useParams();
 
-console.log(tutoria.dias);
+  console.log(tutoria.dias);
 
+  useEffect(() => {
+    fetch(`https://api.coachconnect.tech/tutoria/${id}`)
+      .then((res) => res.json())
+      .then((data) => setTutoria(data));
+  }, []);
 
-useEffect(() => {
-  fetch(`https://api.coachconnect.tech/tutoria/${id}`)
-    .then((res) => res.json())
-    .then((data) => setTutoria(data));
-}, []);
-
-useEffect(() => {
-  if (tutoria && tutoria.dias) {
-    setDatesArray(Object.keys(tutoria.dias)
-      .filter(day => tutoria.dias[day]) // Filtrar solo los días con valor true
-      .map(day => new Date(2024, 2, parseInt(day)))) // Crear un objeto Date para cada día (el mes es 0-indexado)
-    console.log(datesArray);
-  }
-}, [tutoria]);
+  useEffect(() => {
+    if (tutoria && tutoria.dias) {
+      setDatesArray(
+        Object.keys(tutoria.dias)
+          .filter((day) => tutoria.dias[day]) // Filtrar solo los días con valor true
+          .map((day) => new Date(2024, 2, parseInt(day)))
+      ); // Crear un objeto Date para cada día (el mes es 0-indexado)
+      console.log(datesArray);
+    }
+  }, [tutoria]);
 
   useEffect(() => {
     const tutorEncontrado = state.TUTORES.find(
@@ -64,6 +65,7 @@ useEffect(() => {
       <div className={r.calendario}>
         <h2>Disponibilidad</h2>
         <DateRangePicker
+          showOneCalendar
           value={selectedRange}
           block
           label="Fechas de inicio y fin"
@@ -162,9 +164,7 @@ useEffect(() => {
         </div>
 
         <div onClick={irAHome} className={r.backArrow}>
-          <i
-            className="fa-solid fa-house"
-          ></i>
+          <i className="fa-solid fa-house"></i>
         </div>
       </div>
     </div>

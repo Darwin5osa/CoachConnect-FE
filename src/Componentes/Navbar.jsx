@@ -1,94 +1,134 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 import { useGlobalContex } from "../Utils/global.context";
-import { Link as ScrollLink } from "react-scroll";
+import { IoLogIn } from "react-icons/io5";
+import { MdLogin } from "react-icons/md";
 import s from "./css/Navbar.module.css";
-import React, { useState } from "react";
-
+import { FaHome } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 const Navbar = () => {
   const { state, dispatch } = useGlobalContex();
+  const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  const toggleDropdown = () => {
-    setShowDropdown((prevState) => !prevState);
-  };
-
   const handleClose = () => {
     dispatch({ type: "CLOSE_SESSION" });
   };
 
+  useEffect(() => {
+    if (menuOpen) {
+      // Deshabilitar el scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Habilitar el scroll
+      document.body.style.overflow = 'visible';
+    }
+
+    // Cleanup del efecto
+    return () => {
+      document.body.style.overflow = 'visible';
+    };
+  }, [menuOpen]);
   function handleC() {
-    if (state.session.role == "ADMIN") {
-      navigate("/admin/dashboard");
+    if (state.session.role === "ADMIN") {
+      Navigate("/admin/dashboard");
     }
   }
-  return (
-    <nav className={s.navbar}>
-      <div className={s.navbarlogo}>
-        <Link to="/" className={s.logo1}>
-          <img src="/Asset3.png" alt="Logo" />
-        </Link>
-      </div>
-      <ul className={s.navbarmenu}>
-        <div className={s.item}>
-          <ScrollLink
-            className={s.link}
-            to="home"
-            smooth={true}
-            duration={500}
-            offset={-80}
-          >
-            <Link to="/">Home</Link>
-          </ScrollLink>
-        </div>
-        {/* <div className={s.item}>
-          <ScrollLink
-            className={s.link}
-            to="mentores"
-            smooth={true}
-            duration={500}
-            offset={-80}
-          >
-            <Link to="/">Mentores</Link>
-          </ScrollLink>
-        </div> */}
-        <div className={s.item}>
-          <ScrollLink
-            className={s.link}
-            to="favoritos"
-            smooth={true}
-            duration={500}
-            offset={-80}
-          >
-            <Link className={s.link} to="/favoritos">
-              Favoritos
-            </Link>
-          </ScrollLink>
-        </div>
-      </ul>
-      {!state.session ? (
-        <div className={s.navbarbuttons}>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-        </div>
-      ) : (
-        <div className={s.navSession}>
-          <p onClick={handleC}>{state.session.sub}</p>
-          <button onClick={handleClose}>salir</button>
-        </div>
-      )}
 
-      {/* <label className={s.hamburger}>
-        <input type="checkbox" />
-        <svg viewBox="0 0 32 32">
-          <path
-            className={`${s.line} ${s.linetopbottom}`}
-            d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
-          ></path>
-          <path className={s.line} d="M7 16 27 16"></path>
-        </svg>
-      </label> */}
-    </nav>
+    function handleOpen(){
+    if(menuOpen===false){
+      setMenuOpen(true)
+    }
+    if(menuOpen===true){
+      setMenuOpen(false)
+    }
+  }
+
+  const handleOpenM = () => {
+    setMenuOpen(true);
+  };
+
+  const handleCloseM = () => {
+    setMenuOpen(false);
+  };
+
+  const handleHome = () => {
+    setMenuOpen(false);
+    return navigate("/");
+  };
+
+  const handleSignin = () => {
+    setMenuOpen(false);
+    return navigate("/login");
+  };
+  const handleRegister = () => {
+    setMenuOpen(false);
+    return navigate("/register");
+  };
+  const handleFav = () => {
+    setMenuOpen(false);
+    return navigate("/favoritos");
+  };
+  const handleAdm = () => {
+    setMenuOpen(false);
+    return navigate("/admin/dashboard");
+  };
+
+  return (
+    <>
+      <div
+        className={`${s.menu} ${menuOpen ? s.active : ""}`}
+      >
+        {state.session ? (
+          <div className={s.navMenuName}>
+            Hola, {state.session.sub}!
+          </div>
+        ) : (
+          ""
+        )}
+
+        <div className={s.navMenu} onClick={handleHome}>
+          Home
+        </div>
+        {
+          !state.session?<div className={s.navMenu} onClick={handleSignin}>
+          Sign In
+        </div>: ""
+        }
+        {
+          !state.session?<div className={s.navMenu} onClick={handleRegister}>
+          Register
+        </div>: ""
+        }
+        
+        {
+          state.session.role == "ESTUDIANTE"?<div className={s.navMenu} onClick={handleFav}>
+          Favoritos
+        </div>:""
+        }
+        {
+          state.session.role == "ADMIN"?<div className={s.navMenu} onClick={handleAdm}>
+          Administrar
+        </div>:""
+        }
+        
+      </div>
+      <nav className={s.navbar}>
+        <div className={s.navbarlogo}>
+          <Link onClick={handleCloseM} to="/" className={s.logo1}>
+            <img src="/Asset3.png" alt="Logo" />
+          </Link>
+        </div>
+
+        <div className={s.hamburger} onClick={handleOpen}>
+          <svg viewBox="0 0 32 32">
+            <path
+              className={`${s.line} ${s.linetopbottom}`}
+              d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
+            ></path>
+            <path className={s.line} d="M7 16 27 16"></path>
+          </svg>
+        </div>
+      </nav>
+    </>
   );
 };
 
