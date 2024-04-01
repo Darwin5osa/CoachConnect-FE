@@ -25,7 +25,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const { state, dispatch } = useGlobalContex();
+  const { state, dispatch, getFavs } = useGlobalContex();
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [form, setForm] = useState(location === "/register" ? true : false);
@@ -50,12 +50,13 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const info = { ...jwtDecode(data.token), name: signin.email };
-        console.log(info);
+        const info = { ...jwtDecode(data.token) };
         dispatch({ type: "SET_SESSION", payload: info });
         window.localStorage.setItem("token", data.token);
+        getFavs(dispatch, info.estudianteId)
       })
-      .catch((err) => toast.warning("Datos incorrectos o faltantes"));
+      .catch((err) => toast.warning("Datos incorrectos o faltantes"))
+
   };
 
   const handleValidationRegister = (register) => {
@@ -165,13 +166,12 @@ const Login = () => {
       email: "",
       password: "",
     });
-    forms.current.reset()
+    forms.current.reset();
   };
 
   return (
     <>
       <Navbar />
-      <Toaster richColors />
       <div className={s.login}>
         <div className={s.cont}>
           <div className={`${s.screen} ${form ? s.active1 : ""}`}>
@@ -334,4 +334,3 @@ const Login = () => {
 };
 
 export default Login;
-

@@ -11,6 +11,35 @@
   gap: 20px;
   transition: all 0.1s ease-in-out;
 }
+.favCont {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 99;
+}
+.fav {
+  font-size: 20px;
+  color: white;
+  opacity: .6;
+  transition: all 0.1s ease-in-out;
+}
+.fav:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+.fav:active {
+  transform: scale(0.8);
+}
+
+.favActive {
+  opacity: 1;
+  color: #26f7c6c9;
+}
+
+.g {
+  position: relative;
+  transition: all 0.1s ease-in-out;
+}
 
 .cardContainer::after {
   position: absolute;
@@ -24,7 +53,7 @@
   border-left: #4bc8ab solid 10px;
 }
 
-.cardContainer:hover {
+.g:hover {
   transform: scale(0.95);
 }
 .img {
@@ -84,7 +113,7 @@
   margin: 0;
   font-size: clamp(12px, 2vw, 13px);
   text-align: left;
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .rating {

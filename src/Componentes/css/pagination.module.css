@@ -1,0 +1,24 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.btn_pagina {
+  background-color: transparent;
+  border: none;
+  color: #e2f8f1;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.active {
+  transition: all 0.2s ease-in-out;
+  opacity: 1;
+  font-size: 16px;
+  border-bottom: solid #e2f8f1 1px;
+  padding: 2px;
+}

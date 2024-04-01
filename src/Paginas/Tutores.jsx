@@ -1,55 +1,22 @@
-import { isSameDay, format, isBefore, startOfDay } from "date-fns";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useGlobalContex } from "../Utils/global.context";
-import { Link as ScrollLink } from "react-scroll";
+import { format, isBefore, startOfDay } from "date-fns";
+import Pagination from "../Componentes/Pagination";
+import Cardcont from "../Componentes/Cardcont";
 import s from "./css/tutores.module.css";
 import { DateRangePicker } from "rsuite";
-import { Link } from "react-router-dom";
 import Card from "../Componentes/Card";
 import "./css/calendar.css";
 
 const Tutores = () => {
   const [selectedRange, setSelectedRange] = useState(null);
-  const [formattedRange, setFormattedRange] = useState(null);
-
-  const {
-    appearance,
-    allowedMaxDays,
-    allowedDays,
-    allowedRange,
-    beforeToday,
-    afterToday,
-    combine,
-  } = DateRangePicker;
-  const currentDate = new Date().toISOString().split("T")[0]; // Obtiene la fecha actual en formato 'YYYY-MM-DD'
-
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-  const handleStartDateChange = (event) => {
-    setStartDate(event.target.value);
-  };
-
-  const handleEndDateChange = (event) => {
-    const selectedEndDate = event.target.value;
-
-    if (selectedEndDate < startDate) {
-      alert("La fecha de fin no puede ser anterior a la fecha de inicio");
-      setEndDate("");
-    } else {
-      setEndDate(selectedEndDate);
-    }
-  };
 
   const { state } = useGlobalContex();
-
   const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const { TUTORIAS, TUTORES, NIVELES } = state;
   const [tutorias, setTutorias] = useState(TUTORIAS);
-  const [itemsPerPage, setItemsPerPage] = useState(
-    window.innerWidth > 1200 ? 10 : 5
-  );
+  const itemsPerPage = window.innerWidth > 1200 ? 10 : 5;
 
   useEffect(() => {
     setTutorias(TUTORIAS);
@@ -70,11 +37,7 @@ const Tutores = () => {
       const formattedStartDate = format(selectedRange[0], "yyyy-MM-dd");
       const formattedEndDate = format(selectedRange[1], "yyyy-MM-dd");
       const url = `https://api.coachconnect.tech/tutoria/disponibilidad?fechaInicio=${formattedStartDate}&fechaFin=${formattedEndDate}`;
-      setFormattedRange(url);
-      // Realizar el fetch a la URL
       fetchTutoriasDisponibilidad(url);
-    } else {
-      setFormattedRange(null);
     }
   };
 
@@ -115,17 +78,6 @@ const Tutores = () => {
     [TUTORIAS]
   );
 
-  useEffect(() => {
-    const handleResize = () => {
-      setItemsPerPage(window.innerWidth > 1200 ? 10 : 5);
-      setCurrentPage((prevPage) => Math.min(prevPage, totalPages - 1));
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [totalPages]);
-
   const handleInputChange = (event) => {
     setTerm(event.target.value.toLowerCase());
     setCurrentPage(0);
@@ -135,39 +87,18 @@ const Tutores = () => {
     setCurrentPage(page);
   };
 
-  const renderTutorCards = (tutorias) => {
-    return tutorias.map((tutoria, index) => (
-      <Link
-        to={`/detalle/${tutoria.id}`}
-        key={index}
-        className={s.link}
-        style={{ textDecoration: "none" }}
-      >
-        <Card
-          tutoria={tutoria}
-          tutor={buscarTutor(tutoria.tutorId)}
-          nivel={buscarNivel(tutoria.nivelId)}
-        />
-      </Link>
-    ));
-  };
-
-  const buscarTutor = (id) => TUTORES.find((tutor) => tutor.id === id);
-  const buscarNivel = (id) => NIVELES.find((nivel) => nivel.id === id);
-
   return (
     <main id="mentores" className={s.mainTutores}>
       <header className={s.header}>
         <h2 className={s.title}>RECOMENDADOS</h2>
       </header>
-      <section className={s.cardContainer}>
-        {renderTutorCards(tutoriasRecomendadas)}
-      </section>
-
+      <Cardcont
+        tutorias={tutoriasRecomendadas}
+        tutores={TUTORES}
+        niveles={NIVELES}
+      />
       <header className={s.header}>
-        <h2 id="startList" className={s.title}>
-          TUTORIAS
-        </h2>
+        <h2 className={s.title}>TUTORIAS</h2>
       </header>
       <div className={s.menu}>
         <div className={s.content}>
@@ -193,7 +124,6 @@ const Tutores = () => {
               editable={false}
               format="dd.MM.yyyy"
               shouldDisableDate={(date) => {
-
                 const isBeforeToday = isBefore(date, startOfDay(new Date()));
 
                 return isBeforeToday;
@@ -210,37 +140,25 @@ const Tutores = () => {
           </div>
         </div>
       </div>
-      <section className={s.cardContainer}>
-        {currentTutorias.length > 0 ? (
-          renderTutorCards(currentTutorias)
-        ) : (
-          <p className={s.noResults}>No hay resultados para "{term}", o no hay disponibilidad en las fechas seleccionadas</p>
-        )}
-      </section>
+      <div id="startList"></div>
 
-      {filteredTutorias.length > itemsPerPage && (
-        <div className={s.pagination}>
-          {[...Array(totalPages).keys()].map((page) => (
-            <ScrollLink
-              key={page}
-              className={s.link}
-              to="startList"
-              offset={-100}
-              smooth={true}
-              duration={100}
-            >
-              <button
-                onClick={() => handlePageChange(page)}
-                className={`${currentPage === page ? s.active : ""} ${
-                  s.btn_pagina
-                }`}
-              >
-                {page + 1}
-              </button>
-            </ScrollLink>
-          ))}
-        </div>
+      {currentTutorias.length > 0 ? (
+        <Cardcont
+          tutorias={currentTutorias}
+          tutores={TUTORES}
+          niveles={NIVELES}
+        />
+      ) : (
+        <p className={s.noResults}>
+          No hay resultados para "{term}", o no hay disponibilidad en las fechas
+          seleccionadas
+        </p>
       )}
+
+      <Pagination
+        tutorias={filteredTutorias}
+        handlePageChange={handlePageChange}
+      />
     </main>
   );
 };

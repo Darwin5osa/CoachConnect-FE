@@ -14,7 +14,6 @@ const Detail = () => {
   const [caracteristicas, setCaracteristicas] = useState([]);
   const { id } = useParams();
 
-  console.log(tutoria.dias);
 
   useEffect(() => {
     fetch(`https://api.coachconnect.tech/tutoria/${id}`)
@@ -22,14 +21,14 @@ const Detail = () => {
       .then((data) => setTutoria(data));
   }, []);
 
+
   useEffect(() => {
     if (tutoria && tutoria.dias) {
       setDatesArray(
         Object.keys(tutoria.dias)
           .filter((day) => tutoria.dias[day]) // Filtrar solo los días con valor true
-          .map((day) => new Date(2024, 2, parseInt(day)))
+          .map((day) => new Date(2024, 3, parseInt(day)))
       ); // Crear un objeto Date para cada día (el mes es 0-indexado)
-      console.log(datesArray);
     }
   }, [tutoria]);
 
@@ -166,6 +165,9 @@ const Detail = () => {
         <div onClick={irAHome} className={r.backArrow}>
           <i className="fa-solid fa-house"></i>
         </div>
+
+        <h4>Politicas</h4>
+        <p>{tutoria.politicas}</p>
       </div>
     </div>
   );

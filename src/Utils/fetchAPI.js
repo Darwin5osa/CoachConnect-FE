@@ -58,7 +58,7 @@ export const getTutores = (dispatch) => {
       dispatch({ type: "GETtutores", payload: data });
     })
     .catch((error) => {
-      console.error("Error al obtener las tutorias:", error);
+      console.error("Error al obtener los tutores:", error);
     });
 };
 
@@ -74,7 +74,7 @@ export const getNiveles = (dispatch) => {
       dispatch({ type: "GETniveles", payload: data });
     })
     .catch((error) => {
-      console.error("Error al obtener las tutorias:", error);
+      console.error("Error al obtener los niveles:", error);
     });
 };
 
@@ -90,8 +90,22 @@ export const getEstudiantes = (dispatch) => {
       dispatch({ type: "GETestudiantes", payload: data });
     })
     .catch((error) => {
-      console.error("Error al obtener las tutorias:", error);
+      console.error("Error al obtener los estudiantes:", error);
     });
+};
+
+export const getFavs = (dispatch, id) => {
+  fetch(`https://api.coachconnect.tech/estudiante/${id}/favorito`)
+    .then((response) => {
+      if (!response.ok) {
+        return
+      }
+      return response.json();
+    })
+    .then((data) => {
+      dispatch({ type: "GETfavs", payload: data });
+    })
+
 };
 
 
