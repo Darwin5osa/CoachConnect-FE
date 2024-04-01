@@ -12,14 +12,11 @@ const Tutores = () => {
   const [selectedRange, setSelectedRange] = useState(null);
 
   const { state } = useGlobalContex();
-
   const [term, setTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const { TUTORIAS, TUTORES, NIVELES } = state;
   const [tutorias, setTutorias] = useState(TUTORIAS);
-  const [itemsPerPage, setItemsPerPage] = useState(
-    window.innerWidth > 1200 ? 10 : 5
-  );
+  const itemsPerPage = window.innerWidth > 1200 ? 10 : 5;
 
   useEffect(() => {
     setTutorias(TUTORIAS);
@@ -89,7 +86,6 @@ const Tutores = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-
 
   return (
     <main id="mentores" className={s.mainTutores}>

@@ -1,12 +1,10 @@
 .mainTutores {
   padding-bottom: 30px;
-  min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: transparent;
-
   position: relative;
 }
 .mainTutores::after {

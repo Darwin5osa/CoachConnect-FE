@@ -9,14 +9,14 @@ import {
 } from "./fetchAPI";
 import { createContext, useContext, useReducer } from "react";
 
+import { Navigate, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
 
 const getSessionToken = () => {
   const token = localStorage.getItem("token");
   try {
-    return token ? {...jwtDecode(token), id: 20} : false;
+    return token ? { ...jwtDecode(token), id: 20 } : false;
   } catch (error) {
     console.error("Error al decodificar el token:", error);
     return false;
@@ -37,6 +37,7 @@ export const initialState = {
 export const ContextGlobal = createContext();
 
 export const ContextProvider = ({ children }) => {
+
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -63,7 +64,6 @@ export const ContextProvider = ({ children }) => {
         return state;
     }
   };
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -73,8 +73,9 @@ export const ContextProvider = ({ children }) => {
     getTutorias(dispatch);
     getNiveles(dispatch);
     getEstudiantes(dispatch);
-    if(state.session) getFavs(dispatch, state.session.id)
+    if (state.session) getFavs(dispatch, state.session.estudianteId);
   }, []);
+  console.log(state);
   return (
     <ContextGlobal.Provider
       value={{
@@ -85,7 +86,7 @@ export const ContextProvider = ({ children }) => {
         getTutorias,
         getNiveles,
         getFavs,
-        getEstudiantes
+        getEstudiantes,
       }}
     >
       {children}

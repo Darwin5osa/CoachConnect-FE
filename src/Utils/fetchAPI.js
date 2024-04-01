@@ -98,16 +98,14 @@ export const getFavs = (dispatch, id) => {
   fetch(`https://api.coachconnect.tech/estudiante/${id}/favorito`)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        return
       }
       return response.json();
     })
     .then((data) => {
       dispatch({ type: "GETfavs", payload: data });
     })
-    .catch((error) => {
-      console.error("Error al obtener los favs:", error);
-    });
+
 };
 
 

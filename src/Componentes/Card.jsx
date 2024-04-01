@@ -4,24 +4,29 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import s from "./css/card.module.css";
+import { toast } from "sonner";
 const Card = (data) => {
   const { state, getFavs, dispatch } = useGlobalContex();
-  const { favs } = state;
-  const [isFaved, setIsFaved] = useState(false);
-
-  const handleIsFaved = () => favs?.some((fav) => fav.id === data.tutoria.id);
-
-  useEffect(() => {
-    if (handleIsFaved()) setIsFaved(true);
-  }, [state, favs]);
+  const { session } = state;
 
   const handleDeleteFav = () => {
-    /* fetch("https://api.coachconnect.tech/estudiante/20/favorito",{
-      method: 'DELETE',
-    }) */
+    const id = state.session.id;
+    fetch(
+      `https://api.coachconnect.tech/estudiante/${id}/favorito/${data.tutoria.id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .catch((err) => console.log(err))
+      .finally(() => {
+        getFavs(dispatch, id);
+      });
   };
   const handleAddFav = () => {
-    const id = state.session.id
+    const id = state.session.id;
     fetch(`https://api.coachconnect.tech/estudiante/${id}/favorito`, {
       method: "POST",
       headers: {
@@ -33,18 +38,21 @@ const Card = (data) => {
     })
       .catch((err) => console.log(err))
       .finally(() => {
-        setIsFaved(!isFaved)
         getFavs(dispatch, id);
       });
   };
 
   const handleFav = () => {
-    if (handleIsFaved()) {
-      console.log("eliminado");
-      handleDeleteFav();
+    if (session?.role === "ESTUDIANTE") {
+      if (data.fav) {
+        console.log("eliminado");
+        handleDeleteFav();
+      } else {
+        console.log("agregado");
+        handleAddFav();
+      }
     } else {
-      console.log("agregado");
-      handleAddFav();
+      toast.info("Debes iniciar sesion");
     }
   };
 
@@ -54,7 +62,9 @@ const Card = (data) => {
         <div className={s.favCont}>
           <MdOutlineFavorite
             onClick={handleFav}
-            className={`${s.fav} ${isFaved ? s.favActive : ""}`}
+            className={`${s.fav} ${
+              session?.role === "ESTUDIANTE" && data.fav ? s.favActive : ""
+            }`}
           />
         </div>
         <Link

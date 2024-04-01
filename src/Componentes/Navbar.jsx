@@ -10,7 +10,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate("/")
+    navigate("/");
     dispatch({ type: "CLOSE_SESSION" });
     setMenuOpen(false);
   };
@@ -77,16 +77,21 @@ const Navbar = () => {
         ) : (
           ""
         )}
-        {state.session.role === "ESTUDIANTE" ? (
-          <div className={s.navMenu}>
-            Perfil
-          </div>
-        ) : (
-          ""
-        )}
         <div className={s.navMenu} onClick={handleHome}>
           Home
         </div>
+        {state.session.role === "ESTUDIANTE" ? (
+          <Link
+            style={{ textDecoration: "none" }}
+            onClick={() => setMenuOpen(false)}
+            to={"/reservas"}
+            className={s.a}
+          >
+            <div className={s.navMenu}>Mis Reservas</div>
+          </Link>
+        ) : (
+          ""
+        )}
         {!state.session ? (
           <div className={s.navMenu} onClick={handleSignin}>
             Sign In

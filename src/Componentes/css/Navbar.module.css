@@ -52,6 +52,7 @@
 }
 
 .navMenu {
+  color: #e2f8f1;
   display: flex;
   justify-content: center;
   width: 200px;
@@ -60,7 +61,10 @@
   border-left: solid 5px #4bc8ab;
   transition: all .2s ease-in-out;
   position: relative;
-
+}
+.a{
+  outline: none;
+  text-decoration: none;
 }
 .navMenuName{
   display: flex;

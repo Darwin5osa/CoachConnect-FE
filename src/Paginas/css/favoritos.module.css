@@ -1,6 +1,5 @@
-.mainTutores {
+.mainFavs {
   padding-bottom: 30px;
-  min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,7 +8,7 @@
   position: relative;
 }
 
-.mainTutores::after {
+.mainFavs::after {
   content: "";
   position: absolute;
   width: 100%;

@@ -1,12 +1,12 @@
-import emailjs from "@emailjs/browser";
-import { jwtDecode } from "jwt-decode";
-import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useGlobalContex } from "../Utils/global.context";
+import Navbar from "../Componentes/Navbar";
 import { Loader } from "semantic-ui-react";
 import { toast, Toaster } from "sonner";
-import Navbar from "../Componentes/Navbar";
-import { useGlobalContex } from "../Utils/global.context";
 import s from "./css/login.module.css";
+import emailjs from "@emailjs/browser";
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
   const forms = useRef();
   const [loading, setLoading] = useState(false);
@@ -50,12 +50,13 @@ const Login = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        const info = { ...jwtDecode(data.token), id: 20 };
-        console.log(info);
+        const info = { ...jwtDecode(data.token) };
         dispatch({ type: "SET_SESSION", payload: info });
         window.localStorage.setItem("token", data.token);
+        getFavs(dispatch, info.estudianteId)
       })
-      .catch((err) => toast.warning("Datos incorrectos o faltantes"));
+      .catch((err) => toast.warning("Datos incorrectos o faltantes"))
+
   };
 
   const handleValidationRegister = (register) => {
@@ -165,13 +166,12 @@ const Login = () => {
       email: "",
       password: "",
     });
-    forms.current.reset()
+    forms.current.reset();
   };
 
   return (
     <>
       <Navbar />
-      <Toaster richColors />
       <div className={s.login}>
         <div className={s.cont}>
           <div className={`${s.screen} ${form ? s.active1 : ""}`}>
@@ -334,4 +334,3 @@ const Login = () => {
 };
 
 export default Login;
-

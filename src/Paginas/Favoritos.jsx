@@ -24,12 +24,18 @@ const Favoritos = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    if (currentTutorias.length == 0) setCurrentPage(0);
+  }, [currentTutorias]);
   return (
     <div>
       <BannerFavs />
-      <div className={s.mainTutores}>
+      <div className={s.mainFavs}>
         <header className={s.header}>
-          <h2 id="startList" className={s.title}>FAVORITOS</h2>
+          <h2 id="startList" className={s.title}>
+            FAVORITOS
+          </h2>
         </header>
         <Cardcont
           tutorias={currentTutorias}

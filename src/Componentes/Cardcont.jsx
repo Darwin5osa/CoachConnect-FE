@@ -6,6 +6,11 @@ import React from "react";
 
 const Cardcont = ({ tutorias, tutores, niveles }) => {
   const { state } = useGlobalContex();
+  const { favs } = state;
+
+  const handleIsFaved = (tutoria) => favs?.some((fav) => fav.id === tutoria.id);
+
+
   const buscarTutor = (id) => tutores.find((tutor) => tutor.id === id);
   const buscarNivel = (id) => niveles.find((nivel) => nivel.id === id);
   const renderTutorCards = (tutorias) => {
@@ -15,6 +20,7 @@ const Cardcont = ({ tutorias, tutores, niveles }) => {
         tutoria={tutoria}
         tutor={buscarTutor(tutoria.tutorId)}
         nivel={buscarNivel(tutoria.nivelId)}
+        fav={handleIsFaved(tutoria)}
       />
     ));
   };

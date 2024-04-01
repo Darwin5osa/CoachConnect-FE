@@ -11,6 +11,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import s from "../css/admin.module.css";
+import { FaUser } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { GoGear } from "react-icons/go";
 import { toast, Toaster } from "sonner";
@@ -38,13 +39,14 @@ const Admin = () => {
     getCaracteristicas,
     getTutorias,
     getNiveles,
-    getEstudiantes
+    getEstudiantes,
   } = useGlobalContex();
   const [categorias, setCategorias] = useState(state.CATEGORIAS);
   const [caracteristicas, setCaracteristicas] = useState(state.CARACTERISTICAS);
   const [niveles, setNiveles] = useState(state.NIVELES);
   const [tutores, setTutores] = useState(state.TUTORES);
   const [objetos, setObjetos] = useState(state.TUTORIAS);
+  const [usuarios, setUsuarios] = useState(state.ESTUDIANTES);
   const [nuevaCategoria, setNuevaCategoria] = useState({
     nombre: "",
   });
@@ -75,6 +77,7 @@ const Admin = () => {
     setNiveles(state.NIVELES);
     setCaracteristicas(state.CARACTERISTICAS);
     setCategorias(state.CATEGORIAS);
+    setUsuarios(state.ESTUDIANTES);
   }, [state]);
 
   /* CATEGORIAS */
@@ -198,7 +201,7 @@ const Admin = () => {
       })
       .then((res) => {
         getCaracteristicas(dispatch);
-        setNuevaCaracteristica({ nombre: "" , icono: ""});
+        setNuevaCaracteristica({ nombre: "", icono: "" });
         toast.success("Caracteristica agregada");
       })
       .catch((error) => {
@@ -247,7 +250,7 @@ const Admin = () => {
       })
       .then((res) => {
         getCaracteristicas(dispatch);
-        setNuevaCaracteristica({ nombre: "" , icono: ""});
+        setNuevaCaracteristica({ nombre: "", icono: "" });
         toast.success("Caracteristica guardada");
       })
       .catch((error) => {
@@ -507,6 +510,18 @@ const Admin = () => {
 
   const buscarTutor = (id) => tutores.find((tutor) => tutor.id === id);
 
+  // USUARIOS
+
+  const handleCambiarRol = (us) => {
+    let rol = "";
+    if (us.rol == "ADMIN") {
+      rol = "ESTUDIANTE";
+    } else {
+      rol = "ADMIN";
+    }
+    console.log(rol);
+  };
+
   //PAGINACION TUTORIAS
   const [currentPage, setCurrentPage] = useState(1);
   const tutoriasPerPage = 5;
@@ -585,6 +600,26 @@ const Admin = () => {
   const handlePrevPageNiv = () => {
     if (currentPageNiv > 1) {
       setCurrentPageNiv(currentPageNiv - 1);
+    }
+  };
+
+  //PAGINACION USUARIOS
+
+  const [currentPageUs, setCurrentPageUs] = useState(1);
+  const usPerPage = 5;
+
+  const indexOfLastUs = currentPageUs * usPerPage;
+  const indexOfFirstUs = indexOfLastUs - usPerPage;
+  const currentUs = usuarios.slice(indexOfFirstUs, indexOfLastUs);
+  const totalPagesUs = Math.ceil(usuarios.length / usPerPage);
+  const handleNextPageUs = () => {
+    if (currentPageUs < totalPagesUs) {
+      setCurrentPageUs(currentPageUs + 1);
+    }
+  };
+  const handlePrevPageUs = () => {
+    if (currentPageUs > 1) {
+      setCurrentPageUs(currentPageUs - 1);
     }
   };
 
@@ -1020,28 +1055,27 @@ const Admin = () => {
     return (
       <div className={s.selectedCont}>
         <div className={`${s.listCont} ${s.lista}`}>
-          <h2 className={s.tit}>Lista de Niveles</h2>
+          <h2 className={s.tit}>Lista de Usuarios</h2>
           <ul className={s.tList}>
             <li className={s.head}>
               <p className={s.id}>id</p>
-              <p className={s.nameSimple}>Nombre</p>
+              <p className={s.nameUs}>Nombre</p>
+              <p className={s.rolUs}>Rol</p>
               <p className={s.btnsSimple}>Acciones</p>
             </li>
-            {currentNiv.map((nivel) => (
-              <li className={s.item} key={nivel.id}>
-                <p className={s.id}>{nivel.id}</p>
-                <p className={s.nameSimple}>{nivel.nombre}</p>
+            {currentUs.map((us) => (
+              <li className={s.item} key={us.id}>
+                <p className={s.id}>{us.id}</p>
+                <p className={s.nameUs}>{us.username}</p>
+                <p className={s.rolUs}>{us.role}</p>
                 <div className={s.btnsSimple}>
                   <button
                     className={`${s.btn} ${s.edit}`}
-                    onClick={() => handleEditarNivel(nivel)}
+                    onClick={() => handleCambiarRol(us)}
                   >
-                    <FiEdit />
+                    <FaUser />
                   </button>
-                  <button
-                    className={`${s.btn} ${s.el}`}
-                    onClick={() => handleEliminarNivel(nivel.id)}
-                  >
+                  <button className={`${s.btn} ${s.el}`}>
                     <RiDeleteBin6Line />
                   </button>
                 </div>
@@ -1049,54 +1083,20 @@ const Admin = () => {
             ))}
           </ul>
           <div className={s.pagination}>
-            <button onClick={handlePrevPageNiv}>Anterior</button>
-            <span>{currentPageNiv}</span>
-            <button onClick={handleNextPageNiv}>Siguiente</button>
+            <button onClick={handlePrevPageUs}>Anterior</button>
+            <span>{currentPageUs}</span>
+            <button onClick={handleNextPageUs}>Siguiente</button>
           </div>
         </div>
         <p className={s.note}>
-          Nota: No podras eliminar un nivel que este en uso.
+          Nota: Los usuarios no se eliminan, se desactivan.
         </p>
-        <form className={s.listCont}>
-          <h2 className={s.tit}>Agregar - Editar</h2>
-          <div className={s.formContainer}>
-            <div className={s.formInputSimple}>
-              <label htmlFor="descripcion">Nombre:</label>
-              <input
-                className={s.textInput}
-                type="text"
-                value={nuevoNivel.nombre}
-                onChange={(e) =>
-                  setNuevoNivel({
-                    ...nuevoNivel,
-                    nombre: e.target.value,
-                  })
-                }
-                placeholder="Nuevo Nivel"
-              />
-            </div>
-            <div className={s.options}>
-              <button className={s.plus} onClick={(e) => handleNivel(e)}>
-                {nuevoNivel.id ? <FaUserEdit /> : <FaUserPlus />}
-                {nuevoNivel.id ? "Actualizar" : "Crear"}
-              </button>
-              <button
-                className={s.delete}
-                onClick={(e) => handleNivelCancel(e)}
-              >
-                <MdOutlineCancel />
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </form>
       </div>
     );
   };
 
   return (
     <div>
-      <Toaster richColors />
       {!isMobile ? (
         <div className={s.admin}>
           <div className={s.cont}>
