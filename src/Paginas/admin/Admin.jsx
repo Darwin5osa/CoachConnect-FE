@@ -1067,7 +1067,7 @@ const Admin = () => {
               <li className={s.item} key={us.id}>
                 <p className={s.id}>{us.id}</p>
                 <p className={s.nameUs}>{us.username}</p>
-                <p className={s.rolUs}>{us.role}</p>
+                <p className={s.rolUs}>{us.rol}</p>
                 <div className={s.btnsSimple}>
                   <button
                     className={`${s.btn} ${s.edit}`}

@@ -71,7 +71,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className={`${s.menu} ${menuOpen ? s.active : ""}`}>
+      <div onClick={()=> setMenuOpen(false)} className={`${s.menu} ${menuOpen ? s.active : ""}`}>
         {state.session ? (
           <div className={s.navMenuName}>Hola, {state.session.nombre}!</div>
         ) : (

@@ -372,7 +372,17 @@
 }
 
 @media screen and (width <= 700px) {
+  .login {
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: initial;
+  }
   .cont{
+    margin-top: 50px;
     width: 90%;
   }
 }

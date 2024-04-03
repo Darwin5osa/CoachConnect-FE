@@ -16,7 +16,7 @@ import { useEffect } from "react";
 const getSessionToken = () => {
   const token = localStorage.getItem("token");
   try {
-    return token ? { ...jwtDecode(token), id: 20 } : false;
+    return token ? { ...jwtDecode(token)} : false;
   } catch (error) {
     console.error("Error al decodificar el token:", error);
     return false;

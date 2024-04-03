@@ -79,7 +79,7 @@ export const getNiveles = (dispatch) => {
 };
 
 export const getEstudiantes = (dispatch) => {
-  fetch("https://api.coachconnect.tech/estudiante")
+  fetch("https://api.coachconnect.tech/user")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -105,7 +105,6 @@ export const getFavs = (dispatch, id) => {
     .then((data) => {
       dispatch({ type: "GETfavs", payload: data });
     })
-
 };
 
 

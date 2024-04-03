@@ -1,28 +1,16 @@
-import s from "./css/pagination.module.css";
 import React, { useEffect, useState } from "react";
 import { Link as ScrollLink } from "react-scroll";
+import s from "./css/pagination.module.css";
 
-const Pagination = ({ tutorias, handlePageChange }) => {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(
-    window.innerWidth > 1200 ? 10 : 5
-  );
+const Pagination = ({
+  tutorias,
+  handlePageChange,
+  currentPage,
+  itemsPerPage,
+}) => {
   const totalPages = Math.ceil(tutorias.length / itemsPerPage);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setItemsPerPage(window.innerWidth > 1200 ? 10 : 5);
-      setCurrentPage((prevPage) => Math.min(prevPage, totalPages - 1));
-    };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [totalPages]);
-
   const handleChange = (page) => {
-    handlePageChange(page)
-    setCurrentPage(page);
+    handlePageChange(page);
   };
   return (
     <>

@@ -1,19 +1,27 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useGlobalContex } from "../Utils/global.context";
 import Navbar from "../Componentes/Navbar";
 import { Loader } from "semantic-ui-react";
-import { toast, Toaster } from "sonner";
 import s from "./css/login.module.css";
 import emailjs from "@emailjs/browser";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "sonner";
+
 const Login = () => {
+  // Referencia al formulario
   const forms = useRef();
+
+  // Estado para el indicador de carga
   const [loading, setLoading] = useState(false);
+
+  // Estado para los datos del inicio de sesión
   const [signin, setSignin] = useState({
     email: "",
     password: "",
   });
+
+  // Estado para los datos del registro
   const [register, setRegister] = useState({
     username: "",
     edad: 0,
@@ -25,20 +33,28 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  // Obtiene el contexto global y el navegador
   const { state, dispatch, getFavs } = useGlobalContex();
   const navigate = useNavigate();
+
+  // Obtiene la ubicación actual
   const location = useLocation().pathname;
+
+  // Estado para alternar entre el formulario de inicio de sesión y registro
   const [form, setForm] = useState(location === "/register" ? true : false);
 
+  // Efecto para redireccionar al usuario después del inicio de sesión
   useEffect(() => {
-    if (state.session && state.session.role == "ADMIN") {
+    if (state.session && state.session.role === "ADMIN") {
       navigate("/admin/dashboard");
     }
-    if (state.session && state.session.role == "ESTUDIANTE") {
+    if (state.session && state.session.role === "ESTUDIANTE") {
       navigate("/");
     }
   }, [state]);
 
+  // Función para manejar el inicio de sesión
   const handleSignin = (e) => {
     e.preventDefault();
     fetch("https://api.coachconnect.tech/login", {
@@ -53,12 +69,12 @@ const Login = () => {
         const info = { ...jwtDecode(data.token) };
         dispatch({ type: "SET_SESSION", payload: info });
         window.localStorage.setItem("token", data.token);
-        getFavs(dispatch, info.estudianteId)
+        getFavs(dispatch, info.estudianteId);
       })
-      .catch((err) => toast.warning("Datos incorrectos o faltantes"))
-
+      .catch((err) => toast.warning("Datos incorrectos o faltantes"));
   };
 
+  // Función para validar los campos del formulario de registro
   const handleValidationRegister = (register) => {
     // Expresiones regulares para validaciones
     const nameRegex = /^[a-zA-Z\s]+$/;
@@ -66,21 +82,22 @@ const Login = () => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     // Validación de los campos del formulario
+    if (!nameRegex.test(register.username)) {
+      toast.warning("Username invalido o faltante.");
+      return false;
+    }
     if (!nameRegex.test(register.nombre)) {
       toast.warning("Nombre invalido o faltante.");
       return false;
     }
-
     if (!nameRegex.test(register.apellido)) {
       toast.warning("Apellido invalido o faltante.");
       return false;
     }
-
     if (!emailRegex.test(register.email)) {
       toast.warning("Ingrese un correo electrónico válido.");
       return false;
     }
-
     if (
       register.password.length < 8 ||
       !passwordRegex.test(register.password)
@@ -90,13 +107,12 @@ const Login = () => {
       );
       return false;
     }
-
     return true;
   };
 
+  // Función para manejar el registro
   const handleRegister = (e) => {
     e.preventDefault();
-    console.log(forms.current);
     if (handleValidationRegister(register)) {
       setLoading(true);
       fetch("https://api.coachconnect.tech/estudiante", {
@@ -106,9 +122,22 @@ const Login = () => {
         },
         body: JSON.stringify(register),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
+        .then((res) => {
+          if (res.ok) return;
+          else
+            return res.json().then((jsonResponse) => {
+              console.log(jsonResponse);
+              throw new Error(
+                jsonResponse.message || "Error en la solicitud."
+              );
+            });
+        })
+        .then(() => {
+          setTimeout(() => {
+            setLoading(false);
+            navigate("/login");
+            setForm(!form);
+          }, 1000);
           emailjs
             .sendForm(
               "service_m7y7fsr",
@@ -128,25 +157,25 @@ const Login = () => {
               }
             );
         })
-        .catch((err) => toast.warning("Datos incorrectos o faltantes"))
+        .catch((err) => toast.warning(err.message))
         .finally(() => {
           setTimeout(() => {
             setLoading(false);
-
-            navigate("/login");
-            setForm(!form);
           }, 1000);
         });
     }
   };
 
+  // Función para manejar los cambios en los inputs del inicio de sesión
   const handleInputChangeSignin = (event) => {
     const { name, value } = event.target;
     setSignin({
       ...signin,
-      [name]: value.trim(), // Agregar trim() para eliminar espacios al inicio y al final
+      [name]: value.trim(),
     });
   };
+
+  // Función para manejar los cambios en los inputs del registro
   const handleInputChangeRegister = (event) => {
     const { name, value } = event.target;
     setRegister({
@@ -155,8 +184,9 @@ const Login = () => {
     });
   };
 
+  // Función para alternar entre el formulario de inicio de sesión y registro
   const handleScreen = () => {
-    if (location == "/login") {
+    if (location === "/login") {
       navigate("/register");
     } else {
       navigate("/login");
@@ -169,6 +199,7 @@ const Login = () => {
     forms.current.reset();
   };
 
+  // Renderizar el componente
   return (
     <>
       <Navbar />

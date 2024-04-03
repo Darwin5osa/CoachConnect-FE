@@ -3,35 +3,56 @@ import { useGlobalContex } from "../Utils/global.context";
 import { format, isBefore, startOfDay } from "date-fns";
 import Pagination from "../Componentes/Pagination";
 import Cardcont from "../Componentes/Cardcont";
-import s from "./css/tutores.module.css";
 import { DateRangePicker } from "rsuite";
-import Card from "../Componentes/Card";
+import s from "./css/tutores.module.css";
 import "./css/calendar.css";
 
 const Tutores = () => {
+  // Estado para el rango de fechas seleccionado
   const [selectedRange, setSelectedRange] = useState(null);
 
-  const { state } = useGlobalContex();
+  // Estado para el término de búsqueda
   const [term, setTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
-  const { TUTORIAS, TUTORES, NIVELES } = state;
-  const [tutorias, setTutorias] = useState(TUTORIAS);
-  const itemsPerPage = window.innerWidth > 1200 ? 10 : 5;
 
+  // Estado para el número de página actual
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Estado para los datos globales del contexto
+  const { state } = useGlobalContex();
+  const { TUTORIAS, TUTORES, NIVELES } = state;
+
+  // Estado para las tutorías
+  const [tutorias, setTutorias] = useState(TUTORIAS);
+
+  // Estado para el número de elementos por página
+  const [itemsPerPage, setItemsPerPage] = useState(
+    window.innerWidth > 1200 ? 10 : 5
+  );
+
+  // Función para barajar un array
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  // Efecto para barajar las tutorías cuando cambia el estado global
   useEffect(() => {
-    setTutorias(TUTORIAS);
+    setTutorias(shuffleArray(TUTORIAS));
   }, [state]);
 
+  // Función para buscar tutorías según el rango de fechas seleccionado
   const fetchTutoriasDisponibilidad = (url) => {
-    console.log(url);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTutorias(data);
       });
   };
 
+  // Función para realizar la búsqueda
   const search = () => {
     if (selectedRange) {
       const formattedStartDate = format(selectedRange[0], "yyyy-MM-dd");
@@ -41,23 +62,31 @@ const Tutores = () => {
     }
   };
 
+  // Función para cancelar la búsqueda y restablecer los estados
   const handleCancelSearch = () => {
     setTutorias(TUTORIAS);
     setSelectedRange(null);
     setTerm("");
   };
 
+  // Memo para filtrar las tutorías según el término de búsqueda
   const filteredTutorias = useMemo(() => {
     return tutorias.filter((tutoria) =>
       tutoria.nombre.toLowerCase().includes(term)
     );
   }, [TUTORIAS, term, tutorias]);
 
+  // Cálculo del índice inicial y final de las tutorías a mostrar en la página actual
   const startIndex = currentPage * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  // Obtener las tutorías para la página actual
   const currentTutorias = filteredTutorias.slice(startIndex, endIndex);
+
+  // Calcular el número total de páginas
   const totalPages = Math.ceil(filteredTutorias.length / itemsPerPage);
 
+  // Función para obtener tutorías aleatorias
   const obtenerTutoriasAleatorias = () => {
     const tutoriasAleatorias = [];
     const tutoriasDisponibles = [...TUTORIAS];
@@ -73,20 +102,36 @@ const Tutores = () => {
     return tutoriasAleatorias;
   };
 
+  // Obtener tutorías recomendadas como un memo
   const tutoriasRecomendadas = useMemo(
     () => obtenerTutoriasAleatorias(),
     [TUTORIAS]
   );
 
+  // Manejar cambios en el input de búsqueda
   const handleInputChange = (event) => {
     setTerm(event.target.value.toLowerCase());
     setCurrentPage(0);
   };
 
+  // Manejar cambios de página
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+  // Efecto para ajustar el número de elementos por página al cambiar el tamaño de la ventana
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(window.innerWidth > 1200 ? 10 : 5);
+      setCurrentPage((prevPage) => Math.min(prevPage, totalPages - 1));
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [totalPages]);
+
+  // Renderizar el componente
   return (
     <main id="mentores" className={s.mainTutores}>
       <header className={s.header}>
@@ -158,6 +203,8 @@ const Tutores = () => {
       <Pagination
         tutorias={filteredTutorias}
         handlePageChange={handlePageChange}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
       />
     </main>
   );

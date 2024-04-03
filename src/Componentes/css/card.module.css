@@ -20,7 +20,7 @@
 .fav {
   font-size: 20px;
   color: white;
-  opacity: .6;
+  opacity: 0.6;
   transition: all 0.1s ease-in-out;
 }
 .fav:hover {
@@ -107,13 +107,15 @@
   top: 5px;
 }
 .descrip {
-  width: 90%;
   color: white;
-  overflow: hidden;
   margin: 0;
-  font-size: clamp(12px, 2vw, 13px);
-  text-align: left;
+  width: 250px;
   opacity: 0.8;
+  font-size: clamp(12px, 2vw, 13px);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .rating {

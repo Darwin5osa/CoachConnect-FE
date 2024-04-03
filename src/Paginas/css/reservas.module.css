@@ -29,11 +29,13 @@
   height: 620px;
   border-left: solid 5px #4bc8ab;
 }
+
 .titleReservas {
   color: #e2f8f1;
   font-size: clamp(10px, 5vw, 35px);
   width: 100%;
   border-bottom: solid #e2f8f151 2px;
+  margin-bottom: 30px;
 }
 
 .listReservas {
@@ -46,31 +48,54 @@
   font-size: 13px;
 }
 
-.infoTutoria,
-.infoState,
-.infoAlumno,
-.infoTutor,
+.infoTutoria {
+  padding: 0px;
+  margin: 0px;
+  width: 25%;
+  padding-left: 5px;
+}
+.infoState {
+  padding: 0px;
+  margin: 0px;
+  width: 5%;
+  padding-left: 5px;
+}
+.infoAlumno {
+  padding: 0px;
+  margin: 0px;
+  width: 22%;
+  padding-left: 5px;
+}
+.infoTutor {
+  padding: 0px;
+  margin: 0px;
+  width: 21%;
+  padding-left: 5px;
+}
 .infoFecha {
   padding: 0px;
   margin: 0px;
-  width: 20%;
+  width: 25%;
+  padding-left: 5px;
 }
 .li {
   display: flex;
 }
-.mapedLi{
-  margin-top: 10px;
+.mapedLi {
+  margin-top: 8px;
   display: flex;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  border-bottom: solid rgba(255, 255, 255, 0.112) 1px;
 }
 .maped {
   display: flex;
   align-items: center;
   height: 65px;
   color: #e2f8f1;
-  padding-right: 20px ;
+  padding-right: 20px;
+  padding-left: 5px;
 }
-.mapedLi:hover{
+.mapedLi:hover {
   background-color: rgba(255, 255, 255, 0.095);
   border-left: solid #4bc8ab 3px;
   padding-left: 10px;
@@ -84,7 +109,7 @@
   align-items: center;
   gap: 15px;
   height: 30px;
-  bottom: 20px;
+  bottom: 10px;
   padding: 0;
   margin: 0;
   width: 100%;
@@ -103,9 +128,60 @@
   opacity: 1;
   cursor: pointer;
 }
+.rTit {
+  display: none;
+}
 
 .pagination span {
   font-size: 16px;
   border-bottom: solid white;
   padding: 0px 2px;
+}
+
+@media screen and (width <= 1200px) {
+  .contenedor {
+    max-width: 2000px;
+    width: 90%;
+  }
+  .mainReservas {
+    padding: 0px;
+  }
+}
+
+@media screen and (width <= 800px) {
+  .contenedor {
+    width: 80%;
+    max-width: initial;
+  }
+  .titleReservas {
+    margin-bottom: 10px;
+  }
+  .li {
+    display: none;
+  }
+  .mapedLi {
+    height: 145px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: all 0.2s ease-in-out;
+    padding-bottom: 0px;
+  }
+  .maped {
+    display: flex;
+    align-items: center;
+    height: 25px;
+    color: #e2f8f1;
+    padding-right: 20px;
+    padding-left: 5px;
+    min-width: 70%;
+  }
+  .rTit {
+    height: 25px;
+    display: flex;
+    width: 30%;
+    padding-left: 5px;
+    margin-top: 0px;
+  }
 }
