@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useGlobalContex } from "../Utils/global.context";
 import { format, parseISO, isBefore, isAfter, startOfDay } from "date-fns"; // Importa las funciones necesarias de date-fns
+import { useGlobalContex } from "../Utils/global.context";
+import React, { useEffect, useState } from "react";
 import s from "./css/reservas.module.css";
 
 const Reservas = () => {
@@ -12,9 +12,11 @@ const Reservas = () => {
 
   // Efecto para cargar las reservas del estudiante desde la API
   useEffect(() => {
-    fetch(`https://api.coachconnect.tech/estudiante/${state.session.estudianteId}/reserva`)
+    fetch(
+      `https://api.coachconnect.tech/estudiante/${state.session.estudianteId}/reserva`
+    )
       .then((response) => response.json())
-      .then((res) => setReservas(res));
+      .then((res) => setReservas(res.reverse()));
   }, []);
 
   // Estado para el número de página actual
@@ -81,6 +83,7 @@ const Reservas = () => {
   return (
     <main className={s.mainReservas}>
       <div className={s.contenedor}>
+        
         <h1 className={s.titleReservas}>Tus reservas</h1>
         <ul className={s.listReservas}>
           <li className={s.li}>
@@ -93,7 +96,9 @@ const Reservas = () => {
           {current.map((r) => (
             <li key={r.id} className={s.mapedLi}>
               <p className={s.rTit}>Tutoria</p>
-              <p className={`${s.infoTutoria} ${s.maped}`}>{r.tutoria.nombre}</p>
+              <p className={`${s.infoTutoria} ${s.maped}`}>
+                {r.tutoria.nombre}
+              </p>
               <p className={s.rTit}>Alumno</p>
               <p className={`${s.infoAlumno} ${s.maped}`}>
                 {r.estudiante.nombre} {r.estudiante.apellido}
@@ -104,10 +109,13 @@ const Reservas = () => {
               </p>
               <p className={s.rTit}>Inicio - Fin</p>
               <p className={`${s.infoFecha} ${s.maped}`}>
-                {format(parseISO(r.fechaInicio), "dd/MM")} - {format(parseISO(r.fechaFin), "dd/MM")}
+                {format(parseISO(r.fechaInicio), "dd/MM")} -{" "}
+                {format(parseISO(r.fechaFin), "dd/MM")}
               </p>
               <p className={s.rTit}>Estado</p>
-              <p className={`${s.infoState} ${s.maped}`}>{getEstadoReserva(r.fechaInicio, r.fechaFin)}</p>
+              <p className={`${s.infoState} ${s.maped}`}>
+                {getEstadoReserva(r.fechaInicio, r.fechaFin)}
+              </p>
             </li>
           ))}
           <div className={s.pagination}>
@@ -117,6 +125,7 @@ const Reservas = () => {
           </div>
         </ul>
       </div>
+      <p className={s.orden}>Por orden de creación.</p>
     </main>
   );
 };
