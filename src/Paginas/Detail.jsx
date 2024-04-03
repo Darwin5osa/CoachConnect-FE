@@ -11,33 +11,34 @@ import { toast, Toaster } from "sonner";
 import emailjs from "@emailjs/browser";
 
 const Detail = () => {
-  const nav = useNavigate();
-  const form = useRef();
-  const [expanded, setExpanded] = useState(false);
-  const [selectedRange, setSelectedRange] = useState(null);
-  const navigate = useNavigate();
-  const { state } = useGlobalContex();
-  const [tutoria, setTutoria] = useState("");
-  const [tutor, setTutor] = useState("");
-  const [caracteristicas, setCaracteristicas] = useState([]);
-  const { id } = useParams();
-  const [reserva, setReserva] = useState({
+  const nav = useNavigate(); // Hook de react-router-dom para la navegación
+  const form = useRef(); // Referencia para el formulario
+  const [expanded, setExpanded] = useState(false); // Estado para controlar la expansión de alguna sección
+  const [selectedRange, setSelectedRange] = useState(null); // Estado para almacenar el rango de fechas seleccionado
+  const navigate = useNavigate(); // Hook de react-router-dom para la navegación
+  const { state } = useGlobalContex(); // Hook personalizado para acceder al contexto global
+  const { id } = useParams(); // Hook de react-router-dom para obtener parámetros de la URL
+  const [tutoria, setTutoria] = useState(""); // Estado para almacenar información sobre la tutoría
+  const [tutor, setTutor] = useState(""); // Estado para almacenar información sobre el tutor
+  const [caracteristicas, setCaracteristicas] = useState([]); // Estado para almacenar las características de la tutoría
+  const [reserva, setReserva] = useState({ // Estado para almacenar la información de la reserva
     fechaInicio: "",
     fechaFin: "",
     horasReservadas: 2,
     estudianteId: state.session.estudianteId,
     tutoriaId: parseInt(id),
   });
-  const [disabledDates, setDisabledDates] = useState([]);
-
+  const [disabledDates, setDisabledDates] = useState([]); // Estado para almacenar las fechas deshabilitadas
   const [fechasJavaScript, setFechasJavaScript] = useState([]); // Nuevo estado para almacenar las fechas convertidas
 
+  // Función para convertir fechas a objetos de JavaScript
   const convertirAFechas = (fechas) => {
     return disabledDates.map(({ nroDia, nroMes }) => {
       return new Date(new Date().getFullYear(), nroMes - 1, nroDia);
     });
   };
 
+  // Función para enviar el formulario
   const send = () => {
     emailjs
       .sendForm("service_a0s1j68", "template_8z9l7zq", form.current, {
@@ -53,9 +54,12 @@ const Detail = () => {
       );
   };
 
+  // Efecto para actualizar fechas JavaScript cuando cambian las fechas deshabilitadas
   useEffect(() => {
     setFechasJavaScript(convertirAFechas(disabledDates));
   }, [disabledDates]);
+
+  // Función para enviar la reserva
   const sendReserva = () => {
     fetch("https://api.coachconnect.tech/reserva", {
       method: "POST",
@@ -69,7 +73,7 @@ const Detail = () => {
       .then((data) => {
         if (!data.error) {
           toast.success(
-            "Reservado con exito! te llegara un mail de confirmacion"
+            "Reservado con éxito! Te llegará un correo electrónico de confirmación"
           );
           setExpanded(false);
           setSelectedRange(null);
@@ -78,15 +82,17 @@ const Detail = () => {
         }
       });
   };
+
+  // Función para manejar el clic en el botón
   const handleClick = () => {
     if (!state.session) {
       toast.info(
-        "El inicio de sesion es obligatorio para realizar esta accion"
+        "El inicio de sesión es obligatorio para realizar esta acción"
       );
       nav("/login");
       return;
     }
-    if (state.session.role == "ADMIN") {
+    if (state.session.role === "ADMIN") {
       toast.info(
         "Los administradores no tienen permiso para realizar reservas"
       );
@@ -102,6 +108,8 @@ const Detail = () => {
       return;
     }
   };
+
+  // Función para cancelar la selección de fechas
   const handleCancelSelection = () => {
     setExpanded(false);
     setSelectedRange(null);
@@ -111,6 +119,8 @@ const Detail = () => {
       fechaFin: "",
     });
   };
+
+  // Función para manejar el cambio en el rango de fechas
   const handleDateRangeChange = (value) => {
     // Actualizar el estado 'reserva' con las fechas seleccionadas
     if (value && value[0] && value[1]) {
@@ -123,6 +133,7 @@ const Detail = () => {
     setSelectedRange(value);
   };
 
+  // Efecto para obtener la información de la tutoría y las características
   useEffect(() => {
     const fetchTutoria = async () => {
       try {
@@ -146,6 +157,7 @@ const Detail = () => {
     fetchTutoria();
   }, [id, state.TUTORES]);
 
+  // Efecto para actualizar las características de la tutoría
   useEffect(() => {
     // Verificar si se ha cargado la información de la tutoría y el estado global de CARACTERISTICAS
     if (tutoria && state.CARACTERISTICAS.length) {
@@ -159,6 +171,7 @@ const Detail = () => {
     }
   }, [tutoria, state.CARACTERISTICAS]);
 
+  // Si no se encuentra la tutoría o el tutor, se muestra un mensaje
   if (!tutoria || !tutor) {
     return <div style={{ color: "white" }}>Tutoría no encontrada</div>;
   }
