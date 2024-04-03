@@ -10,7 +10,7 @@ const Card = (data) => {
   const { session } = state;
 
   const handleDeleteFav = () => {
-    const id = state.session.id;
+    const id = state.session.estudianteId;
     fetch(
       `https://api.coachconnect.tech/estudiante/${id}/favorito/${data.tutoria.id}`,
       {
@@ -26,7 +26,7 @@ const Card = (data) => {
       });
   };
   const handleAddFav = () => {
-    const id = state.session.id;
+    const id = state.session.estudianteId;
     fetch(`https://api.coachconnect.tech/estudiante/${id}/favorito`, {
       method: "POST",
       headers: {

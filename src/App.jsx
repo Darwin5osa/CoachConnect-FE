@@ -18,7 +18,7 @@ function App() {
   }, [pathname]);
 
   return (
-    <div>
+    <div className="animate-fade animate-duration-500 animate-ease-linear">
       <Toaster />
       <Routes>
         <Route path="/" element={<UserLayout />}>
