@@ -2,9 +2,17 @@
   height: calc(100vh - 100px);
   min-height: 700px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0 100px;
+}
+.orden{
+  color: rgba(255, 255, 255, 0.618);
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  margin-top: 10px;
 }
 .mainReservas::after {
   content: "";
@@ -113,7 +121,7 @@
   padding: 0;
   margin: 0;
   width: 100%;
-  padding-right: 50px;
+  padding-right: 70px;
 }
 
 .pagination button {
@@ -139,6 +147,10 @@
 }
 
 @media screen and (width <= 1200px) {
+  .orden{
+    width: 90%;
+    max-width: 2000px;
+  }
   .contenedor {
     max-width: 2000px;
     width: 90%;
@@ -149,6 +161,10 @@
 }
 
 @media screen and (width <= 800px) {
+  .orden{
+    width: 80%;
+    max-width: initial;
+  }
   .contenedor {
     width: 80%;
     max-width: initial;
