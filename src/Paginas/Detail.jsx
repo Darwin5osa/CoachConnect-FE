@@ -31,7 +31,6 @@ const Detail = () => {
   const [disabledDates, setDisabledDates] = useState([]); // Estado para almacenar las fechas deshabilitadas
   const [fechasJavaScript, setFechasJavaScript] = useState([]); // Nuevo estado para almacenar las fechas convertidas
 
-  // Función para convertir fechas a objetos de JavaScript
   const convertirAFechas = (fechas) => {
     return disabledDates.map(({ nroDia, nroMes }) => {
       return new Date(new Date().getFullYear(), nroMes - 1, nroDia);

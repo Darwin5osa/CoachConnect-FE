@@ -4,7 +4,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-
 }
 
 .logo {
@@ -20,10 +19,10 @@
   width: 33%;
 }
 
-.left p{
+.left p {
   font-size: 14px;
   color: #e2f8f1;
-  opacity: .7;
+  opacity: 0.7;
 }
 .email {
   text-decoration: none;
@@ -39,31 +38,30 @@
   text-decoration: none;
 }
 
-.line{
+.line {
   border-bottom: solid #e2f8f19a 1px;
   width: clamp(0px, 20vw, 30vw);
 }
 
-
 @media (max-width: 700px) {
-  .footer{
+  .footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 180px;
     gap: 10px;
     background-image: linear-gradient(
-    to top,
-    #000000 30%,
-    #00000029,
-    rgba(0, 0, 0, 0)
-  );
+      to top,
+      #000000 30%,
+      #00000029,
+      rgba(0, 0, 0, 0)
+    );
   }
-  .left{
+  .left {
     flex-direction: column;
     width: 50%;
   }
-  .left p{
+  .left p {
     font-size: 12px;
     text-align: center;
   }
@@ -72,4 +70,19 @@
     width: 100%;
     font-size: 14px;
   }
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+  font-size: 20px;
+}
+
+.ico {
+  color: white;
+  opacity: 0.8;
+  transition: all .2s ease-in-out;
+}
+.ico:hover {
+  color: #4bc8ab;
 }
