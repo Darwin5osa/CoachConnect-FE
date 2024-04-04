@@ -9,13 +9,17 @@ import { useGlobalContex } from "../../Utils/global.context";
 import React, { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { MdOutlineCancel } from "react-icons/md";
+import { MdDownloadDone } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
+import { RxCross2 } from "react-icons/rx";
 import s from "../css/admin.module.css";
 import { FaUser } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { GoGear } from "react-icons/go";
 import { toast, Toaster } from "sonner";
 const Admin = () => {
+  const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -67,6 +71,9 @@ const Admin = () => {
     tutorId: null,
     caracteristicas: [],
     nivelId: null,
+    politicas:
+      "Buena Participación y Conducta, Privacidad y Confidencialidad, Tecnología y Plataforma, Puntualidad y Asistencia",
+    fotos: ["", "", "", "", ""],
   };
   const [formData, setFormData] = useState(initialFormData);
 
@@ -171,7 +178,6 @@ const Admin = () => {
   };
 
   const handleEditarCategoria = (categoria) => {
-    console.log(categoria);
     setNuevaCategoria({
       id: categoria.id,
       nombre: categoria.nombre,
@@ -258,7 +264,6 @@ const Admin = () => {
       });
   };
   const handleEditarCaracteristica = (caracteristica) => {
-    console.log(caracteristica);
     setNuevaCaracteristica({
       id: caracteristica.id,
       nombre: caracteristica.nombre,
@@ -314,12 +319,22 @@ const Admin = () => {
       [name]: value,
     });
   };
+
+  const handlePhotoChange = (index, event) => {
+    const { value } = event.target;
+    const updatedFotos = [...formData.fotos];
+    updatedFotos[index] = value;
+    setFormData({
+      ...formData,
+      fotos: updatedFotos,
+    });
+  };
+
   const handleEditar = (objeto) => {
     setFormData(objeto);
   };
 
   const handleCrear = () => {
-    console.log(formData);
     fetch(`https://api.coachconnect.tech/tutoria`, {
       method: "POST",
       headers: {
@@ -463,7 +478,6 @@ const Admin = () => {
   };
 
   const handleEditarNivel = (nivel) => {
-    console.log(nivel);
     setNuevoNivel({
       id: nivel.id,
       nombre: nivel.nombre,
@@ -510,8 +524,6 @@ const Admin = () => {
 
   const buscarTutor = (id) => tutores.find((tutor) => tutor.id === id);
 
-  // USUARIOS
-
   const handleCambiarRol = (us) => {
     let rol = "";
     if (us.rol == "ADMIN") {
@@ -520,6 +532,47 @@ const Admin = () => {
       rol = "ADMIN";
     }
     console.log(rol);
+    fetch("https://api.coachconnect.tech/user", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: us.username,
+        rol: rol,
+      }),
+    }).then(() => {
+      getEstudiantes(dispatch);
+      if (us.username == state.session.sub) {
+        navigate("/");
+        dispatch({ type: "CLOSE_SESSION" });
+      }
+    });
+  };
+
+  const handleCambioHabilitado = (us) => {
+    let habilitado = "";
+    if (us.habilitado) {
+      habilitado = "false";
+    } else {
+      habilitado = "true";
+    }
+    console.log(habilitado);
+
+    fetch("https://api.coachconnect.tech/user", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: us.username,
+        habilitado: habilitado,
+      }),
+    })
+      .then(() => {
+        getEstudiantes(dispatch);
+        if (us.username == state.session.sub) {
+          navigate("/");
+          dispatch({ type: "CLOSE_SESSION" });
+        }
+      })
+      .catch((err) => console.log("err"));
   };
 
   //PAGINACION TUTORIAS
@@ -775,6 +828,67 @@ const Admin = () => {
                 rows="6"
               />
             </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 1:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[0]}
+                onChange={(e) => handlePhotoChange(0, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 2:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[1]}
+                onChange={(e) => handlePhotoChange(1, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 3:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[2]}
+                onChange={(e) => handlePhotoChange(2, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 4:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[3]}
+                onChange={(e) => handlePhotoChange(3, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 5:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[4]}
+                onChange={(e) => handlePhotoChange(4, e)}
+              />
+            </div>
+
             <div className={s.options}>
               <button className={s.plus} type="submit">
                 {formData.id ? <FaUserEdit /> : <FaUserPlus />}
@@ -1061,6 +1175,7 @@ const Admin = () => {
               <p className={s.id}>id</p>
               <p className={s.nameUs}>Nombre</p>
               <p className={s.rolUs}>Rol</p>
+              <p className={s.statusUs}>Status</p>
               <p className={s.btnsSimple}>Acciones</p>
             </li>
             {currentUs.map((us) => (
@@ -1068,6 +1183,7 @@ const Admin = () => {
                 <p className={s.id}>{us.id}</p>
                 <p className={s.nameUs}>{us.username}</p>
                 <p className={s.rolUs}>{us.rol}</p>
+                <p className={s.statusUs}>{us.habilitado ? "🟢" : "🔴"}</p>
                 <div className={s.btnsSimple}>
                   <button
                     className={`${s.btn} ${s.edit}`}
@@ -1075,8 +1191,11 @@ const Admin = () => {
                   >
                     <FaUser />
                   </button>
-                  <button className={`${s.btn} ${s.el}`}>
-                    <RiDeleteBin6Line />
+                  <button
+                    onClick={() => handleCambioHabilitado(us)}
+                    className={`${s.btn} ${s.el}`}
+                  >
+                    {us.habilitado ? <RxCross2 /> : <MdDownloadDone />}
                   </button>
                 </div>
               </li>

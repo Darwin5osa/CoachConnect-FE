@@ -75,7 +75,6 @@ export const ContextProvider = ({ children }) => {
     getEstudiantes(dispatch);
     if (state.session) getFavs(dispatch, state.session.estudianteId);
   }, []);
-  console.log(state);
   return (
     <ContextGlobal.Provider
       value={{

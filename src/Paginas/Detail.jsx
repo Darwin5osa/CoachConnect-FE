@@ -6,9 +6,11 @@ import ShareOnTwittweButton from "../Componentes/ShareOnTwittweButton";
 import { useGlobalContex } from "../Utils/global.context";
 import { useNavigate, useParams } from "react-router";
 import r from "../Paginas/css/detail.module.css";
+import Rating from "../Componentes/Rating";
 import { DateRangePicker } from "rsuite";
 import { toast, Toaster } from "sonner";
 import emailjs from "@emailjs/browser";
+import { Rating as RatingStar } from "primereact/rating";
 
 const Detail = () => {
   const nav = useNavigate(); // Hook de react-router-dom para la navegación
@@ -21,7 +23,8 @@ const Detail = () => {
   const [tutoria, setTutoria] = useState(""); // Estado para almacenar información sobre la tutoría
   const [tutor, setTutor] = useState(""); // Estado para almacenar información sobre el tutor
   const [caracteristicas, setCaracteristicas] = useState([]); // Estado para almacenar las características de la tutoría
-  const [reserva, setReserva] = useState({ // Estado para almacenar la información de la reserva
+  const [reserva, setReserva] = useState({
+    // Estado para almacenar la información de la reserva
     fechaInicio: "",
     fechaFin: "",
     horasReservadas: 2,
@@ -247,6 +250,7 @@ const Detail = () => {
         </div>
       </div>
       <h1 className={r.title}>{tutoria.nombre.toUpperCase()}</h1>
+      <RatingStar className={r.rat} value={tutoria.calificacionPromedio} readOnly cancel={false} />
       <div className={r.share}>
         <ShareOnTwittweButton
           text="mira esta tutoria"
@@ -337,6 +341,9 @@ const Detail = () => {
             </a>
           </div>
         </div>
+        <div className={r.sep}></div>
+        <h2>Reseñas</h2>
+        <Rating id={id} />
         <div className={r.sep}></div>
         <footer className={r.footer}>
           <h5 className={r.pol}>politicas: {tutoria.politicas}</h5>

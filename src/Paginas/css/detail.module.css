@@ -38,6 +38,11 @@
   transition: all 0.4s ease;
   color: rgba(255, 255, 255, 0.8);
 }
+.rat{
+  color: white;
+  gap: 5px;
+  opacity: .8;
+}
 .card1 {
   transition: all 0.4s ease;
   position: relative;
@@ -316,7 +321,7 @@
   max-width: 1700px;
   text-align: center;
   padding: 0 40px;
-  font-size: clamp(19px, 4.5vw, 30px);
+  font-size: clamp(20px, 4.5vw, 30px);
   line-height: inherit;
   text-wrap: balance;
 }
