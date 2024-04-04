@@ -82,7 +82,7 @@ const Login = () => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     // Validación de los campos del formulario
-    if (!nameRegex.test(register.username)) {
+    if (!register.username) {
       toast.warning("Username invalido o faltante.");
       return false;
     }
