@@ -288,7 +288,7 @@ const Detail = () => {
       </div>
       <div className={r.card1}>
         <h2>Descripción</h2>
-        <p>
+{/*         <p>
           Sumérgete en el fascinante mundo subatómico y descubre los misterios
           de la realidad a escala más pequeña. En esta sesión, exploraremos los
           conceptos fundamentales de la física cuántica, desde la dualidad
@@ -303,7 +303,8 @@ const Detail = () => {
           única de adentrarte en el mundo fascinante y sorprendente de la física
           cuántica! Únete a nosotros y déjate llevar por el viaje hacia lo
           infinitamente pequeño y lo extraordinariamente poderoso.
-        </p>
+        </p> */}
+        <p>{tutoria.descripcion}</p>
         <div className={r.sep}></div>
         <h2>Caracteristicas</h2>
         <div className={r.caracteristicas}>
