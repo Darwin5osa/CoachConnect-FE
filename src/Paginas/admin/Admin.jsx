@@ -71,6 +71,9 @@ const Admin = () => {
     tutorId: null,
     caracteristicas: [],
     nivelId: null,
+    politicas:
+      "Buena Participación y Conducta, Privacidad y Confidencialidad, Tecnología y Plataforma, Puntualidad y Asistencia",
+    fotos: ["", "", "", "", ""],
   };
   const [formData, setFormData] = useState(initialFormData);
 
@@ -316,6 +319,17 @@ const Admin = () => {
       [name]: value,
     });
   };
+
+  const handlePhotoChange = (index, event) => {
+    const { value } = event.target;
+    const updatedFotos = [...formData.fotos];
+    updatedFotos[index] = value;
+    setFormData({
+      ...formData,
+      fotos: updatedFotos,
+    });
+  };
+
   const handleEditar = (objeto) => {
     setFormData(objeto);
   };
@@ -814,6 +828,67 @@ const Admin = () => {
                 rows="6"
               />
             </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 1:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[0]}
+                onChange={(e) => handlePhotoChange(0, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 2:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[1]}
+                onChange={(e) => handlePhotoChange(1, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 3:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[2]}
+                onChange={(e) => handlePhotoChange(2, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 4:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[3]}
+                onChange={(e) => handlePhotoChange(3, e)}
+              />
+            </div>
+            <div className={s.formInput}>
+              <label htmlFor="nombre">Foto 5:</label>
+              <input
+                placeholder="url"
+                className={s.textInput}
+                type="text"
+                id="fotos"
+                name="foto"
+                value={formData.fotos[4]}
+                onChange={(e) => handlePhotoChange(4, e)}
+              />
+            </div>
+
             <div className={s.options}>
               <button className={s.plus} type="submit">
                 {formData.id ? <FaUserEdit /> : <FaUserPlus />}
