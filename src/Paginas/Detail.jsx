@@ -4,13 +4,13 @@ import ShareOnFacebookButton from "../Componentes/ShareOnFacebookButton";
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import ShareOnTwittweButton from "../Componentes/ShareOnTwittweButton";
 import { useGlobalContex } from "../Utils/global.context";
+import { Rating as RatingStar } from "primereact/rating";
 import { useNavigate, useParams } from "react-router";
 import r from "../Paginas/css/detail.module.css";
 import Rating from "../Componentes/Rating";
 import { DateRangePicker } from "rsuite";
 import { toast, Toaster } from "sonner";
 import emailjs from "@emailjs/browser";
-import { Rating as RatingStar } from "primereact/rating";
 
 const Detail = () => {
   const nav = useNavigate(); // Hook de react-router-dom para la navegación
@@ -136,22 +136,23 @@ const Detail = () => {
   };
 
   // Efecto para obtener la información de la tutoría y las características
-  useEffect(() => {
-    const fetchTutoria = async () => {
-      try {
-        const response = await fetch(
-          `https://api.coachconnect.tech/tutoria/${id}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch tutoria");
-        }
-        const data = await response.json();
-        setTutoria(data);
-        setDisabledDates(data.dias);
-      } catch (error) {
-        console.error("Error fetching tutoria:", error);
+  // TODO = AL ACTUALIZAR RESEÑA ACTUALIZAR TUTORIA
+  const fetchTutoria = async () => {
+    try {
+      const response = await fetch(
+        `https://api.coachconnect.tech/tutoria/${id}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch tutoria");
       }
-    };
+      const data = await response.json();
+      setTutoria(data);
+      setDisabledDates(data.dias);
+    } catch (error) {
+      console.error("Error fetching tutoria:", error);
+    }
+  };
+  useEffect(() => {
     const tutorEncontrado = state.TUTORES.find(
       (tutor) => tutor.id === parseInt(id)
     );
@@ -250,7 +251,12 @@ const Detail = () => {
         </div>
       </div>
       <h1 className={r.title}>{tutoria.nombre.toUpperCase()}</h1>
-      <RatingStar className={r.rat} value={tutoria.calificacionPromedio} readOnly cancel={false} />
+      <RatingStar
+        className={r.rat}
+        value={tutoria.calificacionPromedio}
+        readOnly
+        cancel={false}
+      />
       <div className={r.share}>
         <ShareOnTwittweButton
           text="mira esta tutoria"
@@ -288,7 +294,7 @@ const Detail = () => {
       </div>
       <div className={r.card1}>
         <h2>Descripción</h2>
-{/*         <p>
+        {/*         <p>
           Sumérgete en el fascinante mundo subatómico y descubre los misterios
           de la realidad a escala más pequeña. En esta sesión, exploraremos los
           conceptos fundamentales de la física cuántica, desde la dualidad
@@ -344,7 +350,7 @@ const Detail = () => {
         </div>
         <div className={r.sep}></div>
         <h2>Reseñas</h2>
-        <Rating id={id} />
+        <Rating send={fetchTutoria} id={id} />
         <div className={r.sep}></div>
         <footer className={r.footer}>
           <h5 className={r.pol}>politicas: {tutoria.politicas}</h5>

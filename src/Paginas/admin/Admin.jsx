@@ -105,6 +105,7 @@ const Admin = () => {
       body: JSON.stringify(nuevaCategoria),
     })
       .then((response) => {
+        console.log(response.ok);
         if (response.ok) return response.json();
         else
           return response.json().then((jsonResponse) => {
