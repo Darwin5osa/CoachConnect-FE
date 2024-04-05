@@ -5,7 +5,7 @@ import s from "./css/rating.module.css";
 import { toast, Toaster } from "sonner";
 import CardRating from "./CardRating";
 import React from "react";
-const Rating = ({ id }) => {
+const Rating = ({ send, id }) => {
   const { state } = useGlobalContex();
   const [mensaje, setMensaje] = useState("");
   const [ratingNumber, setRatingNumer] = useState(null);
@@ -26,6 +26,7 @@ const Rating = ({ id }) => {
     })
       .then(() => {
         setMensaje("");
+        send()
         setRatingNumer(null);
         getResena();
         toast.success("¡Tu reseña ha sido enviada exitosamente!");

@@ -35,7 +35,7 @@ const Login = () => {
   });
 
   // Obtiene el contexto global y el navegador
-  const { state, dispatch, getFavs } = useGlobalContex();
+  const { state, dispatch, getFavs, getEstudiantes } = useGlobalContex();
   const navigate = useNavigate();
 
   // Obtiene la ubicación actual
@@ -147,7 +147,7 @@ const Login = () => {
             )
             .then(
               (result) => {
-                console.log(result);
+                getEstudiantes(dispatch)
                 toast.info(
                   "Te llegara un mail con la confirmacion de registro"
                 );
