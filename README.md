@@ -83,7 +83,7 @@ Durante el desarrollo de este proyecto, todas las pruebas fueron realizadas de f
 * **Laureano Berna** - *Lider Frontend* - [lauberna](https://github.com/lauberna)
 * **Valentin Gamba** - *Frontend* - [Valengamba](https://github.com/Valengamba)
 * **Agustina Zabaleta** - *Lider UX-UI* - []()
-* **Darwin Sosa** - *Lider UX-UI* - [Darwin5osa](https://github.com/Darwin5osa)
+* **Darwin Sosa** - *Lider Backend* - [Darwin5osa](https://github.com/Darwin5osa)
 * **Maurin Cristina Arturo** - *Lider Bases de Datos e Infraestructura* - [MCristina94](https://github.com/MCristina94)
 * **Yurleidys Tatiana Jaimes** - *Lider Testing* - [yurlejaimes](https://github.com/yurlejaimes)
 
